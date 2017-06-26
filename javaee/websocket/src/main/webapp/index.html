@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>WebSocket Echo</title>
+
+    <script language="javascript" type="text/javascript">
+        console.log(window.location);
+
+        var wsUri = "ws://" + window.location.host + window.location.pathname + "echo";
+        var websocket;
+
+        function init() {
+            writeToScreen("Connecting to " + wsUri);
+            websocket = new WebSocket(wsUri);
+            websocket.onopen = onOpen;
+            websocket.onclose = onClose;
+            websocket.onmessage = onMessage;
+            websocket.onerror = onError;
+
+            document.getElementById("send-button").addEventListener("click", function (event) {
+                var input = document.getElementById("text-input");
+                var text = input.value;
+                input.value = "";
+                doSend(text);
+            });
+
+            document.getElementById("close-button").addEventListener("click", function (event) {
+                websocket.close();
+            });
+        }
+
+        function onOpen(event) {
+            writeToScreen('<span style="color: green;">CONNECTED</span>');
+        }
+
+        function onClose(event) {
+            writeToScreen('<span style="color: green;">DISCONNECTED</span>');
+        }
+
+        function onMessage(event) {
+            writeToScreen('<span style="color: blue;">' + event.data + '</span>');
+        }
+
+        function onError(event) {
+            writeToScreen('<span style="color: red;">ERROR: </span> ' + event.data);
+        }
+
+        function doSend(message) {
+            writeToScreen(message);
+            websocket.send(message);
+        }
+
+        function writeToScreen(message) {
+            var paragraph = document.createElement("p");
+            paragraph.style.wordWrap = "break-word";
+            paragraph.innerHTML = new Date().toISOString() + ": " + message;
+            document.getElementById("output").prepend(paragraph);
+        }
+
+        window.addEventListener("load", init, false);
+    </script>
+
+</head>
+<body>
+
+<h1>WebSocket Echo</h1>
+
+<p>
+    <input type="text" name="text-input" id="text-input">
+    <input type="button" name="send-button" id="send-button" value="Send">
+    <input type="button" name="close-button" id="close-button" value="Close">
+</p>
+
+<div id="output"></div>
+
+</body>
+</html>
