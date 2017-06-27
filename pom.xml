@@ -12,6 +12,8 @@
     <name>Swarm TS: Parent</name>
 
     <modules>
+        <module>common</module>
+
         <module>javaee/cdi</module>
         <module>javaee/ejb</module>
         <module>javaee/jaxrs</module>
@@ -19,6 +21,9 @@
         <module>javaee/jsf</module>
         <module>javaee/servlet</module>
         <module>javaee/websocket</module>
+
+        <module>custom-main/jar</module>
+        <module>custom-main/war</module>
     </modules>
 
     <properties>
@@ -42,6 +47,14 @@
 
     <dependencyManagement>
         <dependencies>
+            <!-- modules -->
+            <dependency>
+                <groupId>org.wildfly.swarm.ts</groupId>
+                <artifactId>ts-common</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <!-- Swarm BOMs -->
             <dependency>
                 <groupId>org.wildfly.swarm</groupId>
                 <artifactId>bom</artifactId>
@@ -59,6 +72,7 @@
             </dependency>
 remove this line for bom-certified -->
 
+            <!-- test dependencies -->
             <dependency>
                 <groupId>com.h2database</groupId>
                 <artifactId>h2</artifactId>
@@ -165,6 +179,10 @@ remove this line for bom-certified -->
                     <groupId>org.wildfly.swarm</groupId>
                     <artifactId>wildfly-swarm-plugin</artifactId>
                     <version>${version.org.wildfly.swarm}</version>
+                    <configuration>
+                        <stdoutFile>target/stdout.log</stdoutFile>
+                        <stderrFile>target/stderr.log</stderrFile>
+                    </configuration>
                     <executions>
                         <execution>
                             <goals>
