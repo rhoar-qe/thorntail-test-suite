@@ -129,6 +129,12 @@ remove this line for bom-certified -->
             </dependency>
             <dependency>
                 <groupId>io.undertow</groupId>
+                <artifactId>undertow-servlet</artifactId>
+                <version>${version.io.undertow}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>io.undertow</groupId>
                 <artifactId>undertow-websockets-jsr</artifactId>
                 <version>${version.io.undertow}</version>
                 <scope>test</scope>

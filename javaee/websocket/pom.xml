@@ -27,6 +27,15 @@
             <artifactId>undertow</artifactId>
         </dependency>
 
+        <!--
+          - the test only requires undertow-websocket-jsr, but we need to depend on undertow-servlet
+          - as well, otherwise a different version would transitively come from the 'undertow' fraction
+          - and that doesn't necessarily have to be binary compatible
+          -->
+        <dependency>
+            <groupId>io.undertow</groupId>
+            <artifactId>undertow-servlet</artifactId>
+        </dependency>
         <dependency>
             <groupId>io.undertow</groupId>
             <artifactId>undertow-websockets-jsr</artifactId>
