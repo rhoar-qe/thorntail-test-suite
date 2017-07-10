@@ -21,6 +21,7 @@
         <module>javaee/jpa</module>
         <module>javaee/jsf</module>
         <module>javaee/jsonp</module>
+        <module>javaee/jsp-jstl</module>
         <module>javaee/servlet</module>
         <module>javaee/websocket</module>
 
