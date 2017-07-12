@@ -14,7 +14,12 @@
     <modules>
         <module>common</module>
 
+        <module>javaee/bean-validation</module>
         <module>javaee/cdi</module>
+        <module>javaee/cdi-bean-validation</module>
+        <module>javaee/cdi-ejb</module>
+        <module>javaee/cdi-jpa-jta</module>
+        <module>javaee/datasources</module>
         <module>javaee/ejb</module>
         <module>javaee/jaxrs</module>
         <module>javaee/jaxrs-client</module>
@@ -22,7 +27,11 @@
         <module>javaee/jsf</module>
         <module>javaee/jsonp</module>
         <module>javaee/jsp-jstl</module>
+        <module>javaee/jta</module>
         <module>javaee/servlet</module>
+        <module>javaee/servlet-cdi</module>
+        <module>javaee/servlet-ejb</module>
+        <module>javaee/servlet-jpa-jta</module>
         <module>javaee/websocket</module>
 
         <module>custom-main/jar</module>
@@ -34,6 +43,8 @@
 
         <module>protocols/ajp</module>
         <module>protocols/https</module>
+
+        <module>wildfly/cdi-config</module>
     </modules>
 
     <properties>
