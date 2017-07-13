@@ -20,7 +20,7 @@ public class CdiEjbTest {
     private GreeterFacade greeter;
 
     @Test
-    public void cdiEjb() {
+    public void test() {
         assertEquals("Said: Hello, Ladicek!", greeter.hello("Ladicek"));
     }
 }

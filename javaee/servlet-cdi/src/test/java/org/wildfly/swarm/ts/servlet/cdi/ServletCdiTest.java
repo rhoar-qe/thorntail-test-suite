@@ -22,7 +22,7 @@ public class ServletCdiTest {
 
     @Test
     @RunAsClient
-    public void hello() throws IOException {
+    public void test() throws IOException {
         sendRequestAndAssertCounter(executor1, 1);
         sendRequestAndAssertCounter(executor1, 2);
         sendRequestAndAssertCounter(executor2, 1);

@@ -9,7 +9,8 @@ import java.nio.file.Paths;
  */
 public enum Log {
     STDOUT("target/stdout.log"),
-    STDERR("target/stderr.log"),;
+    STDERR("target/stderr.log"),
+    ;
 
     final Path path;
 
