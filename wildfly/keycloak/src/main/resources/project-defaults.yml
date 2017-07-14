@@ -1,0 +1,9 @@
+swarm:
+  keycloak:
+    secure-deployments:
+      ts-wildfly-keycloak-1.0.0-SNAPSHOT.war:
+        auth-server-url: "http://localhost:8180/auth"
+        realm: test-realm
+        resource: test-client
+        public-client: true
+        ssl-required: EXTERNAL

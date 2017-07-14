@@ -1,0 +1,5 @@
+swarm:
+  logging:
+    pattern-formatters:
+      COLOR_PATTERN:
+        pattern: "CUSTOM LOG FORMAT %p [%c] %s%e%n"
