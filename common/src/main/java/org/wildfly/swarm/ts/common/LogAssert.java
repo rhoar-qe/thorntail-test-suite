@@ -30,10 +30,13 @@ public final class LogAssert extends AbstractAssert<LogAssert, Log> {
         return lines;
     }
 
-    public LogAssert hasLine(String line) throws IOException {
+    /** Asserts that the log contains at least one line that contains given {@code string}. */
+    public LogAssert hasLine(String string) throws IOException {
         isNotNull();
         Assertions.assertThat(actual.path).isRegularFile();
-        Assertions.assertThat(lines()).contains(line);
+        Assertions.assertThat(lines())
+                .as("log %s must contain at least one line that contains '%s'", actual, string)
+                .anySatisfy(line -> Assertions.assertThat(line).contains(string));
         return this;
     }
 }
