@@ -72,7 +72,6 @@
                 <groupId>io.fabric8</groupId>
                 <artifactId>docker-maven-plugin</artifactId>
                 <configuration>
-                    <showLogs>true</showLogs>
                     <images>
                         <image>
                             <name>jboss/keycloak:${version.org.keycloak.everything}</name>
@@ -85,6 +84,7 @@
                                     <KEYCLOAK_PASSWORD>admin</KEYCLOAK_PASSWORD>
                                 </env>
                                 <wait>
+                                    <time>30000</time>
                                     <log>WFLYSRV0025: Keycloak</log>
                                 </wait>
                             </run>
@@ -94,17 +94,9 @@
                 <executions>
                     <execution>
                         <id>start</id>
-                        <phase>pre-integration-test</phase>
-                        <goals>
-                            <goal>start</goal>
-                        </goals>
                     </execution>
                     <execution>
                         <id>stop</id>
-                        <phase>post-integration-test</phase>
-                        <goals>
-                            <goal>stop</goal>
-                        </goals>
                     </execution>
                 </executions>
             </plugin>

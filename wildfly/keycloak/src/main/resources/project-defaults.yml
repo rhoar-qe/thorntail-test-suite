@@ -7,3 +7,10 @@ swarm:
         resource: test-client
         public-client: true
         ssl-required: EXTERNAL
+  deployment:
+    ts-wildfly-keycloak-1.0.0-SNAPSHOT.war:
+      web:
+        security-constraints:
+        - url-pattern: /protected/*
+          roles:
+          - "*"
