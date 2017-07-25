@@ -57,14 +57,6 @@
                 <configuration>
                     <mainClass>org.wildfly.swarm.ts.custom.main.jar.Main</mainClass>
                 </configuration>
-                <executions>
-                    <execution>
-                        <id>start</id>
-                    </execution>
-                    <execution>
-                        <id>stop</id>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>

@@ -54,14 +54,6 @@
             <plugin>
                 <groupId>org.wildfly.swarm</groupId>
                 <artifactId>wildfly-swarm-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>start</id>
-                    </execution>
-                    <execution>
-                        <id>stop</id>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>
