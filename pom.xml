@@ -19,8 +19,12 @@
         <module>javaee/cdi-bean-validation</module>
         <module>javaee/cdi-ejb</module>
         <module>javaee/cdi-jpa-jta</module>
+        <module>javaee/concurrency</module>
         <module>javaee/datasources</module>
         <module>javaee/ejb</module>
+        <module>javaee/el</module>
+        <module>javaee/interceptors-cdi</module>
+        <module>javaee/interceptors-ejb</module>
         <module>javaee/jaxrs</module>
         <module>javaee/jaxrs-client</module>
         <module>javaee/jpa</module>
