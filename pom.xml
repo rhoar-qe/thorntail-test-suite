@@ -27,11 +27,13 @@
         <module>javaee/interceptors-ejb</module>
         <module>javaee/jaxrs</module>
         <module>javaee/jaxrs-client</module>
+        <module>javaee/jmx</module>
         <module>javaee/jpa</module>
         <module>javaee/jsf</module>
         <module>javaee/jsonp</module>
         <module>javaee/jsp-jstl</module>
         <module>javaee/jta</module>
+        <module>javaee/naming</module>
         <module>javaee/servlet</module>
         <module>javaee/servlet-cdi</module>
         <module>javaee/servlet-ejb</module>
@@ -55,6 +57,8 @@
         <module>wildfly/management</module>
         <module>wildfly/monitor</module>
         <module>wildfly/msc</module>
+        <module>wildfly/request-controller</module>
+        <module>wildfly/security</module>
     </modules>
 
     <properties>

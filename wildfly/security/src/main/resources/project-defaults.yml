@@ -1,0 +1,32 @@
+swarm:
+  security:
+    security-domains:
+      my-security-domain:
+        classic-authentication:
+          login-modules:
+            my-login-module:
+              code: UsersRoles
+              flag: required
+  deployment:
+    # for the Arquillian test
+    SecurityTest.war:
+      web:
+        login-config:
+          auth-method: BASIC
+          security-domain: my-security-domain
+        security-constraints:
+        - url-pattern: /hello/*
+          roles:
+          - UserRole
+          - AdminRole
+    # for the actual uberjar
+    ts-wildfly-security-1.0.0-SNAPSHOT.war:
+      web:
+        login-config:
+          auth-method: BASIC
+          security-domain: my-security-domain
+        security-constraints:
+        - url-pattern: /hello/*
+          roles:
+          - UserRole
+          - AdminRole
