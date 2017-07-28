@@ -12,7 +12,7 @@
     </parent>
 
     <artifactId>ts-wildfly-msc</artifactId>
-    <packaging>jar</packaging>
+    <packaging>war</packaging>
 
     <name>Swarm TS: WildFly: MSC</name>
 
@@ -20,6 +20,11 @@
         <dependency>
             <groupId>org.wildfly.swarm</groupId>
             <artifactId>msc</artifactId>
+        </dependency>
+        <!-- so that Swarm understands how to deploy a WAR -->
+        <dependency>
+            <groupId>org.wildfly.swarm</groupId>
+            <artifactId>undertow</artifactId>
         </dependency>
 
         <dependency>
