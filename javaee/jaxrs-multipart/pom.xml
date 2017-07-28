@@ -22,7 +22,7 @@
             <artifactId>jaxrs-multipart</artifactId>
         </dependency>
 
-        <!-- IMHO, this shouldn't really be necessary, the `jaxrs-multipart` fraction should provide that -->
+        <!-- this shouldn't be necessary, see SWARM-1465 -->
         <dependency>
             <groupId>org.jboss.resteasy</groupId>
             <artifactId>resteasy-multipart-provider</artifactId>
