@@ -52,6 +52,8 @@
         <module>fraction-autodetection/jsonp-servlet</module>
         <module>fraction-autodetection/servlet</module>
 
+        <module>microprofile</module>
+
         <module>protocols/ajp</module>
         <module>protocols/https</module>
 
