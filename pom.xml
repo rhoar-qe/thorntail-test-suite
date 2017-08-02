@@ -66,6 +66,8 @@
         <module>wildfly/msc</module>
         <module>wildfly/request-controller</module>
         <module>wildfly/security</module>
+        <module>wildfly/topology</module>
+        <module>wildfly/topology-webapp</module>
     </modules>
 
     <properties>
@@ -88,6 +90,8 @@
         <version.org.codehaus.mojo.keytool-maven-plugin>1.5</version.org.codehaus.mojo.keytool-maven-plugin>
         <version.org.glassfish.javax.json>1.0.4</version.org.glassfish.javax.json>
         <version.org.glassfish.tyrus>1.13.1</version.org.glassfish.tyrus>
+        <version.org.jboss.arquillian>1.1.13.Final</version.org.jboss.arquillian>
+        <version.org.jboss.arquillian.drone>2.3.1</version.org.jboss.arquillian.drone>
         <version.org.jboss.resteasy>3.1.3.Final</version.org.jboss.resteasy>
         <version.org.jboss.spec.javax.ejb.jboss-ejb-api_3.2_spec>1.0.0.Final</version.org.jboss.spec.javax.ejb.jboss-ejb-api_3.2_spec>
         <version.org.jboss.spec.javax.json.jboss-json-api_1.0_spec>1.0.0.Final</version.org.jboss.spec.javax.json.jboss-json-api_1.0_spec>
@@ -203,6 +207,20 @@ remove this line for bom-certified -->
                 <artifactId>tyrus-standalone-client</artifactId>
                 <version>${version.org.glassfish.tyrus}</version>
                 <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.arquillian</groupId>
+                <artifactId>arquillian-bom</artifactId>
+                <version>${version.org.jboss.arquillian}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.arquillian.extension</groupId>
+                <artifactId>arquillian-drone-bom</artifactId>
+                <version>${version.org.jboss.arquillian.drone}</version>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
             <dependency>
                 <groupId>org.jboss.resteasy</groupId>

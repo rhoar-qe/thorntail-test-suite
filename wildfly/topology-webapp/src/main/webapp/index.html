@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Topology Test</title>
+</head>
+<body>
+    <ul id="current-topology"></ul>
+
+    <input id="request-input">
+    <button id="do-get-request">GET</button>
+    <button id="do-post-request">POST</button>
+    <div id="result"></div>
+
+    <script src="/jquery-3.2.1.min.js"></script>
+    <script src="/topology/topology.js"></script>
+    <script>
+        $(function () {
+            var topo = topology();
+            topo.onTopologyChange(function (newTopology) {
+                $("#current-topology").empty();
+
+                $.each(newTopology, function (service) {
+                    $("#current-topology").append("<li>" + service + "</li>");
+                });
+            });
+
+            $("#do-get-request").click(function () {
+                var input = $("#request-input").val();
+                topo.getJSON("hello-test", "/test/service", {input: input}).then(function (result) {
+                    $("#result").text(result.hello);
+                });
+            });
+
+            $("#do-post-request").click(function () {
+                var input = $("#request-input").val();
+                topo.postJSON("hello-test", "/test/service", {input: input}).then(function (result) {
+                    $("#result").text(result.hello);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

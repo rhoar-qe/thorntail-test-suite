@@ -11,27 +11,37 @@
         <relativePath>../..</relativePath>
     </parent>
 
-    <artifactId>ts-javaee-jmx</artifactId>
+    <artifactId>ts-wildfly-topology</artifactId>
     <packaging>war</packaging>
 
-    <name>Swarm TS: Java EE: JMX</name>
+    <name>Swarm TS: WildFly: Topology</name>
 
     <dependencies>
         <dependency>
             <groupId>org.wildfly.swarm</groupId>
-            <artifactId>jmx</artifactId>
+            <artifactId>msc</artifactId>
         </dependency>
         <dependency>
             <groupId>org.wildfly.swarm</groupId>
-            <artifactId>management</artifactId>
+            <artifactId>topology</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.wildfly.swarm</groupId>
+            <artifactId>undertow</artifactId>
         </dependency>
 
         <!-- TODO -->
         <dependency>
-            <groupId>org.jboss.remotingjmx</groupId>
-            <artifactId>remoting-jmx</artifactId>
-            <version>2.0.1.Final</version>
-            <scope>test</scope>
+            <groupId>org.wildfly.core</groupId>
+            <artifactId>wildfly-network</artifactId>
+            <version>2.2.1.Final</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.wildfly.core</groupId>
+            <artifactId>wildfly-server</artifactId>
+            <version>2.2.1.Final</version>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
@@ -49,7 +59,6 @@
         <dependency>
             <groupId>org.wildfly.swarm</groupId>
             <artifactId>arquillian</artifactId>
-            <scope>test</scope>
         </dependency>
     </dependencies>
 

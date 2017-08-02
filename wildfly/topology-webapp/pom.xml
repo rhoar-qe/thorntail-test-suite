@@ -11,27 +11,37 @@
         <relativePath>../..</relativePath>
     </parent>
 
-    <artifactId>ts-javaee-jmx</artifactId>
+    <artifactId>ts-wildfly-topology-webapp</artifactId>
     <packaging>war</packaging>
 
-    <name>Swarm TS: Java EE: JMX</name>
+    <name>Swarm TS: WildFly: Topology Web App</name>
 
     <dependencies>
         <dependency>
             <groupId>org.wildfly.swarm</groupId>
-            <artifactId>jmx</artifactId>
+            <artifactId>jaxrs-jsonp</artifactId>
         </dependency>
         <dependency>
             <groupId>org.wildfly.swarm</groupId>
-            <artifactId>management</artifactId>
+            <artifactId>msc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.wildfly.swarm</groupId>
+            <artifactId>topology-webapp</artifactId>
         </dependency>
 
         <!-- TODO -->
         <dependency>
-            <groupId>org.jboss.remotingjmx</groupId>
-            <artifactId>remoting-jmx</artifactId>
-            <version>2.0.1.Final</version>
-            <scope>test</scope>
+            <groupId>org.wildfly.core</groupId>
+            <artifactId>wildfly-network</artifactId>
+            <version>2.2.1.Final</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- this shouldn't be necessary, see SWARM-1459 -->
+        <dependency>
+            <groupId>org.jboss.spec.javax.json</groupId>
+            <artifactId>jboss-json-api_1.0_spec</artifactId>
         </dependency>
 
         <dependency>
@@ -49,6 +59,12 @@
         <dependency>
             <groupId>org.wildfly.swarm</groupId>
             <artifactId>arquillian</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.arquillian.extension</groupId>
+            <artifactId>arquillian-drone-webdriver-depchain</artifactId>
+            <version>${version.org.jboss.arquillian.drone}</version>
+            <type>pom</type>
             <scope>test</scope>
         </dependency>
     </dependencies>
