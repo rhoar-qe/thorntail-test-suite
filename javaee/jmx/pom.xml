@@ -26,12 +26,9 @@
             <artifactId>management</artifactId>
         </dependency>
 
-        <!-- TODO -->
         <dependency>
             <groupId>org.jboss.remotingjmx</groupId>
             <artifactId>remoting-jmx</artifactId>
-            <version>2.0.1.Final</version>
-            <scope>test</scope>
         </dependency>
 
         <dependency>

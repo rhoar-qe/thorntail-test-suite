@@ -30,18 +30,13 @@
             <artifactId>undertow</artifactId>
         </dependency>
 
-        <!-- TODO -->
         <dependency>
             <groupId>org.wildfly.core</groupId>
             <artifactId>wildfly-network</artifactId>
-            <version>2.2.1.Final</version>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.wildfly.core</groupId>
             <artifactId>wildfly-server</artifactId>
-            <version>2.2.1.Final</version>
-            <scope>provided</scope>
         </dependency>
 
         <dependency>
