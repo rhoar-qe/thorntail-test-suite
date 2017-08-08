@@ -45,18 +45,6 @@
         <module>javaee/servlet-jpa-jta</module>
         <module>javaee/websocket</module>
 
-        <module>custom-main/jar</module>
-        <module>custom-main/war</module>
-
-        <module>fraction-autodetection/cdi-jaxrs-ejb</module>
-        <module>fraction-autodetection/jsonp-servlet</module>
-        <module>fraction-autodetection/servlet</module>
-
-        <module>microprofile</module>
-
-        <module>protocols/ajp</module>
-        <module>protocols/https</module>
-
         <module>wildfly/cdi-config</module>
         <module>wildfly/hibernate-validator</module>
         <module>wildfly/keycloak</module>
@@ -68,6 +56,18 @@
         <module>wildfly/security</module>
         <module>wildfly/topology</module>
         <module>wildfly/topology-webapp</module>
+
+        <module>microprofile</module>
+
+        <module>protocols/ajp</module>
+        <module>protocols/https</module>
+
+        <module>fraction-autodetection/cdi-jaxrs-ejb</module>
+        <module>fraction-autodetection/jsonp-servlet</module>
+        <module>fraction-autodetection/servlet</module>
+
+        <module>custom-main/jar</module>
+        <module>custom-main/war</module>
     </modules>
 
     <properties>
