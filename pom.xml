@@ -76,6 +76,7 @@
 
         <version.java>1.8</version.java>
 
+        <version.com.google.guava>21.0</version.com.google.guava>
         <version.com.h2database.h2>1.4.196</version.com.h2database.h2>
         <version.io.fabric8.docker-maven-plugin>0.21.0</version.io.fabric8.docker-maven-plugin>
         <version.javax.enterprise.cdi-api>1.2</version.javax.enterprise.cdi-api>
@@ -275,6 +276,13 @@ remove this line for bom-certified -->
                 <groupId>org.xmlunit</groupId>
                 <artifactId>xmlunit-core</artifactId>
                 <version>${version.org.xmlunit}</version>
+            </dependency>
+
+            <!-- for Selenium, make sure that we have a reasonably new Guava version -->
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${version.com.google.guava}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
