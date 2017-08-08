@@ -231,6 +231,8 @@ remove this line for bom-certified -->
                 <version>${version.org.jboss.remotingjmx}</version>
                 <scope>test</scope>
             </dependency>
+<!--
+remove this line if RESTEasy dependencies are managed by the Swarm BOM -->
             <dependency>
                 <groupId>org.jboss.resteasy</groupId>
                 <artifactId>resteasy-client</artifactId>
@@ -249,6 +251,8 @@ remove this line for bom-certified -->
                 <version>${version.org.jboss.resteasy}</version>
                 <scope>test</scope>
             </dependency>
+<!-- remove this line if RESTEasy dependencies are managed by the Swarm BOM
+-->
             <dependency>
                 <groupId>org.keycloak</groupId>
                 <artifactId>keycloak-admin-client</artifactId>
