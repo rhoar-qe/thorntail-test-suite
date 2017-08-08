@@ -14,7 +14,7 @@
     <artifactId>ts-javaee-interceptors-ejb</artifactId>
     <packaging>war</packaging>
 
-    <name>Swarm TS: WildFly: Interceptors + EJB</name>
+    <name>Swarm TS: Java EE: Interceptors + EJB</name>
 
     <dependencies>
         <dependency>

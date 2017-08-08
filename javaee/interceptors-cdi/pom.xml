@@ -14,7 +14,7 @@
     <artifactId>ts-javaee-interceptors-cdi</artifactId>
     <packaging>war</packaging>
 
-    <name>Swarm TS: WildFly: Interceptors + CDI</name>
+    <name>Swarm TS: Java EE: Interceptors + CDI</name>
 
     <dependencies>
         <dependency>
