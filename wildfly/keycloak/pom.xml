@@ -84,7 +84,7 @@
                                     <KEYCLOAK_PASSWORD>admin</KEYCLOAK_PASSWORD>
                                 </env>
                                 <wait>
-                                    <time>30000</time>
+                                    <time>600000</time>
                                     <log>WFLYSRV0025: Keycloak</log>
                                 </wait>
                             </run>
