@@ -10,9 +10,11 @@ import org.wildfly.swarm.topology.AdvertisementHandle;
 import org.wildfly.swarm.topology.Topology;
 
 import javax.naming.NamingException;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.awaitility.Awaitility.await;
 
 @RunWith(Arquillian.class)
 @DefaultDeployment
@@ -38,31 +40,35 @@ public class TopologyTest {
                 .containsKey("hello-test");
 
         AdvertisementHandle handle = topology.advertise("foobar");
+
         CurrentServiceContainer.getServiceContainer().awaitStability();
+        await().atMost(2, TimeUnit.SECONDS).untilAsserted(() -> {
+            assertThat(topology.asMap())
+                    .as("Topology should have 2 entries")
+                    .hasSize(2)
+                    .as("Topology should contain 'foobar'")
+                    .containsKey("foobar");
 
-        assertThat(topology.asMap())
-                .as("Topology should have 2 entries")
-                .hasSize(2)
-                .as("Topology should contain 'foobar'")
-                .containsKey("foobar");
-
-        assertThat(listenerWasInvoked)
-                .as("Topology change listener should be invoked after service was advertised")
-                .isTrue();
+            assertThat(listenerWasInvoked)
+                    .as("Topology change listener should be invoked after service was advertised")
+                    .isTrue();
+        });
 
         listenerWasInvoked.set(false);
 
         handle.unadvertise();
+
         CurrentServiceContainer.getServiceContainer().awaitStability();
+        await().atMost(2, TimeUnit.SECONDS).untilAsserted(() -> {
+            assertThat(topology.asMap())
+                    .as("Topology should have 1 entry")
+                    .hasSize(1)
+                    .as("Topology should contain 'hello-test'")
+                    .containsKey("hello-test");
 
-        assertThat(topology.asMap())
-                .as("Topology should have 1 entry")
-                .hasSize(1)
-                .as("Topology should contain 'hello-test'")
-                .containsKey("hello-test");
-
-        assertThat(listenerWasInvoked)
-                .as("Topology change listener should be invoked after service was unadvertised")
-                .isTrue();
+            assertThat(listenerWasInvoked)
+                    .as("Topology change listener should be invoked after service was unadvertised")
+                    .isTrue();
+        });
     }
 }
