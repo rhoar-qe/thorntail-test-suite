@@ -25,6 +25,8 @@ public class TopologyTest {
     /**
      * Note that service advertisements in the topology are in fact MSC services. Therefore, the registrations
      * and unregistrations happen concurrently, on other threads, and awaiting MSC stability is required.
+     * Also topology listeners are invoked asynchronously, outside of MSC services lifecycle, so there
+     * needs to be an extra wait loop for them.
      */
     @Test
     public void test() throws NamingException, InterruptedException {

@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!-- this file only exists for manual tests; TopologyTest uses @DeploymentModule -->
+<jboss-deployment-structure>
+    <deployment>
+        <dependencies>
+            <!-- needed for mock topology connector -->
+            <module name="org.wildfly.swarm.topology" slot="runtime"/>
+            <module name="org.jboss.as.network"/>
+            <!-- needed for awaiting MSC stability -->
+            <module name="org.jboss.as.server"/>
+        </dependencies>
+    </deployment>
+</jboss-deployment-structure>
