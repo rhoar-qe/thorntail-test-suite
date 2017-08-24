@@ -3,3 +3,13 @@ swarm:
     pattern-formatters:
       COLOR_PATTERN:
         pattern: "CUSTOM LOG FORMAT %p [%c] %s%e%n"
+    periodic-rotating-file-handlers:
+      FILE:
+        file:
+          path: target/foobar.log
+        suffix: .yyyy-MM-dd
+        named-formatter: COLOR_PATTERN
+    root-logger:
+      handlers:
+      - CONSOLE
+      - FILE

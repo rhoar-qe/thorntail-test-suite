@@ -16,5 +16,7 @@ public class LoggingIT {
         assertThat(response).isEqualTo("Hello");
         assertThat(Log.STDOUT).hasLine("CUSTOM LOG FORMAT INFO [stdout] Servlet reached!");
         assertThat(Log.STDOUT).hasLine("CUSTOM LOG FORMAT WARNING [HelloServlet] Servlet reached!");
+        assertThat(Log.custom("target/foobar.log")).hasLine("CUSTOM LOG FORMAT INFO [stdout] Servlet reached!");
+        assertThat(Log.custom("target/foobar.log")).hasLine("CUSTOM LOG FORMAT WARNING [HelloServlet] Servlet reached!");
     }
 }
