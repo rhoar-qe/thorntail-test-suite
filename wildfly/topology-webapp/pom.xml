@@ -35,12 +35,6 @@
             <artifactId>wildfly-network</artifactId>
         </dependency>
 
-        <!-- this shouldn't be necessary, see SWARM-1459 -->
-        <dependency>
-            <groupId>org.jboss.spec.javax.json</groupId>
-            <artifactId>jboss-json-api_1.0_spec</artifactId>
-        </dependency>
-
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>

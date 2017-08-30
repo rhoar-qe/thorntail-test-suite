@@ -1,5 +1,7 @@
 package org.wildfly.swarm.ts.microprofile;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 import org.apache.http.client.fluent.Request;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;
@@ -23,12 +25,10 @@ public class MicroProfileTest {
     @RunAsClient
     public void test() throws IOException {
         String response = Request.Get("http://localhost:8080/").execute().returnContent().asString();
-        JsonStructure json = Json.createReader(new StringReader(response)).read();
-        assertThat(json).isInstanceOf(JsonObject.class);
-        assertThat(json.getValueType()).isEqualTo(JsonValue.ValueType.OBJECT);
-        JsonObject jsonObj = (JsonObject) json;
-        assertThat(jsonObj).containsKey("content");
-        assertThat(jsonObj.get("content").getValueType()).isEqualTo(JsonValue.ValueType.STRING);
-        assertThat(jsonObj.getString("content")).isEqualTo("Hello, World!");
+        JsonElement json = new JsonParser().parse(response);
+        assertThat(json.isJsonObject()).isTrue();
+        assertThat(json.getAsJsonObject().size()).isEqualTo(1);
+        assertThat(json.getAsJsonObject().has("content")).isTrue();
+        assertThat(json.getAsJsonObject().get("content").getAsString()).isEqualTo("Hello, World!");
     }
 }

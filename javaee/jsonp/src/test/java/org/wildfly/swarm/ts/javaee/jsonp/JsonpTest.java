@@ -1,5 +1,7 @@
 package org.wildfly.swarm.ts.javaee.jsonp;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 import org.apache.http.client.fluent.Request;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;
@@ -18,6 +20,10 @@ public class JsonpTest {
     @RunAsClient
     public void test() throws IOException {
         String response = Request.Get("http://localhost:8080/").execute().returnContent().asString();
-        assertThat(response).isEqualTo("{\"hello\":\"world\"}");
+        JsonElement json = new JsonParser().parse(response);
+        assertThat(json.isJsonObject()).isTrue();
+        assertThat(json.getAsJsonObject().size()).isEqualTo(1);
+        assertThat(json.getAsJsonObject().has("hello"));
+        assertThat(json.getAsJsonObject().get("hello").getAsString()).isEqualTo("world");
     }
 }

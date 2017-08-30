@@ -1,5 +1,7 @@
 package org.wildfly.swarm.ts.wildfly.request.controller;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.fluent.Request;
 import org.apache.http.entity.ContentType;
@@ -10,7 +12,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.wildfly.swarm.arquillian.DefaultDeployment;
 
-import javax.json.Json;
 import java.io.IOException;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -30,12 +31,11 @@ public class SuspendResumeTest {
     @RunAsClient
     @InSequence(2)
     public void suspend() throws IOException {
-        String json = Json.createObjectBuilder()
-                .add("operation", "suspend")
-                .build()
-                .toString();
+        JsonObject json = new JsonObject();
+        json.add("operation", new JsonPrimitive("suspend"));
+
         HttpResponse response = Request.Post("http://localhost:9990/management")
-                .bodyString(json, ContentType.APPLICATION_JSON)
+                .bodyString(json.toString(), ContentType.APPLICATION_JSON)
                 .execute()
                 .returnResponse();
         assertThat(response.getStatusLine().getStatusCode()).isEqualTo(200);
@@ -54,12 +54,11 @@ public class SuspendResumeTest {
     @RunAsClient
     @InSequence(4)
     public void resume() throws IOException {
-        String json = Json.createObjectBuilder()
-                .add("operation", "resume")
-                .build()
-                .toString();
+        JsonObject json = new JsonObject();
+        json.add("operation", new JsonPrimitive("resume"));
+
         HttpResponse response = Request.Post("http://localhost:9990/management")
-                .bodyString(json, ContentType.APPLICATION_JSON)
+                .bodyString(json.toString(), ContentType.APPLICATION_JSON)
                 .execute()
                 .returnResponse();
         assertThat(response.getStatusLine().getStatusCode()).isEqualTo(200);

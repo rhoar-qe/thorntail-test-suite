@@ -76,6 +76,7 @@
 
         <version.java>1.8</version.java>
 
+        <version.com.google.code.gson>2.8.1</version.com.google.code.gson>
         <version.com.google.guava>21.0</version.com.google.guava>
         <version.com.h2database.h2>1.4.196</version.com.h2database.h2>
         <version.io.fabric8.docker-maven-plugin>0.21.0</version.io.fabric8.docker-maven-plugin>
@@ -90,7 +91,6 @@
         <version.org.apache.maven.plugins.maven-war-plugin>3.1.0</version.org.apache.maven.plugins.maven-war-plugin>
         <version.org.awaitility>3.0.0</version.org.awaitility>
         <version.org.codehaus.mojo.keytool-maven-plugin>1.5</version.org.codehaus.mojo.keytool-maven-plugin>
-        <version.org.glassfish.javax.json>1.0.4</version.org.glassfish.javax.json>
         <version.org.glassfish.tyrus>1.13.1</version.org.glassfish.tyrus>
         <version.org.jboss.arquillian>1.1.13.Final</version.org.jboss.arquillian>
         <version.org.jboss.arquillian.drone>2.3.1</version.org.jboss.arquillian.drone>
@@ -134,7 +134,7 @@
             </dependency>
 remove this line for bom-certified -->
 
-            <!-- spec dependencies -->
+            <!-- spec dependencies, only for fraction autodetection tests -->
             <dependency>
                 <groupId>javax.enterprise</groupId>
                 <artifactId>cdi-api</artifactId>
@@ -167,6 +167,12 @@ remove this line for bom-certified -->
             </dependency>
 
             <!-- test dependencies -->
+            <dependency>
+                <groupId>com.google.code.gson</groupId>
+                <artifactId>gson</artifactId>
+                <version>${version.com.google.code.gson}</version>
+                <scope>test</scope>
+            </dependency>
             <dependency>
                 <groupId>com.h2database</groupId>
                 <artifactId>h2</artifactId>
@@ -211,12 +217,6 @@ remove this line for bom-certified -->
                         <artifactId>junit</artifactId>
                     </exclusion>
                 </exclusions>
-            </dependency>
-            <dependency>
-                <groupId>org.glassfish</groupId>
-                <artifactId>javax.json</artifactId>
-                <version>${version.org.glassfish.javax.json}</version>
-                <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>org.glassfish.tyrus.bundles</groupId>
