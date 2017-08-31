@@ -139,56 +139,50 @@ remove this line for bom-certified -->
                 <groupId>javax.enterprise</groupId>
                 <artifactId>cdi-api</artifactId>
                 <version>${version.javax.enterprise.cdi-api}</version>
-                <scope>provided</scope>
             </dependency>
             <dependency>
                 <groupId>org.jboss.spec.javax.ejb</groupId>
                 <artifactId>jboss-ejb-api_3.2_spec</artifactId>
                 <version>${version.org.jboss.spec.javax.ejb.jboss-ejb-api_3.2_spec}</version>
-                <scope>provided</scope>
             </dependency>
             <dependency>
                 <groupId>org.jboss.spec.javax.json</groupId>
                 <artifactId>jboss-json-api_1.0_spec</artifactId>
                 <version>${version.org.jboss.spec.javax.json.jboss-json-api_1.0_spec}</version>
-                <scope>provided</scope>
             </dependency>
             <dependency>
                 <groupId>org.jboss.spec.javax.servlet</groupId>
                 <artifactId>jboss-servlet-api_3.0_spec</artifactId>
                 <version>${version.org.jboss.spec.javax.servlet.jboss-servlet-api_3.0_spec}</version>
-                <scope>provided</scope>
             </dependency>
             <dependency>
                 <groupId>org.jboss.spec.javax.ws.rs</groupId>
                 <artifactId>jboss-jaxrs-api_2.0_spec</artifactId>
                 <version>${version.org.jboss.spec.javax.ws.rs.jboss-jaxrs-api_2.0_spec}</version>
-                <scope>provided</scope>
             </dependency>
 
             <!-- test dependencies -->
+            <!--
+              - If at all possible, tests should NEVER depend on something that Swarm can bring in transitively.
+              - For example, instead of using JSON-P for working with JSON in the tests, use Gson. Instead of
+              - using Undertow's WebSocket implementation for implementing the WebSocket client in the tests,
+              - use Glassfish's implementation (Tyrus). First, it avoids dependency clashes, which are typically
+              - really hard to debug. Second, it provides some level of interoperability testing for free.
+              -->
             <dependency>
                 <groupId>com.google.code.gson</groupId>
                 <artifactId>gson</artifactId>
                 <version>${version.com.google.code.gson}</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>com.h2database</groupId>
-                <artifactId>h2</artifactId>
-                <version>${version.com.h2database.h2}</version>
             </dependency>
             <dependency>
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
                 <version>${version.junit.junit}</version>
-                <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>org.apache.httpcomponents</groupId>
                 <artifactId>fluent-hc</artifactId>
                 <version>${version.org.apache.httpcomponents.httpclient}</version>
-                <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>org.apache.httpcomponents</groupId>
@@ -204,13 +198,11 @@ remove this line for bom-certified -->
                 <groupId>org.assertj</groupId>
                 <artifactId>assertj-core</artifactId>
                 <version>${version.org.assertj.assertj-core}</version>
-                <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>org.awaitility</groupId>
                 <artifactId>awaitility</artifactId>
                 <version>${version.org.awaitility}</version>
-                <scope>test</scope>
                 <exclusions>
                     <exclusion>
                         <groupId>junit</groupId>
@@ -222,7 +214,6 @@ remove this line for bom-certified -->
                 <groupId>org.glassfish.tyrus.bundles</groupId>
                 <artifactId>tyrus-standalone-client</artifactId>
                 <version>${version.org.glassfish.tyrus}</version>
-                <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>org.jboss.arquillian</groupId>
@@ -242,27 +233,49 @@ remove this line for bom-certified -->
                 <groupId>org.jboss.remotingjmx</groupId>
                 <artifactId>remoting-jmx</artifactId>
                 <version>${version.org.jboss.remotingjmx}</version>
-                <scope>test</scope>
             </dependency>
+            <dependency>
+                <groupId>org.kohsuke</groupId>
+                <artifactId>ajp-client</artifactId>
+                <version>${version.org.kohsuke.ajp-client}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.xmlunit</groupId>
+                <artifactId>xmlunit-core</artifactId>
+                <version>${version.org.xmlunit}</version>
+            </dependency>
+
+            <!-- for database tests -->
+            <dependency>
+                <groupId>com.h2database</groupId>
+                <artifactId>h2</artifactId>
+                <version>${version.com.h2database.h2}</version>
+            </dependency>
+
+            <!-- for the Topology tests; these modules are required to build a mock topology implementation -->
+            <dependency>
+                <groupId>org.wildfly.core</groupId>
+                <artifactId>wildfly-network</artifactId>
+                <version>${version.org.wildfly.core}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wildfly.core</groupId>
+                <artifactId>wildfly-server</artifactId>
+                <version>${version.org.wildfly.core}</version>
+            </dependency>
+
+            <!-- for the Keycloak test; unfortunately, Keycloak Admin Client requires RESTEasy Client -->
 <!--
 remove this line if RESTEasy dependencies are managed by the Swarm BOM -->
             <dependency>
                 <groupId>org.jboss.resteasy</groupId>
                 <artifactId>resteasy-client</artifactId>
                 <version>${version.org.jboss.resteasy}</version>
-                <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>org.jboss.resteasy</groupId>
                 <artifactId>resteasy-jackson2-provider</artifactId>
                 <version>${version.org.jboss.resteasy}</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.jboss.resteasy</groupId>
-                <artifactId>resteasy-multipart-provider</artifactId>
-                <version>${version.org.jboss.resteasy}</version>
-                <scope>test</scope>
             </dependency>
 <!-- remove this line if RESTEasy dependencies are managed by the Swarm BOM
 -->
@@ -270,29 +283,6 @@ remove this line if RESTEasy dependencies are managed by the Swarm BOM -->
                 <groupId>org.keycloak</groupId>
                 <artifactId>keycloak-admin-client</artifactId>
                 <version>${version.org.keycloak.everything}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.kohsuke</groupId>
-                <artifactId>ajp-client</artifactId>
-                <version>${version.org.kohsuke.ajp-client}</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.wildfly.core</groupId>
-                <artifactId>wildfly-network</artifactId>
-                <version>${version.org.wildfly.core}</version>
-                <scope>provided</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.wildfly.core</groupId>
-                <artifactId>wildfly-server</artifactId>
-                <version>${version.org.wildfly.core}</version>
-                <scope>provided</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.xmlunit</groupId>
-                <artifactId>xmlunit-core</artifactId>
-                <version>${version.org.xmlunit}</version>
             </dependency>
 
             <!-- for Selenium, make sure that we have a reasonably new Guava version -->
