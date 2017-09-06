@@ -16,26 +16,27 @@
     <script src="/topology/topology.js"></script>
     <script>
         $(function () {
-            var topo = topology();
-            topo.onTopologyChange(function (newTopology) {
-                $("#current-topology").empty();
+            topology().then(function (topo) {
+                topo.onTopologyChange(function (newTopology) {
+                    $("#current-topology").empty();
 
-                $.each(newTopology, function (service) {
-                    $("#current-topology").append("<li>" + service + "</li>");
+                    $.each(newTopology, function (service) {
+                        $("#current-topology").append("<li>" + service + "</li>");
+                    });
                 });
-            });
 
-            $("#do-get-request").click(function () {
-                var input = $("#request-input").val();
-                topo.getJSON("hello-test", "/test/service", {input: input}).then(function (result) {
-                    $("#result").text(result.hello);
+                $("#do-get-request").click(function () {
+                    var input = $("#request-input").val();
+                    topo.getJSON("hello-test", "/test/service", {input: input}).then(function (result) {
+                        $("#result").text(result.hello);
+                    });
                 });
-            });
 
-            $("#do-post-request").click(function () {
-                var input = $("#request-input").val();
-                topo.postJSON("hello-test", "/test/service", {input: input}).then(function (result) {
-                    $("#result").text(result.hello);
+                $("#do-post-request").click(function () {
+                    var input = $("#request-input").val();
+                    topo.postJSON("hello-test", "/test/service", {input: input}).then(function (result) {
+                        $("#result").text(result.hello);
+                    });
                 });
             });
         });
