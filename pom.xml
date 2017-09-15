@@ -47,7 +47,7 @@
 
         <module>wildfly/cdi-config</module>
         <module>wildfly/hibernate-validator</module>
-        <module>wildfly/keycloak</module>
+<!--        <module>wildfly/keycloak</module> -->
         <module>wildfly/logging</module>
         <module>wildfly/management</module>
         <module>wildfly/monitor</module>
