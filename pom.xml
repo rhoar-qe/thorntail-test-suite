@@ -59,6 +59,8 @@
 
         <module>microprofile</module>
 
+        <module>netflix/ribbon</module>
+
         <module>protocols/ajp</module>
         <module>protocols/https</module>
 
