@@ -1,33 +1,26 @@
 package org.wildfly.swarm.ts.netflix.ribbon;
 
-import org.wildfly.swarm.topology.Topology;
-import java.util.concurrent.atomic.AtomicBoolean;
-
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
+import java.util.concurrent.atomic.AtomicBoolean;
 
-@Path("/")
+@Path("/hello")
 public class HelloResource {
-
-    private AtomicBoolean enabled = new AtomicBoolean(true);
+    private static AtomicBoolean enabled = new AtomicBoolean(true);
 
     @GET
     public Response get() {
         if (enabled.get()) {
-            try {
-                String response = Topology.lookup().asMap().keySet().toString();
-                return Response.ok().entity(response).build();
-            } catch (Exception e) {
-                return Response.status(500).build();
-            }
+            return Response.ok().entity("Hello, World!").build();
         } else {
-            return Response.status(404).build();
+            return Response.serverError().build();
         }
     }
 
-    @GET
-    @Path("disable")
+    @POST
+    @Path("/disable")
     public void disable() {
         enabled.set(false);
     }

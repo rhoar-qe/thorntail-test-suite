@@ -1,21 +1,17 @@
 package org.wildfly.swarm.ts.netflix.ribbon;
 
-import java.nio.charset.StandardCharsets;
+import io.netty.buffer.ByteBuf;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
+import java.nio.charset.StandardCharsets;
 
-import io.netty.buffer.ByteBuf;
-import rx.Observable;
-
-@Path("/")
+@Path("/test")
 public class RibbonClientResource {
-
     @GET
-    @Path("test")
     public Response test() {
-        Observable<ByteBuf > obs = RibbonClient.INSTANCE.ribbonTest().observe();
-        return Response.ok().entity(obs.toBlocking().single().toString(StandardCharsets.UTF_8)).build();
+        ByteBuf response = RibbonClient.INSTANCE.ribbonTest().execute();
+        return Response.ok().entity(response.toString(StandardCharsets.UTF_8)).build();
     }
 }

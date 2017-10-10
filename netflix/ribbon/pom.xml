@@ -23,25 +23,27 @@
         </dependency>
         <dependency>
             <groupId>org.wildfly.swarm</groupId>
-            <artifactId>ribbon</artifactId>
+            <artifactId>msc</artifactId>
         </dependency>
         <dependency>
             <groupId>org.wildfly.swarm</groupId>
-            <artifactId>msc</artifactId>
+            <artifactId>ribbon</artifactId>
         </dependency>
+
         <dependency>
             <groupId>org.wildfly.core</groupId>
             <artifactId>wildfly-network</artifactId>
             <scope>provided</scope>
         </dependency>
+
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.wildfly.swarm</groupId>
-            <artifactId>arquillian</artifactId>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>fluent-hc</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -50,14 +52,9 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpclient</artifactId>
+            <groupId>org.wildfly.swarm</groupId>
+            <artifactId>arquillian</artifactId>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-           <groupId>org.apache.httpcomponents</groupId>
-           <artifactId>fluent-hc</artifactId>
-           <scope>test</scope>
         </dependency>
     </dependencies>
 </project>
