@@ -14,22 +14,47 @@
     <artifactId>ts-netflix-ribbon-secured</artifactId>
     <packaging>war</packaging>
 
-    <name>Swarm TS: Netflix: Ribbon secured</name>
+    <name>Swarm TS: Netflix: Ribbon Secured</name>
 
     <dependencies>
+        <dependency>
+            <groupId>org.wildfly.swarm</groupId>
+            <artifactId>jaxrs</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.wildfly.swarm</groupId>
+            <artifactId>keycloak</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.wildfly.swarm</groupId>
+            <artifactId>msc</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.wildfly.swarm</groupId>
             <artifactId>ribbon-secured</artifactId>
             <version>${version.org.wildfly.swarm}</version>
         </dependency>
+
         <dependency>
-            <groupId>org.wildfly.swarm</groupId>
-            <artifactId>jaxrs</artifactId>
+            <groupId>org.wildfly.core</groupId>
+            <artifactId>wildfly-network</artifactId>
+            <scope>provided</scope>
         </dependency>
-        <!-- KEYCLOAK -->
+
         <dependency>
-            <groupId>org.wildfly.swarm</groupId>
-            <artifactId>keycloak</artifactId>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>fluent-hc</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.jboss.resteasy</groupId>
@@ -49,27 +74,6 @@
         <dependency>
             <groupId>org.keycloak</groupId>
             <artifactId>keycloak-authz-client</artifactId>
-            <version>${version.org.keycloak.everything}</version>
-            <scope>test</scope>
-         </dependency>
-
-        <dependency>
-            <groupId>org.wildfly.swarm</groupId>
-            <artifactId>msc</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.wildfly.core</groupId>
-            <artifactId>wildfly-network</artifactId>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.assertj</groupId>
-            <artifactId>assertj-core</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -77,28 +81,18 @@
             <artifactId>arquillian</artifactId>
             <scope>test</scope>
         </dependency>
-         <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpclient</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>fluent-hc</artifactId>
-            <scope>test</scope>
-        </dependency>
     </dependencies>
 
     <build>
         <plugins>
-           <plugin>
+            <plugin>
                 <groupId>io.fabric8</groupId>
                 <artifactId>docker-maven-plugin</artifactId>
                 <configuration>
                     <images>
                         <image>
                             <name>jboss/keycloak:${version.org.keycloak.everything}</name>
-                            <alias>ts-nextflix-ribbon-secured</alias>
+                            <alias>keycloak</alias>
                             <run>
                                 <ports>
                                     <port>8180:8080</port>
@@ -125,15 +119,15 @@
                 <groupId>org.wildfly.swarm</groupId>
                 <artifactId>wildfly-swarm-plugin</artifactId>
                 <executions>
-                        <execution>
-                            <id>start</id>
-                            <phase>none</phase>
-                        </execution>
-                        <execution>
-                            <id>stop</id>
-                            <phase>none</phase>
-                        </execution>
-                    </executions>
+                    <execution>
+                        <id>start</id>
+                        <phase>none</phase>
+                    </execution>
+                    <execution>
+                        <id>stop</id>
+                        <phase>none</phase>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

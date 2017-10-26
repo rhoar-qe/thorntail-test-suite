@@ -60,7 +60,7 @@
         <module>microprofile</module>
 
         <module>netflix/ribbon</module>
-        <module>netflix/ribbon-secure</module>
+        <module>netflix/ribbon-secured</module>
 
         <module>protocols/ajp</module>
         <module>protocols/https</module>
@@ -285,6 +285,11 @@ remove this line if RESTEasy dependencies are managed by the Swarm BOM -->
             <dependency>
                 <groupId>org.keycloak</groupId>
                 <artifactId>keycloak-admin-client</artifactId>
+                <version>${version.org.keycloak.everything}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.keycloak</groupId>
+                <artifactId>keycloak-authz-client</artifactId>
                 <version>${version.org.keycloak.everything}</version>
             </dependency>
 

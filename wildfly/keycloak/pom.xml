@@ -27,11 +27,6 @@
         </dependency>
 
         <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpclient</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <scope>test</scope>
@@ -77,6 +72,7 @@
                     <images>
                         <image>
                             <name>jboss/keycloak:${version.org.keycloak.everything}</name>
+                            <alias>keycloak</alias>
                             <run>
                                 <ports>
                                     <port>8180:8080</port>
