@@ -32,7 +32,6 @@
         <dependency>
             <groupId>org.wildfly.swarm</groupId>
             <artifactId>ribbon-secured</artifactId>
-            <version>${version.org.wildfly.swarm}</version>
         </dependency>
 
         <dependency>
