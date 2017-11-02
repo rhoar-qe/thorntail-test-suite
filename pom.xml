@@ -59,6 +59,7 @@
 
         <module>microprofile</module>
 
+        <module>netflix/archaius</module>
         <module>netflix/ribbon</module>
         <module>netflix/ribbon-secured</module>
 
