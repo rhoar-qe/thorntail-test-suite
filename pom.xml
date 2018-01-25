@@ -280,16 +280,16 @@ remove this line for bom-certified -->
                 <artifactId>wildfly-server</artifactId>
                 <version>${version.org.wildfly.core}</version>
             </dependency>
-            <dependency>
+	    <dependency>
                 <groupId>org.wildfly.swarm</groupId>
                 <artifactId>msc</artifactId>
                 <version>${version.org.wildfly.swarm}</version>
             </dependency>
-            <dependency>
+           <dependency>
                 <groupId>org.wildfly.swarm</groupId>
                 <artifactId>topology</artifactId>
                 <version>${version.org.wildfly.swarm}</version>
-            </dependency>
+           </dependency>
 
             <!-- for the Keycloak test; unfortunately, Keycloak Admin Client requires RESTEasy Client -->
 <!--
