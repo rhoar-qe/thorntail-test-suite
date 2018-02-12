@@ -1,0 +1,10 @@
+swarm:
+  deployment:
+    # for the Arquillian test
+    RibbonTopologyTest.war:
+      ribbon:
+        advertise: ts-netflix-ribbon
+    # for the actual uberjar
+    ts-netflix-ribbon-1.0.0-SNAPSHOT.war:
+      ribbon:
+        advertise: ts-netflix-ribbon

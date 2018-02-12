@@ -9,25 +9,19 @@ import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.wildfly.swarm.arquillian.DefaultDeployment;
 import org.wildfly.swarm.jaxrs.JAXRSArchive;
 import org.wildfly.swarm.netflix.ribbon.RibbonArchive;
 import org.wildfly.swarm.spi.api.JARArchive;
+import org.wildfly.swarm.spi.api.annotations.DeploymentModule;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(Arquillian.class)
+@DefaultDeployment
+@DeploymentModule(name = "org.wildfly.swarm.topology", slot = "runtime") // needed for mock topology connector
+@DeploymentModule(name = "org.jboss.as.network")                         // needed for mock topology connector
 public class RibbonTopologyTest {
-    @Deployment
-    public static Archive<?> deployment() {
-        JAXRSArchive war = ShrinkWrap.create(JAXRSArchive.class)
-                .addPackage(RestApplication.class.getPackage())
-                .addAsServiceProvider(ServiceActivator.class, MockTopologyConnectorServiceActivator.class);
-        war.as(JARArchive.class).addModule("org.wildfly.swarm.topology", "runtime"); // needed for mock topology connector
-        war.as(JARArchive.class).addModule("org.jboss.as.network");                  // needed for mock topology connector
-        war.as(RibbonArchive.class).advertise("ts-netflix-ribbon");
-        return war;
-    }
-
     @Test
     @RunAsClient
     public void test() throws Exception {
