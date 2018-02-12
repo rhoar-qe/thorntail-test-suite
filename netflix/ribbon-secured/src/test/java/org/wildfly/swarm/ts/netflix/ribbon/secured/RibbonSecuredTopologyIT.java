@@ -2,6 +2,7 @@ package org.wildfly.swarm.ts.netflix.ribbon.secured;
 
 import org.apache.http.client.fluent.Request;
 import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.msc.service.ServiceActivator;
 import org.jboss.shrinkwrap.api.Archive;
@@ -28,6 +29,9 @@ import java.util.Collections;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+/**
+ * This is only {@code *IT} so that it runs between the Docker Maven plugin starting and stopping Keycloak.
+ */
 @RunWith(Arquillian.class)
 public class RibbonSecuredTopologyIT {
     private static Keycloak keycloak;
@@ -55,7 +59,7 @@ public class RibbonSecuredTopologyIT {
     }
 
     @BeforeClass
-    public static void setupKeycloakRealm() throws Exception {
+    public static void setupKeycloakRealm() {
         keycloak = Keycloak.getInstance("http://localhost:8180/auth", "master", "admin", "admin", "admin-cli");
 
         {
@@ -120,6 +124,7 @@ public class RibbonSecuredTopologyIT {
     }
 
     @Test
+    @RunAsClient
     public void testAccessSecuredContentTokenWithFallback() throws Exception {
         String token = authzClient.obtainAccessToken("test-user", "test-password").getToken();
 
