@@ -73,6 +73,8 @@
 
         <module>custom-main/jar</module>
         <module>custom-main/war</module>
+
+        <module>hollow-jar/web</module>
     </modules>
 
     <properties>
@@ -91,12 +93,14 @@
         <version.org.apache.httpcomponents.httpclient>4.5.3</version.org.apache.httpcomponents.httpclient>
         <version.org.apache.maven.plugins.maven-clean-plugin>3.0.0</version.org.apache.maven.plugins.maven-clean-plugin>
         <version.org.apache.maven.plugins.maven-compiler-plugin>3.6.1</version.org.apache.maven.plugins.maven-compiler-plugin>
+        <version.org.apache.maven.plugins.maven-dependency-plugin>3.0.2</version.org.apache.maven.plugins.maven-dependency-plugin>
         <version.org.apache.maven.plugins.maven-resources-plugin>3.0.2</version.org.apache.maven.plugins.maven-resources-plugin>
         <version.org.apache.maven.plugins.maven-surefire-plugin>2.20</version.org.apache.maven.plugins.maven-surefire-plugin>
         <version.org.apache.maven.plugins.maven-war-plugin>3.1.0</version.org.apache.maven.plugins.maven-war-plugin>
         <version.org.awaitility>3.0.0</version.org.awaitility>
         <version.org.codehaus.mojo.keytool-maven-plugin>1.5</version.org.codehaus.mojo.keytool-maven-plugin>
         <version.org.glassfish.tyrus>1.13.1</version.org.glassfish.tyrus>
+        <version.org.honton.chas.process-exec-maven-plugin>0.9.2</version.org.honton.chas.process-exec-maven-plugin>
         <version.org.jboss.arquillian>1.1.13.Final</version.org.jboss.arquillian>
         <version.org.jboss.arquillian.drone>2.3.1</version.org.jboss.arquillian.drone>
         <version.org.jboss.remotingjmx>2.0.1.Final</version.org.jboss.remotingjmx>
@@ -364,6 +368,11 @@ remove this line if RESTEasy dependencies are managed by the Swarm BOM -->
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                    <version>${version.org.apache.maven.plugins.maven-dependency-plugin}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-failsafe-plugin</artifactId>
                     <version>${version.org.apache.maven.plugins.maven-surefire-plugin}</version>
                     <configuration>
@@ -426,6 +435,28 @@ remove this line if RESTEasy dependencies are managed by the Swarm BOM -->
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>keytool-maven-plugin</artifactId>
                     <version>${version.org.codehaus.mojo.keytool-maven-plugin}</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.honton.chas</groupId>
+                    <artifactId>process-exec-maven-plugin</artifactId>
+                    <version>${version.org.honton.chas.process-exec-maven-plugin}</version>
+                    <executions>
+                        <execution>
+                            <id>start</id>
+                            <phase>pre-integration-test</phase>
+                            <goals>
+                                <goal>start</goal>
+                            </goals>
+                        </execution>
+                        <execution>
+                            <id>stop</id>
+                            <phase>post-integration-test</phase>
+                            <goals>
+                                <goal>stop-all</goal>
+                            </goals>
+                        </execution>
+                    </executions>
                 </plugin>
 
                 <plugin>
