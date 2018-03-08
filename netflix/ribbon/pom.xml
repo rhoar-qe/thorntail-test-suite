@@ -12,7 +12,7 @@
     </parent>
 
     <artifactId>ts-netflix-ribbon</artifactId>
-    <packaging>jar</packaging>
+    <packaging>war</packaging>
 
     <name>Swarm TS: Netflix: Ribbon</name>
 

@@ -7,6 +7,7 @@
 - `protocols`: tests for exposing an application over various protocols
 - `fraction-autodetection`: tests for fraction autodetection
 - `custom-main`: tests for custom `main` method
+- `hollow-jar`: tests for hollow JARs
 
 For some tests, Docker is required.
 
