@@ -1,4 +1,4 @@
-package org.wildfly.swarm.ts.microprofile;
+package org.wildfly.swarm.ts.microprofile.v10;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
@@ -9,18 +9,13 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.wildfly.swarm.arquillian.DefaultDeployment;
 
-import javax.json.Json;
-import javax.json.JsonObject;
-import javax.json.JsonStructure;
-import javax.json.JsonValue;
 import java.io.IOException;
-import java.io.StringReader;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(Arquillian.class)
 @DefaultDeployment
-public class MicroProfileTest {
+public class MicroProfile10Test {
     @Test
     @RunAsClient
     public void test() throws IOException {

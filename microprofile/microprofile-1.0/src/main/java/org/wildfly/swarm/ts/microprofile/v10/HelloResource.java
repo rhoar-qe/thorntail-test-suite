@@ -1,4 +1,4 @@
-package org.wildfly.swarm.ts.microprofile;
+package org.wildfly.swarm.ts.microprofile.v10;
 
 import javax.inject.Inject;
 import javax.json.Json;

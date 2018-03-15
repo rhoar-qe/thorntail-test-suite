@@ -57,7 +57,7 @@
         <module>wildfly/topology</module>
         <module>wildfly/topology-webapp</module>
 
-        <module>microprofile</module>
+        <module>microprofile/microprofile-1.0</module>
 
         <module>netflix/archaius</module>
         <module>netflix/hystrix</module>

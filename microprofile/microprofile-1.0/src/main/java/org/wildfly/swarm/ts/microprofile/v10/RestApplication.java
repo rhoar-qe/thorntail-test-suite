@@ -1,4 +1,4 @@
-package org.wildfly.swarm.ts.microprofile;
+package org.wildfly.swarm.ts.microprofile.v10;
 
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
