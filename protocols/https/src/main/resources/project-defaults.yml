@@ -1,5 +1,5 @@
 swarm:
-  http:
+  https:
     keystore:
       path: ${project.build.directory}/keystore.jks
       password: password
