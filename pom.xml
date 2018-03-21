@@ -112,10 +112,11 @@
         <version.org.jboss.spec.javax.json.jboss-json-api_1.0_spec>1.0.0.Final</version.org.jboss.spec.javax.json.jboss-json-api_1.0_spec>
         <version.org.jboss.spec.javax.servlet.jboss-servlet-api_3.0_spec>1.0.2.Final</version.org.jboss.spec.javax.servlet.jboss-servlet-api_3.0_spec>
         <version.org.jboss.spec.javax.ws.rs.jboss-jaxrs-api_2.0_spec>1.0.0.Final</version.org.jboss.spec.javax.ws.rs.jboss-jaxrs-api_2.0_spec>
+        <version.org.jboss.spec.web.7.0.api>1.1.1.Final</version.org.jboss.spec.web.7.0.api>
         <version.org.keycloak.everything>3.4.0.Final</version.org.keycloak.everything>
         <version.org.kohsuke.ajp-client>1.0</version.org.kohsuke.ajp-client>
         <version.org.wildfly.core>3.0.8.Final</version.org.wildfly.core>
-        <version.org.wildfly.swarm>2018.3.3</version.org.wildfly.swarm>
+        <version.org.wildfly.swarm>2018.4.0-SNAPSHOT</version.org.wildfly.swarm>
         <version.org.xmlunit>2.4.0</version.org.xmlunit>
 
         <!--
@@ -322,6 +323,14 @@ remove this line if RESTEasy dependencies are managed by the Swarm BOM -->
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
                 <version>${version.com.google.guava}</version>
+            </dependency>
+
+            <!-- For hollow jar web profile test -->
+            <dependency>
+                <groupId>org.jboss.spec</groupId>
+                <artifactId>jboss-javaee-web-7.0</artifactId>
+                <version>${version.org.jboss.spec.web.7.0.api}</version>
+		<type>pom</type>
             </dependency>
         </dependencies>
     </dependencyManagement>

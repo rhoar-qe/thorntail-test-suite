@@ -8,7 +8,7 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
 
 @Stateless
-@Path("/")
+@Path("/hello")
 public class HelloResource {
     @Inject
     private HelloService hello;
