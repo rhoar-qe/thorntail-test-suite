@@ -57,7 +57,10 @@
         <module>wildfly/topology</module>
         <module>wildfly/topology-webapp</module>
 
-        <module>microprofile</module>
+        <module>microprofile/microprofile-1.0</module>
+        <module>microprofile/microprofile-config-1.1</module>
+        <module>microprofile/microprofile-health-check-1.0</module>
+        <module>microprofile/microprofile-metrics-1.0</module>
 
         <module>netflix/archaius</module>
         <module>netflix/hystrix</module>
@@ -112,7 +115,7 @@
         <version.org.keycloak.everything>3.4.0.Final</version.org.keycloak.everything>
         <version.org.kohsuke.ajp-client>1.0</version.org.kohsuke.ajp-client>
         <version.org.wildfly.core>3.0.8.Final</version.org.wildfly.core>
-        <version.org.wildfly.swarm>2018.3.0</version.org.wildfly.swarm>
+        <version.org.wildfly.swarm>2018.3.3</version.org.wildfly.swarm>
         <version.org.xmlunit>2.4.0</version.org.xmlunit>
 
         <!--
