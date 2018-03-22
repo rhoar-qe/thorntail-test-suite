@@ -114,6 +114,7 @@ public class KeycloakIT {
         boolean found = matcher.find();
         assertThat(found).as("Expected login form").isTrue();
         String loginPostUrl = matcher.group(1);
+        loginPostUrl = loginPostUrl.replace("&amp;", "&");
         HttpResponse loginResponse = executor.execute(Request.Post(loginPostUrl).bodyForm(loginForm)).returnResponse();
 
         assertThat(loginResponse.getStatusLine().getStatusCode()).isEqualTo(302);
