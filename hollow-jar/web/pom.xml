@@ -49,7 +49,7 @@
                 <artifactId>maven-dependency-plugin</artifactId>
                 <executions>
                     <execution>
-                        <id>download-hollow-jar</id>
+                        <id>download-hollow-jar-and-jdbc-driver</id>
                         <phase>pre-integration-test</phase>
                         <goals>
                             <goal>copy</goal>
