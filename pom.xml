@@ -78,6 +78,7 @@
         <module>custom-main/war</module>
 
         <module>hollow-jar/web</module>
+        <module>hollow-jar/full</module>
     </modules>
 
     <properties>
@@ -89,9 +90,11 @@
         <version.com.google.code.gson>2.8.1</version.com.google.code.gson>
         <version.com.google.guava>21.0</version.com.google.guava>
         <version.com.h2database.h2>1.4.196</version.com.h2database.h2>
+        <version.com.icegreen.greenmail>1.3.1b</version.com.icegreen.greenmail>
         <version.io.fabric8.docker-maven-plugin>0.22.1</version.io.fabric8.docker-maven-plugin>
         <version.javax.enterprise.cdi-api>1.2</version.javax.enterprise.cdi-api>
         <version.junit.junit>4.12</version.junit.junit>
+        <version.net.java.xadisk>1.2.2</version.net.java.xadisk>
         <version.org.assertj.assertj-core>3.8.0</version.org.assertj.assertj-core>
         <version.org.apache.httpcomponents.httpclient>4.5.3</version.org.apache.httpcomponents.httpclient>
         <version.org.apache.maven.plugins.maven-clean-plugin>3.0.0</version.org.apache.maven.plugins.maven-clean-plugin>
@@ -113,15 +116,17 @@
         <version.org.jboss.spec.javax.servlet.jboss-servlet-api_3.0_spec>1.0.2.Final</version.org.jboss.spec.javax.servlet.jboss-servlet-api_3.0_spec>
         <version.org.jboss.spec.javax.ws.rs.jboss-jaxrs-api_2.0_spec>1.0.0.Final</version.org.jboss.spec.javax.ws.rs.jboss-jaxrs-api_2.0_spec>
         <version.org.jboss.spec.web.7.0.api>1.1.0.Final</version.org.jboss.spec.web.7.0.api>
+        <version.org.jboss.spec.all.7.0.api>1.1.0.Final</version.org.jboss.spec.all.7.0.api>
         <version.org.keycloak.everything>3.4.3.Final</version.org.keycloak.everything>
         <version.org.kohsuke.ajp-client>1.0</version.org.kohsuke.ajp-client>
         <version.org.wildfly.core>3.0.8.Final</version.org.wildfly.core>
+        <version.org.wildfly.ejb-client-bom>11.0.0.Final</version.org.wildfly.ejb-client-bom>
         <version.org.wildfly.swarm>2018.4.0-SNAPSHOT</version.org.wildfly.swarm>
         <version.org.xmlunit>2.4.0</version.org.xmlunit>
 
         <!--
-          - when updating version.org.wildfly.swarm, check build-parent/pom.xml in that WildFly Swarm release
-          - and update version.org.wildfly.core and version.org.keycloak.everything as well
+          - when updating version.org.wildfly.swarm, check build-parent/pom.xml in that WildFly Swarm release and
+          - update version.org.wildfly.core, version.org.wildfly.ejb-client-bom and version.org.keycloak.everything too
           -->
     </properties>
 
@@ -326,7 +331,25 @@ remove this line for bom-certified -->
                 <groupId>org.jboss.spec</groupId>
                 <artifactId>jboss-javaee-web-7.0</artifactId>
                 <version>${version.org.jboss.spec.web.7.0.api}</version>
-		<type>pom</type>
+                <type>pom</type>
+            </dependency>
+
+            <!-- For hollow jar full profile test -->
+            <dependency>
+                <groupId>com.icegreen</groupId>
+                <artifactId>greenmail</artifactId>
+                <version>${version.com.icegreen.greenmail}</version>
+            </dependency>
+            <dependency>
+                <groupId>net.java.xadisk</groupId>
+                <artifactId>xadisk</artifactId>
+                <version>${version.net.java.xadisk}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.spec</groupId>
+                <artifactId>jboss-javaee-all-7.0</artifactId>
+                <version>${version.org.jboss.spec.all.7.0.api}</version>
+                <type>pom</type>
             </dependency>
         </dependencies>
     </dependencyManagement>

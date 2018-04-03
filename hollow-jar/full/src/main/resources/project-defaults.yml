@@ -1,0 +1,28 @@
+swarm:
+  resource-adapters:
+    resource-adapters:
+       xadisk:
+          archive: xadisk.rar
+          config-properties:
+             xaDiskHome:
+                value: diskHome
+             instanceId:
+                value: instance1
+          connection-definitions:
+             XADiskConnectionFactoryPool:
+                class-name: org.xadisk.connector.outbound.XADiskManagedConnectionFactory
+                jndi-name: java:global/XADiskCF
+                config-properties:
+                   instanceId:
+                      value: instance1
+  mail:
+    smtp:
+      host: 127.0.0.1
+      port: 3026
+  messaging-activemq:
+    servers:
+      default:
+        jms-topics:
+          my-topic:
+        jms-queues:
+          my-queue:
