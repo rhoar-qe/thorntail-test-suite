@@ -288,6 +288,11 @@ remove this line for bom-certified -->
             </dependency>
             <dependency>
                 <groupId>org.wildfly.swarm</groupId>
+                <artifactId>monitor</artifactId>
+                <version>${version.org.wildfly.swarm}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wildfly.swarm</groupId>
                 <artifactId>msc</artifactId>
                 <version>${version.org.wildfly.swarm}</version>
             </dependency>
