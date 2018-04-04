@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.wildfly.swarm.ts</groupId>
+        <artifactId>ts-parent</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+        <relativePath>../..</relativePath>
+    </parent>
+
+    <artifactId>ts-hollow-jar-full</artifactId>
+    <packaging>war</packaging>
+
+    <name>Swarm TS: Hollow JAR: Full</name>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.wildfly</groupId>
+                <artifactId>wildfly-ejb-client-bom</artifactId>
+                <version>${version.org.wildfly.ejb-client-bom}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>net.java.xadisk</groupId>
+            <artifactId>xadisk</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.spec</groupId>
+            <artifactId>jboss-javaee-all-7.0</artifactId>
+            <type>pom</type>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.icegreen</groupId>
+            <artifactId>greenmail</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>fluent-hc</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.awaitility</groupId>
+            <artifactId>awaitility</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.wildfly</groupId>
+            <artifactId>wildfly-naming-client</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+           <groupId>org.jboss</groupId>
+           <artifactId>jboss-ejb-client</artifactId>
+           <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>download-hollow-jar-and-resource-adapter</id>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>copy</goal>
+                        </goals>
+                        <configuration>
+                            <stripVersion>true</stripVersion>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>net.java.xadisk</groupId>
+                                    <artifactId>xadisk</artifactId>
+                                    <version>${version.net.java.xadisk}</version>
+                                    <type>rar</type>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.wildfly.swarm.servers</groupId>
+                                    <artifactId>full</artifactId>
+                                    <version>${version.org.wildfly.swarm}</version>
+                                    <classifier>hollowswarm</classifier>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.honton.chas</groupId>
+                <artifactId>process-exec-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>start</id>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                          <goal>start</goal>
+                        </goals>
+                        <configuration>
+                            <name>swarm</name>
+                            <workingDir>${project.build.directory}</workingDir>
+                            <arguments>
+                                <argument>${java.home}/bin/java</argument>
+                                <argument>-jar</argument>
+                                <argument>dependency/full-hollowswarm.jar</argument>
+                                <argument>dependency/xadisk.rar</argument>
+                                <argument>${project.build.finalName}.${project.packaging}</argument>
+                                <argument>-s</argument>
+                                <argument>classes/project-defaults.yml</argument>
+                            </arguments>
+                            <healthCheckUrl>http://localhost:8080/health</healthCheckUrl>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
