@@ -1,8 +1,7 @@
-package org.wildfly.swarm.ts.hollow.jar.full;
+package org.wildfly.swarm.ts.javaee.batch;
 
 import javax.batch.operations.JobOperator;
 import javax.batch.runtime.BatchRuntime;
-import javax.batch.runtime.JobExecution;
 import javax.inject.Inject;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -13,6 +12,7 @@ import java.util.Properties;
 
 @WebServlet("/batch")
 public class BatchServlet extends HttpServlet {
+
     @Inject
     private ProcessResult processResult;
 
