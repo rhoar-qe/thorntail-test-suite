@@ -63,17 +63,17 @@ public class FullHollowJarIT {
         String response = Request.Get("http://localhost:8080/messaging?operation=sendQueue").execute().returnContent().asString();
         assertThat(response).isEqualTo("OK");
 
-        String resultsURL = "http://localhost:8080/messaging?operation=results";
+        String resultsUrl = "http://localhost:8080/messaging?operation=results";
 
         await().atMost(1, TimeUnit.SECONDS).untilAsserted(() -> {
-            assertThat(Request.Get(resultsURL).execute().returnContent().asString()).isEqualTo("1 in queue\n");
+            assertThat(Request.Get(resultsUrl).execute().returnContent().asString()).isEqualTo("1 in queue\n");
         });
 
         response = Request.Get("http://localhost:8080/messaging?operation=sendTopic").execute().returnContent().asString();
         assertThat(response).isEqualTo("OK");
 
         await().atMost(1, TimeUnit.SECONDS).untilAsserted(() -> {
-            assertThat(Request.Get(resultsURL).execute().returnContent().asString()).isEqualTo("2 in topic\n");
+            assertThat(Request.Get(resultsUrl).execute().returnContent().asString()).isEqualTo("2 in topic\n");
         });
     }
 
