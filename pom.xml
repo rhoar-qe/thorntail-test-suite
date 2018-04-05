@@ -41,6 +41,7 @@
         <module>javaee/jsp-jstl</module>
         <module>javaee/jta</module>
         <module>javaee/mail</module>
+        <module>javaee/messaging</module>
         <module>javaee/naming</module>
         <module>javaee/servlet</module>
         <module>javaee/servlet-cdi</module>

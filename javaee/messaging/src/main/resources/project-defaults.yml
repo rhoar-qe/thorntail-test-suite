@@ -1,0 +1,8 @@
+swarm:
+  messaging-activemq:
+    servers:
+      default:
+        jms-topics:
+          my-topic:
+        jms-queues:
+          my-queue:
