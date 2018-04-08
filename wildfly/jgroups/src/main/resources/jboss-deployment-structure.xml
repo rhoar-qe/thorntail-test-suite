@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<!-- this file only exists for manual tests; JGroupsTest uses @DeploymentModule -->
+<jboss-deployment-structure>
+    <deployment>
+        <dependencies>
+            <!-- needed for ClusterCreator to be able to inject a JGroups class -->
+            <module name="org.jgroups"/>
+        </dependencies>
+    </deployment>
+</jboss-deployment-structure>

@@ -53,6 +53,7 @@
 
         <module>wildfly/cdi-config</module>
         <module>wildfly/hibernate-validator</module>
+        <module>wildfly/jgroups</module>
         <module>wildfly/keycloak</module>
         <module>wildfly/logging</module>
         <module>wildfly/management</module>
@@ -124,6 +125,7 @@
         <version.org.jboss.spec.javax.ws.rs.jboss-jaxrs-api_2.0_spec>1.0.0.Final</version.org.jboss.spec.javax.ws.rs.jboss-jaxrs-api_2.0_spec>
         <version.org.jboss.spec.web.7.0.api>1.1.0.Final</version.org.jboss.spec.web.7.0.api>
         <version.org.jboss.spec.all.7.0.api>1.1.0.Final</version.org.jboss.spec.all.7.0.api>
+        <version.org.jgroups>3.6.13.Final</version.org.jgroups>
         <version.org.keycloak.everything>3.4.3.Final</version.org.keycloak.everything>
         <version.org.kohsuke.ajp-client>1.0</version.org.kohsuke.ajp-client>
         <version.org.wildfly.core>3.0.8.Final</version.org.wildfly.core>
@@ -132,8 +134,11 @@
         <version.org.xmlunit>2.4.0</version.org.xmlunit>
 
         <!--
-          - when updating version.org.wildfly.swarm, check build-parent/pom.xml in that WildFly Swarm release and
-          - update version.org.wildfly.core, version.org.wildfly.ejb-client-bom and version.org.keycloak.everything too
+          - when updating version.org.wildfly.swarm, check and possibly update these properties as well:
+          -   version.org.jgroups
+          -   version.org.keycloak.everything
+          -   version.org.wildfly.core
+          -   version.org.wildfly.ejb-client-bom
           -->
     </properties>
 
@@ -307,6 +312,13 @@ remove this line for bom-certified -->
                 <groupId>org.wildfly.swarm</groupId>
                 <artifactId>topology</artifactId>
                 <version>${version.org.wildfly.swarm}</version>
+            </dependency>
+
+            <!-- for the JGroups test -->
+            <dependency>
+                <groupId>org.jgroups</groupId>
+                <artifactId>jgroups</artifactId>
+                <version>${version.org.jgroups}</version>
             </dependency>
 
             <!-- for the Keycloak test; unfortunately, Keycloak Admin Client requires RESTEasy Client -->
