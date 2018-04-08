@@ -41,7 +41,6 @@ public class SuspendResumeTest {
         assertThat(response.getStatusLine().getStatusCode()).isEqualTo(200);
     }
 
-
     @Test
     @RunAsClient
     @InSequence(3)
