@@ -88,6 +88,7 @@
 
         <module>hollow-jar/web</module>
         <module>hollow-jar/full</module>
+        <module>hollow-jar/microprofile</module>
     </modules>
 
     <properties>
@@ -115,6 +116,7 @@
         <version.org.apache.maven.plugins.maven-war-plugin>3.1.0</version.org.apache.maven.plugins.maven-war-plugin>
         <version.org.awaitility>3.0.0</version.org.awaitility>
         <version.org.codehaus.mojo.keytool-maven-plugin>1.5</version.org.codehaus.mojo.keytool-maven-plugin>
+        <version.org.eclipse.microprofile>1.2</version.org.eclipse.microprofile>
         <version.org.glassfish.tyrus>1.13.1</version.org.glassfish.tyrus>
         <version.org.honton.chas.process-exec-maven-plugin>0.9.2</version.org.honton.chas.process-exec-maven-plugin>
         <version.org.jboss.arquillian>1.1.13.Final</version.org.jboss.arquillian>
@@ -382,6 +384,8 @@ remove this line for bom-certified -->
                 <version>${version.org.jboss.spec.all.7.0.api}</version>
                 <type>pom</type>
             </dependency>
+
+            <!-- For hollow jar microprofile test -->
         </dependencies>
     </dependencyManagement>
 
