@@ -14,7 +14,7 @@
     <artifactId>ts-javaee-resource-adapter</artifactId>
     <packaging>war</packaging>
 
-    <name>Swarm TS: Java EE: Resource adapter</name>
+    <name>Swarm TS: Java EE: Resource Adapter</name>
 
     <dependencies>
         <dependency>
