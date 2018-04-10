@@ -9,11 +9,13 @@ import org.junit.runner.RunWith;
 import org.wildfly.swarm.arquillian.DefaultDeployment;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashSet;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Queue;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.TimeUnit;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -130,9 +132,9 @@ public class MicroProfileFaultTolerance10Test {
     @Test
     @RunAsClient
     public void bulkheadOk() throws InterruptedException {
-        Set<String> expectedResponses = Collections.singleton(
-                "Hello from @Bulkhead method, context = foobar"
-        );
+        Map<String, Integer> expectedResponses = new HashMap<>();
+        expectedResponses.put("Hello from @Bulkhead method, context = foobar", 10);
+
         // 10 allowed invocations
         // 11 invocations would already trigger fallback
         testBulkhead(10, "http://localhost:8080/?operation=bulkhead&context=foobar", expectedResponses);
@@ -141,10 +143,10 @@ public class MicroProfileFaultTolerance10Test {
     @Test
     @RunAsClient
     public void bulkheadFailure() throws InterruptedException {
-        Set<String> expectedResponses = new HashSet<>(Arrays.asList(
-                "Hello from @Bulkhead method, context = foobar",
-                "Fallback Hello, context = foobar"
-        ));
+        Map<String, Integer> expectedResponses = new HashMap<>();
+        expectedResponses.put("Hello from @Bulkhead method, context = foobar", 10);
+        expectedResponses.put("Fallback Hello, context = foobar", 10);
+
         // 20 = 10 allowed invocations + 10 not allowed invocations that lead to fallback
         // 21 invocations would already trigger SWARM-1946
         testBulkhead(20, "http://localhost:8080/?operation=bulkhead&context=foobar&fail=true", expectedResponses);
@@ -153,9 +155,9 @@ public class MicroProfileFaultTolerance10Test {
     @Test
     @RunAsClient
     public void bulkheadOkAsync() throws InterruptedException {
-        Set<String> expectedResponses = Collections.singleton(
-                "Hello from @Bulkhead method"
-        );
+        Map<String, Integer> expectedResponses = new HashMap<>();
+        expectedResponses.put("Hello from @Bulkhead method", 20);
+
         // 20 = 10 allowed invocations + 10 queued invocations
         // 21 invocations would already trigger fallback
         testBulkhead(20, "http://localhost:8080/async?operation=bulkhead", expectedResponses);
@@ -164,43 +166,54 @@ public class MicroProfileFaultTolerance10Test {
     @Test
     @RunAsClient
     public void bulkheadFailureAsync() throws InterruptedException {
-        Set<String> expectedResponses = new HashSet<>(Arrays.asList(
-                "Hello from @Bulkhead method",
-                "Fallback Hello"
-        ));
+        Map<String, Integer> expectedResponses = new HashMap<>();
+        expectedResponses.put("Hello from @Bulkhead method", 20);
+        expectedResponses.put("Fallback Hello", 10);
+
         // 30 = 10 allowed invocations + 10 queued invocations + 10 not allowed invocations that lead to fallback
         // 31 invocations would already trigger SWARM-1946
         testBulkhead(30, "http://localhost:8080/async?operation=bulkhead&fail=true", expectedResponses);
     }
 
-    private static void testBulkhead(int count, String url, Set<String> expectedResponses) throws InterruptedException {
-        Thread[] threads = new Thread[count];
+    private static void testBulkhead(int parallelRequests, String url, Map<String, Integer> expectedResponses) throws InterruptedException {
+        Thread[] threads = new Thread[parallelRequests];
         Set<String> violations = Collections.newSetFromMap(new ConcurrentHashMap<>());
-        Set<String> seenResponses = Collections.newSetFromMap(new ConcurrentHashMap<>());
+        Queue<String> seenResponses = new ConcurrentLinkedQueue<>();
 
-        for (int i = 0; i < count; i++) {
+        for (int i = 0; i < parallelRequests; i++) {
             threads[i] = new Thread(() -> {
                 try {
                     String response = Request.Get(url).execute().returnContent().asString();
                     seenResponses.add(response);
-                    if (!expectedResponses.contains(response)) {
-                        violations.add("Unexpected response: " + response);
-                    }
                 } catch (Exception e) {
                     violations.add("Unexpected exception: " + e.getMessage());
                 }
             });
             threads[i].start();
         }
-        for (int i = 0; i < count; i++) {
+        for (int i = 0; i < parallelRequests; i++) {
             threads[i].join();
         }
 
-        for (String expectedResponse : expectedResponses) {
-            if (!seenResponses.contains(expectedResponse)) {
-                violations.add("Never seen expected response: " + expectedResponse);
+        for (String seenResponse : seenResponses) {
+            if (!expectedResponses.containsKey(seenResponse)) {
+                violations.add("Unexpected response: " + seenResponse);
             }
         }
+
+        for (Map.Entry<String, Integer> expectedResponse : expectedResponses.entrySet()) {
+            int count = 0;
+            for (String seenResponse : seenResponses) {
+                if (expectedResponse.getKey().equals(seenResponse)) {
+                    count++;
+                }
+            }
+            if (count != expectedResponse.getValue()) {
+                violations.add("Expected to see " + expectedResponse.getValue() + " occurence(s) but seen " + count
+                        + ": " + expectedResponse.getKey());
+            }
+        }
+
         assertThat(violations).isEmpty();
     }
 }
