@@ -73,7 +73,6 @@ public class MicroProfileFaultTolerance10Test {
         assertThat(response).isEqualTo("Hello from @Retry method");
     }
 
-    @Ignore("SWARM-1944")
     @Test
     @RunAsClient
     public void retryFailureAsync() throws IOException {

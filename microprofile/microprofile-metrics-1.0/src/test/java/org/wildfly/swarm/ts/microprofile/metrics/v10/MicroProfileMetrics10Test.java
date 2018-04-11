@@ -58,12 +58,9 @@ public class MicroProfileMetrics10Test {
         assertThat(json.has("application")).isTrue();
         JsonObject app = json.getAsJsonObject("application");
         assertThat(app.has("hello-count")).isTrue();
-        // SWARM-1898 (hello-count.displayName, hello-count.description)
-/*
         assertThat(app.getAsJsonObject("hello-count").get("displayName").getAsString()).isEqualTo("Hello Count");
         assertThat(app.getAsJsonObject("hello-count").has("description")).isTrue();
         assertThat(app.getAsJsonObject("hello-count").get("description").getAsString()).isEqualTo("Number of hello invocations");
-*/
         assertThat(app.getAsJsonObject("hello-count").get("unit").getAsString()).isEqualTo("none");
         assertThat(app.has("hello-time")).isTrue();
         assertThat(app.getAsJsonObject("hello-time").get("displayName").getAsString()).isEqualTo("Hello Time");
@@ -88,13 +85,10 @@ public class MicroProfileMetrics10Test {
         assertThat(app.get("hello-count").getAsInt()).isEqualTo(11);
         assertThat(app.has("hello-time")).isTrue();
         assertThat(app.getAsJsonObject("hello-time").get("count").getAsInt()).isEqualTo(11);
-        // SWARM-1899
-/*
         assertThat(app.getAsJsonObject("hello-time").get("min").getAsDouble()).isGreaterThanOrEqualTo(1.0)
                 .isLessThanOrEqualTo(110.0); // delay is from 1 to 100 millis, 10 millis should be enough of a tolerance
         assertThat(app.getAsJsonObject("hello-time").get("max").getAsDouble()).isGreaterThanOrEqualTo(1.0)
                 .isLessThanOrEqualTo(110.0); // delay is from 1 to 100 millis, 10 millis should be enough of a tolerance
-*/
         assertThat(app.has("hello-freq")).isTrue();
         assertThat(app.getAsJsonObject("hello-freq").get("count").getAsInt()).isEqualTo(11);
     }
@@ -105,13 +99,10 @@ public class MicroProfileMetrics10Test {
     public void prometheusData() throws IOException {
         String response = Request.Get("http://localhost:8080/metrics").execute().returnContent().asString();
         assertThat(response).contains("application:hello_count 11.0");
-        // SWARM-1899
-/*
-        assertThat(prometheusMetricValue(response, "application:hello_time_min_seconds")).isGreaterThanOrEqualTo(1.0)
-                .isLessThanOrEqualTo(110.0); // delay is from 1 to 100 millis, 10 millis should be enough of a tolerance
-        assertThat(prometheusMetricValue(response, "application:hello_time_max_seconds")).isGreaterThanOrEqualTo(1.0)
-                .isLessThanOrEqualTo(110.0); // delay is from 1 to 100 millis, 10 millis should be enough of a tolerance
-*/
+        assertThat(prometheusMetricValue(response, "application:hello_time_min_seconds")).isGreaterThanOrEqualTo(0.001)
+                .isLessThanOrEqualTo(0.110); // delay is from 1 to 100 millis, 10 millis should be enough of a tolerance
+        assertThat(prometheusMetricValue(response, "application:hello_time_max_seconds")).isGreaterThanOrEqualTo(0.001)
+                .isLessThanOrEqualTo(0.110); // delay is from 1 to 100 millis, 10 millis should be enough of a tolerance
         assertThat(response).contains("application:hello_freq_total 11.0");
     }
 
@@ -134,15 +125,8 @@ public class MicroProfileMetrics10Test {
         JsonObject json = new JsonParser().parse(response).getAsJsonObject();
         assertThat(json.has("vendor")).isTrue();
         JsonObject vendor = json.getAsJsonObject("vendor");
-        // SWARM-1901
-        assertThat(vendor.has("mscLoadedModules")).isTrue();
-/*
         assertThat(vendor.has("loadedModules")).isTrue();
         assertThat(vendor.has("mscLoadedModules")).isFalse();
-*/
-        // SWARM-1900
-/*
         assertThat(vendor.has("test")).isFalse();
-*/
     }
 }
