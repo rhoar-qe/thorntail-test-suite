@@ -7,6 +7,7 @@
   - `wildfly`: WildFly subsystems and other fractions
 - other tests
   - `protocols`: tests for exposing an application over various protocols
+    (note that plain HTTP and remote EJBs are in `javaee`)
   - `fraction-autodetection`: tests for fraction autodetection
   - `custom-main`: tests for custom `main` method
   - `hollow-jar`: tests for hollow JARs
