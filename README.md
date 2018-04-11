@@ -4,6 +4,7 @@
   - `javaee`: Java EE technologies
   - `microprofile`: MicroProfile technologies
   - `netflix`: Netflix OSS integration
+  - `opentracing`: OpenTracing integration
   - `wildfly`: WildFly subsystems and other fractions
 - other tests
   - `protocols`: tests for exposing an application over various protocols
