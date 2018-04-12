@@ -19,7 +19,7 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>org.wildfly</groupId>
+                <groupId>${groupId.org.wildfly.ejb-client-bom}</groupId>
                 <artifactId>wildfly-ejb-client-bom</artifactId>
                 <version>${version.org.wildfly.ejb-client-bom}</version>
                 <type>pom</type>
