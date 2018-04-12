@@ -257,4 +257,34 @@ public class MicroProfileJwt10Test {
                 .execute().returnResponse();
         assertThat(response.getStatusLine().getStatusCode()).isEqualTo(403);
     }
+
+    @Test
+    @RunAsClient
+    public void parameterizedPaths_admin_adminGroup() throws IOException, GeneralSecurityException {
+        String response = request("http://localhost:8080/parameterized-paths/my/foo/admin", createToken("admin")).returnContent().asString();
+        assertThat(response).isEqualTo("Admin accessed foo");
+    }
+
+    @Ignore("SWARM-1972")
+    @Test
+    @RunAsClient
+    public void parameterizedPaths_admin_viewGroup() throws IOException, GeneralSecurityException {
+        HttpResponse response = request("http://localhost:8080/parameterized-paths/my/foo/admin", createToken("view")).returnResponse();
+        assertThat(response.getStatusLine().getStatusCode()).isEqualTo(403);
+    }
+
+    @Test
+    @RunAsClient
+    public void parameterizedPaths_view_viewGroup() throws IOException, GeneralSecurityException {
+        String response = request("http://localhost:8080/parameterized-paths/my/foo/view", createToken("view")).returnContent().asString();
+        assertThat(response).isEqualTo("View accessed foo");
+    }
+
+    @Ignore("SWARM-1972")
+    @Test
+    @RunAsClient
+    public void parameterizedPaths_view_adminGroup() throws IOException, GeneralSecurityException {
+        HttpResponse response = request("http://localhost:8080/parameterized-paths/my/foo/view", createToken("admin")).returnResponse();
+        assertThat(response.getStatusLine().getStatusCode()).isEqualTo(403);
+    }
 }
