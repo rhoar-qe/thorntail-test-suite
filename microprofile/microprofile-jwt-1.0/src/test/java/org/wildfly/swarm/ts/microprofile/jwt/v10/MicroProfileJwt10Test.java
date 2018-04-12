@@ -194,7 +194,6 @@ public class MicroProfileJwt10Test {
         assertThat(response).isEqualTo("Hello there!");
     }
 
-    @Ignore("SWARM-1953")
     @Test
     @RunAsClient
     public void denied_correctToken() throws IOException, GeneralSecurityException {
