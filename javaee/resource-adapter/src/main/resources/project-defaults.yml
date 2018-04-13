@@ -1,19 +1,19 @@
 swarm:
   resource-adapters:
     resource-adapters:
-       xadisk:
-          archive: xadisk.rar
-          config-properties:
-             xaDiskHome:
-                value: diskHome
-             instanceId:
+      xadisk:
+        archive: xadisk.rar
+        config-properties:
+          xaDiskHome:
+            value: diskHome
+          instanceId:
+            value: instance1
+        connection-definitions:
+          XADiskConnectionFactoryPool:
+            class-name: org.xadisk.connector.outbound.XADiskManagedConnectionFactory
+            jndi-name: java:global/XADiskCF
+            config-properties:
+              instanceId:
                 value: instance1
-          connection-definitions:
-             XADiskConnectionFactoryPool:
-                class-name: org.xadisk.connector.outbound.XADiskManagedConnectionFactory
-                jndi-name: java:global/XADiskCF
-                config-properties:
-                   instanceId:
-                      value: instance1
   deployment:
     net.java.xadisk:xadisk.rar:
