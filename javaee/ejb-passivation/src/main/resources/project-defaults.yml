@@ -1,0 +1,8 @@
+swarm:
+  bind:
+    address: 127.0.0.1
+  ejb3:
+    default-sfsb-cache: passivating
+    passivation-stores:
+      infinispan:
+        max-size: 5
