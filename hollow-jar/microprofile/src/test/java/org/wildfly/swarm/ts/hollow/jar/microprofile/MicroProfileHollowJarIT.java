@@ -32,6 +32,8 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -137,12 +139,12 @@ public class MicroProfileHollowJarIT {
     }
 
     private static void testBulkhead(int parallelRequests, String url, Map<String, Integer> expectedResponses) throws InterruptedException {
-        Thread[] threads = new Thread[parallelRequests];
         Set<String> violations = Collections.newSetFromMap(new ConcurrentHashMap<>());
         Queue<String> seenResponses = new ConcurrentLinkedQueue<>();
 
+        ExecutorService executor = Executors.newFixedThreadPool(parallelRequests);
         for (int i = 0; i < parallelRequests; i++) {
-            threads[i] = new Thread(() -> {
+            executor.submit(() -> {
                 try {
                     String response = Request.Get(url).execute().returnContent().asString();
                     seenResponses.add(response);
@@ -150,11 +152,10 @@ public class MicroProfileHollowJarIT {
                     violations.add("Unexpected exception: " + e.getMessage());
                 }
             });
-            threads[i].start();
         }
-        for (int i = 0; i < parallelRequests; i++) {
-            threads[i].join();
-        }
+        executor.shutdown();
+        boolean finished = executor.awaitTermination(10, TimeUnit.SECONDS);
+        assertThat(finished).isTrue();
 
         for (String seenResponse : seenResponses) {
             if (!expectedResponses.containsKey(seenResponse)) {
