@@ -162,7 +162,7 @@ remove this line for EAP EJB Client BOM -->
 <!-- remove this line for EAP EJB Client BOM
 -->
 <!-- remove this line for EAP EJB Client BOM
-        <groupId.org.wildfly.ejb-client-bom>org.jboss.eap</version.org.wildfly.ejb-client-bom>
+        <groupId.org.wildfly.ejb-client-bom>org.jboss.eap</groupId.org.wildfly.ejb-client-bom>
 remove this line for EAP EJB Client BOM -->
     </properties>
 
