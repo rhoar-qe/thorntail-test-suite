@@ -24,7 +24,7 @@
         <module>javaee/datasources</module>
         <module>javaee/ejb</module>
         <!--<module>javaee/ejb-passivation</module>-->
-        <!--<module>javaee/ejb-remote</module>-->
+        <module>javaee/ejb-remote</module>
         <module>javaee/el</module>
         <module>javaee/interceptors-cdi</module>
         <module>javaee/interceptors-ejb</module>
