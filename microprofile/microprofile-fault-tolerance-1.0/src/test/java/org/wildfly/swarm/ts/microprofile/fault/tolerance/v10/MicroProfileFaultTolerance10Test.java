@@ -146,11 +146,11 @@ public class MicroProfileFaultTolerance10Test {
     public void bulkheadFailure() throws InterruptedException {
         Map<String, Integer> expectedResponses = new HashMap<>();
         expectedResponses.put("Hello from @Bulkhead method, context = foobar", 10);
-        expectedResponses.put("Fallback Hello, context = foobar", 10);
+        expectedResponses.put("Fallback Hello, context = foobar", 20);
 
-        // 20 = 10 allowed invocations + 10 not allowed invocations that lead to fallback
-        // 21 invocations would already trigger SWARM-1946
-        testBulkhead(20, "http://localhost:8080/?operation=bulkhead&context=foobar&fail=true", expectedResponses);
+        // 30 = 10 allowed invocations + 20 not allowed invocations that lead to fallback
+        // 31 invocations would already trigger fallback rejection
+        testBulkhead(30, "http://localhost:8080/?operation=bulkhead&context=foobar&fail=true", expectedResponses);
     }
 
     @Test
@@ -169,11 +169,11 @@ public class MicroProfileFaultTolerance10Test {
     public void bulkheadFailureAsync() throws InterruptedException {
         Map<String, Integer> expectedResponses = new HashMap<>();
         expectedResponses.put("Hello from @Bulkhead method", 20);
-        expectedResponses.put("Fallback Hello", 10);
+        expectedResponses.put("Fallback Hello", 20);
 
-        // 30 = 10 allowed invocations + 10 queued invocations + 10 not allowed invocations that lead to fallback
-        // 31 invocations would already trigger SWARM-1946
-        testBulkhead(30, "http://localhost:8080/async?operation=bulkhead&fail=true", expectedResponses);
+        // 40 = 10 allowed invocations + 10 queued invocations + 20 not allowed invocations that lead to fallback
+        // 41 invocations would already trigger fallback rejection
+        testBulkhead(40, "http://localhost:8080/async?operation=bulkhead&fail=true", expectedResponses);
     }
 
     private static void testBulkhead(int parallelRequests, String url, Map<String, Integer> expectedResponses) throws InterruptedException {

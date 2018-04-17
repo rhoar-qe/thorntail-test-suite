@@ -1,0 +1,8 @@
+swarm:
+  hystrix:
+    command:
+      default:
+        fallback:
+          isolation:
+            semaphore:
+              maxConcurrentRequests: 20
