@@ -21,6 +21,8 @@
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
         </dependency>
+<!--
+remove this line for "full" -->
         <dependency>
             <groupId>org.wildfly.swarm</groupId>
             <artifactId>cdi</artifactId>
@@ -41,6 +43,14 @@
             <groupId>org.wildfly.swarm</groupId>
             <artifactId>transactions</artifactId>
         </dependency>
+<!-- remove this line for "full"
+-->
+<!-- remove this line for "full"
+        <dependency>
+            <groupId>org.wildfly.swarm</groupId>
+            <artifactId>full</artifactId>
+        </dependency>
+remove this line for "full" -->
 
         <dependency>
             <groupId>junit</groupId>

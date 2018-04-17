@@ -17,10 +17,20 @@
     <name>Swarm TS: Java EE: JAX-WS</name>
 
     <dependencies>
+<!--
+remove this line for "full" -->
         <dependency>
             <groupId>org.wildfly.swarm</groupId>
             <artifactId>webservices</artifactId>
         </dependency>
+<!-- remove this line for "full"
+-->
+<!-- remove this line for "full"
+        <dependency>
+            <groupId>org.wildfly.swarm</groupId>
+            <artifactId>full</artifactId>
+        </dependency>
+remove this line for "full" -->
 
         <dependency>
             <groupId>junit</groupId>

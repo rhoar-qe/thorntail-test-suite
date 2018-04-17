@@ -17,6 +17,8 @@
     <name>Swarm TS: Java EE: Mail</name>
 
     <dependencies>
+<!--
+remove this line for "full" -->
         <dependency>
             <groupId>org.wildfly.swarm</groupId>
             <artifactId>mail</artifactId>
@@ -25,6 +27,14 @@
             <groupId>org.wildfly.swarm</groupId>
             <artifactId>undertow</artifactId>
         </dependency>
+<!-- remove this line for "full"
+-->
+<!-- remove this line for "full"
+        <dependency>
+            <groupId>org.wildfly.swarm</groupId>
+            <artifactId>full</artifactId>
+        </dependency>
+remove this line for "full" -->
 
         <dependency>
             <groupId>com.icegreen</groupId>
