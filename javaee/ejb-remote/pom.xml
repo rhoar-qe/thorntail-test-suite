@@ -31,7 +31,7 @@
     <dependencies>
         <dependency>
             <groupId>org.wildfly.swarm</groupId>
-            <artifactId>full</artifactId>
+            <artifactId>ejb-remote</artifactId>
         </dependency>
 
         <dependency>
