@@ -1,10 +1,10 @@
 swarm:
   microprofile:
-    jwtauth:
+    jwt:
       token:
-        issuedBy: https://my.auth.server/
+        issued-by: https://my.auth.server/
         # this must be a literal, can't be a file name (SWARM-1950)
-        signerPubKey: |
+        signer-pub-key: |
           -----BEGIN PUBLIC KEY-----
           MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAuvtFLWirJ/eSn9ZNdBuf
           gnynStau9zHbOj/oDbLfISfMKcG+0Pli8405Ax6y8wWdUElSS/t6sHWe/7sz/yme
