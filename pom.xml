@@ -38,6 +38,7 @@
         <module>javaee/jaxws</module>
         <module>javaee/jmx</module>
         <module>javaee/jpa</module>
+        <module>javaee/jpa-2lc</module>
         <module>javaee/jsf</module>
         <module>javaee/jsonp</module>
         <module>javaee/jsp-jstl</module>
