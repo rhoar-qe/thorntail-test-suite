@@ -122,4 +122,39 @@ public class FullHollowJarIT {
         String response = Request.Get("http://localhost:8080/TestWebService?wsdl").execute().returnContent().asString();
         assertThat(response).contains("TestWebService").contains("webMethod");
     }
+
+    @Test
+    public void testJpa2ndLevelCache() throws IOException {
+        String id1;
+        String id2;
+
+        {
+            id1 = Request.Get("http://localhost:8080/jpa-2lc?operation=create&text=Hello1").execute().returnContent().asString();
+            id2 = Request.Get("http://localhost:8080/jpa-2lc?operation=create&text=Hello2").execute().returnContent().asString();
+
+            String greetings = Request.Get("http://localhost:8080/jpa-2lc").execute().returnContent().asString();
+            assertThat(greetings).isEqualTo("Hello1\nHello2\n");
+        }
+
+        {
+            String affectedRows = Request.Get("http://localhost:8080/jpa-2lc?operation=update&id=" + id1 + "&text=UpdatedHello1").execute().returnContent().asString();
+            assertThat(affectedRows).isEqualTo("1");
+        }
+
+        {
+            String jdbc = Request.Get("http://localhost:8080/jpa-2lc?operation=query&id=" + id1 + "&jdbc=true").execute().returnContent().asString();
+            String jpa = Request.Get("http://localhost:8080/jpa-2lc?operation=query&id=" + id1).execute().returnContent().asString();
+            assertThat(jdbc).isEqualTo("UpdatedHello1");
+            assertThat(jpa).isEqualTo("Hello1");
+        }
+
+        {
+            String cachedBeforeDelete = Request.Get("http://localhost:8080/jpa-2lc?operation=cached&id=" + id2).execute().returnContent().asString();
+            Request.Get("http://localhost:8080/jpa-2lc?operation=delete&id=" + id2).execute().discardContent();
+            String cachedAfterDelete = Request.Get("http://localhost:8080/jpa-2lc?operation=cached&id=" + id2).execute().returnContent().asString();
+
+            assertThat(cachedBeforeDelete).isEqualTo("true");
+            assertThat(cachedAfterDelete).isEqualTo("false");
+        }
+    }
 }

@@ -84,7 +84,7 @@
                 <artifactId>maven-dependency-plugin</artifactId>
                 <executions>
                     <execution>
-                        <id>download-hollow-jar-and-resource-adapter</id>
+                        <id>download-hollow-jar-and-jdbc-driver-and-resource-adapter</id>
                         <phase>pre-integration-test</phase>
                         <goals>
                             <goal>copy</goal>
@@ -92,6 +92,11 @@
                         <configuration>
                             <stripVersion>true</stripVersion>
                             <artifactItems>
+                                <artifactItem>
+                                    <groupId>com.h2database</groupId>
+                                    <artifactId>h2</artifactId>
+                                    <version>${version.com.h2database.h2}</version>
+                                </artifactItem>
                                 <artifactItem>
                                     <groupId>net.java.xadisk</groupId>
                                     <artifactId>xadisk</artifactId>
@@ -125,6 +130,8 @@
                             <workingDir>${project.build.directory}</workingDir>
                             <arguments>
                                 <argument>${java.home}/bin/java</argument>
+                                <argument>-Djava.net.preferIPv4Stack=true</argument>
+                                <argument>-Dswarm.classpath=dependency/h2.jar</argument>
                                 <argument>-jar</argument>
                                 <argument>dependency/full-hollowswarm.jar</argument>
                                 <argument>dependency/xadisk.rar</argument>
