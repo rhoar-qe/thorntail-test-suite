@@ -7,12 +7,14 @@ import javax.ejb.PrePassivate;
 import javax.ejb.Stateful;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
+import java.util.Collections;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.logging.Logger;
 
 @Stateful
 public class HelloBean {
-    private static final Logger log = Logger.getLogger(HelloBean.class.getSimpleName());
+    static final Set<String> lifecycleMessages = Collections.newSetFromMap(new ConcurrentHashMap<>());
 
     private static final AtomicInteger counter = new AtomicInteger();
 
@@ -26,24 +28,24 @@ public class HelloBean {
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
     public void postConstruct() {
         this.id = counter.getAndIncrement();
-        log.info("Constructed HelloBean " + id);
+        lifecycleMessages.add("Constructed HelloBean " + id);
     }
 
     @PrePassivate
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
     public void prePassivate() {
-        log.info("Passivating HelloBean " + id);
+        lifecycleMessages.add("Passivating HelloBean " + id);
     }
 
     @PostActivate
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
     public void postActivate() {
-        log.info("Activated HelloBean " + id);
+        lifecycleMessages.add("Activated HelloBean " + id);
     }
 
     @PreDestroy
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
     public void preDestroy() {
-        log.info("Destroying HelloBean " + id);
+        lifecycleMessages.add("Destroying HelloBean " + id);
     }
 }
