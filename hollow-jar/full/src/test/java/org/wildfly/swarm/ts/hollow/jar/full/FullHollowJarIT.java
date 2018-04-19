@@ -5,13 +5,14 @@ import com.icegreen.greenmail.store.StoredMessage;
 import com.icegreen.greenmail.user.GreenMailUser;
 import com.icegreen.greenmail.util.GreenMail;
 import com.icegreen.greenmail.util.ServerSetup;
+
 import org.apache.http.client.fluent.Request;
 import org.awaitility.Awaitility;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.wildfly.swarm.ts.hollow.jar.full.remote.ejb.RemoteEjb;
+import org.wildfly.swarm.ts.hollow.jar.full.ejb.remote.RemoteEjb;
 
 import javax.mail.internet.MimeMultipart;
 import javax.naming.Context;
@@ -41,8 +42,11 @@ public class FullHollowJarIT {
     }
 
     @Before
-    public void setup() {
+    public void setup() throws IOException {
         Awaitility.setDefaultPollInterval(10, TimeUnit.MILLISECONDS);
+
+        String response = Request.Get("http://localhost:8080/clear-process-result").execute().returnContent().asString();
+        assertThat(response).isEqualTo("OK");
     }
 
     @Test
@@ -86,7 +90,7 @@ public class FullHollowJarIT {
         Context ctx = null;
         try {
             ctx = new InitialContext(jndiProps);
-            RemoteEjb service = (RemoteEjb) ctx.lookup("ejb:/ts-hollow-jar-full-1.0.0-SNAPSHOT/RemoteEjbImpl!org.wildfly.swarm.ts.hollow.jar.full.remote.ejb.RemoteEjb");
+            RemoteEjb service = (RemoteEjb) ctx.lookup("ejb:/ts-hollow-jar-full-1.0.0-SNAPSHOT/RemoteEjbImpl!org.wildfly.swarm.ts.hollow.jar.full.ejb.remote.RemoteEjb");
             assertThat(service.method()).isEqualTo("remote ejb method");
         } finally {
             if (ctx != null) {
@@ -156,5 +160,27 @@ public class FullHollowJarIT {
             assertThat(cachedBeforeDelete).isEqualTo("true");
             assertThat(cachedAfterDelete).isEqualTo("false");
         }
+    }
+
+    @Test
+    public void testEjbPassivation() throws IOException {
+        for (int i = 0; i < 100; i++) {
+            String response = Request.Get("http://localhost:8080/ejbpassivation").execute().returnContent().asString();
+            assertThat(response).isEqualTo("Hello from stateful EJB " + i);
+        }
+
+        await().atMost(10, TimeUnit.SECONDS).untilAsserted(() -> {
+            String response = Request.Get("http://localhost:8080/ejbpassivation?operation=results").execute().returnContent().asString();
+
+            for (int i = 0; i < 100; i++) {
+                assertThat(response).contains("Constructed EjbPassivationBean " + i);
+            }
+
+            // can't determine _precisely_ how many beans will be passivated -- it should be cca 95,
+            // so 90 should be a good lower bound
+            for (int i = 0; i < 90; i++) {
+                assertThat(response).contains("Passivating EjbPassivationBean " + i);
+            }
+        });
     }
 }
