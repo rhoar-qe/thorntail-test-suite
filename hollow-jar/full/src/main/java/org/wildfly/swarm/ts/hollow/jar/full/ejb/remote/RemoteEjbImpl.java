@@ -1,4 +1,4 @@
-package org.wildfly.swarm.ts.hollow.jar.full.remote.ejb;
+package org.wildfly.swarm.ts.hollow.jar.full.ejb.remote;
 
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
