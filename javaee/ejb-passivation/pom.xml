@@ -17,11 +17,16 @@
     <name>Swarm TS: Java EE: EJB passivation</name>
 
     <dependencies>
+        <!-- dependency on ejb-remote is needed because of SWARM-1989 -->
 <!--
 remove this line for "full" -->
         <dependency>
             <groupId>org.wildfly.swarm</groupId>
             <artifactId>ejb</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.wildfly.swarm</groupId>
+            <artifactId>ejb-remote</artifactId>
         </dependency>
         <dependency>
             <groupId>org.wildfly.swarm</groupId>
