@@ -104,7 +104,6 @@ public class MicroProfileFaultTolerance10Test {
         assertThat(response).isEqualTo("Hello from @CircuitBreaker method");
     }
 
-    @Ignore("SWARM-1945")
     @Test
     @RunAsClient
     public void circuitBreakerFailureAsync() throws IOException {
