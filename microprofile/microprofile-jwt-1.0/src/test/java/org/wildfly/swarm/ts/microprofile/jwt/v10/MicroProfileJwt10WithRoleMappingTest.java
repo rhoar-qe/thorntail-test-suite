@@ -10,23 +10,23 @@ import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.runner.RunWith;
 
 @RunWith(Arquillian.class)
-public class MicroProfileJwt10Test extends AbstractMicroProfileJwt10Test {
+public class MicroProfileJwt10WithRoleMappingTest extends AbstractMicroProfileJwt10Test {
     @Deployment
     public static Archive<?> deployment() {
         return ShrinkWrap.create(WebArchive.class)
-                .addPackage(MicroProfileJwt10Test.class.getPackage())
+                .addPackage(MicroProfileJwt10WithRoleMappingTest.class.getPackage())
                 .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
-                .addAsResource(new ClassLoaderAsset("project-defaults.yml"), "project-defaults.yml")
-                .addAsResource(new ClassLoaderAsset("public-key.pem"), "public-key.pem");
+                .addAsResource(new ClassLoaderAsset("project-defaults-with-role-mapping.yml"), "project-defaults.yml")
+                .addAsResource(new ClassLoaderAsset("role-mapping.properties"), "role-mapping.properties");
     }
 
     @Override
     protected boolean isSuperUser() {
-        return false;
+        return true;
     }
 
     @Override
     protected boolean isMethodWithMissingPermissionsDenied() {
-        return true;
+        return false;
     }
 }
