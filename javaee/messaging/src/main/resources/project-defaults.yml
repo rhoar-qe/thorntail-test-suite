@@ -1,4 +1,6 @@
 swarm:
+  bind:
+    address: 127.0.0.1
   messaging-activemq:
     servers:
       default:
