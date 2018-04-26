@@ -1,8 +1,19 @@
 swarm:
   hystrix:
+    threadpool:
+      default:
+        # for asynchronous bulkhead tests
+        maximumSize: 40
+        allowMaximumSizeToDivergeFromCoreSize: true
     command:
       default:
         fallback:
           isolation:
             semaphore:
+              # for synchronous bulkhead tests
               maxConcurrentRequests: 20
+        execution:
+          isolation:
+            thread:
+              # we wait 2 seconds in the test, to trigger a failure behavior, but Hystrix allows just 1 sec by default
+              timeoutInMilliseconds: 5000
