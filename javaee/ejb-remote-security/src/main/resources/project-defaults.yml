@@ -1,0 +1,25 @@
+swarm:
+  bind:
+    address: 127.0.0.1
+  management:
+    security-realms:
+      ApplicationRealm:
+        in-memory-authentication:
+          users:
+            test-user:
+              password: test-user-password
+            test-admin:
+              password: test-admin-password
+        in-memory-authorization:
+          users:
+            test-user:
+              roles:
+              - view
+            test-admin:
+              roles:
+              - view
+              - admin
+  remoting:
+    http-connectors:
+      http-remoting-connector:
+        security-realm: ApplicationRealm
