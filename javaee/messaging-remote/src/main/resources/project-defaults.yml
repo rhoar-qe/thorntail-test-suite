@@ -1,0 +1,23 @@
+swarm:
+  bind:
+    address: 127.0.0.1
+  management:
+    security-realms:
+      ApplicationRealm:
+        in-memory-authentication:
+          users:
+            test-user:
+              password: test-user-password
+        in-memory-authorization:
+          users:
+            test-user:
+              roles:
+              - guest
+  messaging-activemq:
+    servers:
+      default:
+        jms-queues:
+          my-queue:
+            entries:
+            - jms/queue/my-queue
+            - java:jboss/exported/jms/queue/my-queue
