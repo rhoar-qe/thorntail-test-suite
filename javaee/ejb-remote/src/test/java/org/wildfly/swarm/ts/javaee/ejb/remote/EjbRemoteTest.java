@@ -22,7 +22,6 @@ public class EjbRemoteTest {
     public void test() throws NamingException {
         Hashtable<String, Object> jndiProps = new Hashtable<>();
         jndiProps.put(Context.INITIAL_CONTEXT_FACTORY, "org.wildfly.naming.client.WildFlyInitialContextFactory");
-        jndiProps.put(Context.PROVIDER_URL, "remote+http://localhost:8080");
 
         Context ctx = null;
         try {
