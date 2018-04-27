@@ -25,6 +25,13 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <dependency>
+                <groupId>${groupId.org.wildfly.client-bom}</groupId>
+                <artifactId>wildfly-jms-client-bom</artifactId>
+                <version>${version.org.wildfly.client-bom}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -51,6 +58,11 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>org.apache.activemq</groupId>
+            <artifactId>artemis-jms-client</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>fluent-hc</artifactId>
             <scope>test</scope>
@@ -66,14 +78,20 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.wildfly</groupId>
-            <artifactId>wildfly-naming-client</artifactId>
+            <!-- org.apache.activemq:artemis-jms-client requires this, but doesn't declare a dependency -->
+            <groupId>org.glassfish</groupId>
+            <artifactId>javax.json</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
-           <groupId>org.jboss</groupId>
-           <artifactId>jboss-ejb-client</artifactId>
-           <scope>test</scope>
+            <groupId>org.jboss</groupId>
+            <artifactId>jboss-ejb-client</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.wildfly</groupId>
+            <artifactId>wildfly-naming-client</artifactId>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
