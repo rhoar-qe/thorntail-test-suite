@@ -14,14 +14,14 @@
     <artifactId>ts-javaee-ejb-remote-security</artifactId>
     <packaging>war</packaging>
 
-    <name>Swarm TS: Java EE: EJB remote + Security</name>
+    <name>Swarm TS: Java EE: EJB Remote + Security</name>
 
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>${groupId.org.wildfly.ejb-client-bom}</groupId>
+                <groupId>${groupId.org.wildfly.client-bom}</groupId>
                 <artifactId>wildfly-ejb-client-bom</artifactId>
-                <version>${version.org.wildfly.ejb-client-bom}</version>
+                <version>${version.org.wildfly.client-bom}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>

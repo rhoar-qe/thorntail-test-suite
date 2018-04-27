@@ -19,9 +19,9 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>${groupId.org.wildfly.ejb-client-bom}</groupId>
+                <groupId>${groupId.org.wildfly.client-bom}</groupId>
                 <artifactId>wildfly-ejb-client-bom</artifactId>
-                <version>${version.org.wildfly.ejb-client-bom}</version>
+                <version>${version.org.wildfly.client-bom}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
