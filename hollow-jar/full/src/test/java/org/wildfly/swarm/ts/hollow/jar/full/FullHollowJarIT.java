@@ -212,11 +212,15 @@ public class FullHollowJarIT {
                 assertThat(response).contains("Constructed EjbPassivationBean " + i);
             }
 
-            // can't determine _precisely_ how many beans will be passivated -- it should be cca 95,
-            // so 90 should be a good lower bound
-            for (int i = 0; i < 90; i++) {
-                assertThat(response).contains("Passivating EjbPassivationBean " + i);
+            // can't determine which exact beans will stay alive or precisely how many beans will be passivated,
+            // but 90 should be a good lower bound
+            int passivated = 0;
+            for (int i = 0; i < 100; i++) {
+                if (response.contains("Passivating EjbPassivationBean " + i)) {
+                    passivated++;
+                }
             }
+            assertThat(passivated).isGreaterThanOrEqualTo(90);
         });
     }
 }
