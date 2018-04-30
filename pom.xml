@@ -567,8 +567,14 @@ remove this line for bom-certified -->
                     <configuration>
                         <stdoutFile>target/stdout.log</stdoutFile>
                         <stderrFile>target/stderr.log</stderrFile>
+                        <useUberJar>true</useUberJar> <!-- running from classpath is a horribly horribly bad idea -->
                     </configuration>
                     <executions>
+                        <execution>
+                            <goals>
+                                <goal>package</goal>
+                            </goals>
+                        </execution>
                         <execution>
                             <id>start</id>
                             <phase>pre-integration-test</phase>
