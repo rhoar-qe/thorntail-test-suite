@@ -21,7 +21,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 /**
- * Need to use JUnit's assertion methods instead of AssertJ because AssertJ isn't available in the in-containe
+ * Need to use JUnit's assertion methods instead of AssertJ because AssertJ isn't available in the in-container test.
  */
 @RunWith(Arquillian.class)
 @DefaultDeployment
