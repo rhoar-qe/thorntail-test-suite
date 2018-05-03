@@ -81,6 +81,7 @@
         <module>netflix/ribbon-secured</module>
 
         <module>opentracing/basic</module>
+        <module>opentracing/jaeger</module>
 
         <module>protocols/ajp</module>
         <module>protocols/https</module>

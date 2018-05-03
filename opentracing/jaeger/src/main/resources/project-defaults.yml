@@ -1,0 +1,6 @@
+swarm:
+  jaeger:
+    service-name: test-traced-service
+    sampler-type: const
+    sampler-parameter: 1
+    agent-port: 26831
