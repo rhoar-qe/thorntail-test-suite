@@ -1,0 +1,13 @@
+swarm:
+  microprofile:
+    config:
+      config-sources:
+        default:
+          dir: ${project.build.directory}/classes/configs
+        propertiesSource:
+          properties:
+            yamlProperty: Custom value from YAML
+        orderedSource:
+          ordinal: 99
+          properties:
+            yamlOrdereredProperty: This will be overriden by microprofile-config.properties
