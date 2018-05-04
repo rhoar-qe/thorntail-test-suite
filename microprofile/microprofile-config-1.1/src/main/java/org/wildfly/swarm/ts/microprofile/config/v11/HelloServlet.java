@@ -17,6 +17,18 @@ public class HelloServlet extends HttpServlet {
     private long appTimeout;
 
     @Inject
+    @ConfigProperty(name = "fileProperty")
+    private String propFromCustomScanDir;
+
+    @Inject
+    @ConfigProperty(name = "yamlProperty")
+    private String yamlProperty;
+
+    @Inject
+    @ConfigProperty(name = "yamlOrdereredProperty")
+    private String yamlOrdereredProperty;
+
+    @Inject
     @ConfigProperty(name = "missing.property", defaultValue = "it's present anyway")
     private String missingProperty;
 
@@ -29,5 +41,8 @@ public class HelloServlet extends HttpServlet {
         resp.getWriter().println("Value of missing.property: " + missingProperty);
         resp.getWriter().println("Config contains app.timeout: " + config.getOptionalValue("app.timeout", String.class).isPresent());
         resp.getWriter().println("Config contains missing.property: " + config.getOptionalValue("missing.property", String.class).isPresent());
+        resp.getWriter().println("Custom scan dir: " + propFromCustomScanDir);
+        resp.getWriter().println("YAML Property: " + yamlProperty);
+        resp.getWriter().println("YAML Ordered property: " + yamlOrdereredProperty);
     }
 }

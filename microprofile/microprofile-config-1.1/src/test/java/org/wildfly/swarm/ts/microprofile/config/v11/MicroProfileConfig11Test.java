@@ -23,6 +23,9 @@ public class MicroProfileConfig11Test {
                 + "Value of missing.property: it's present anyway\n"
                 + "Config contains app.timeout: true\n"
                 + "Config contains missing.property: false\n"
+                + "Custom scan dir: File in custom directory\n"
+                + "YAML Property: Custom value from YAML\n"
+                + "YAML Ordered property: Property from default config source\n"
         );
     }
 }
