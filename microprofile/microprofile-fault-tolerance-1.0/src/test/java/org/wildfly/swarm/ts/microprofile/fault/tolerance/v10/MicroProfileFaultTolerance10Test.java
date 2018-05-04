@@ -3,7 +3,6 @@ package org.wildfly.swarm.ts.microprofile.fault.tolerance.v10;
 import org.apache.http.client.fluent.Request;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.wildfly.swarm.arquillian.DefaultDeployment;
@@ -113,17 +112,27 @@ public class MicroProfileFaultTolerance10Test {
     }
 
     private static void testCircuitBreakerFailure(String url, String expectedFallbackResponse, String expectedOkResponse) throws IOException {
-        for (int i = 0; i < 20; i++) {
+        // hystrix.command.default.circuitBreaker.requestVolumeThreshold
+        int initialRequestsCount = 20;
+
+        for (int i = 0; i < initialRequestsCount; i++) {
             String response = Request.Get(url + "&fail=true").execute().returnContent().asString();
             assertThat(response).isEqualTo(expectedFallbackResponse);
         }
 
-        for (int i = 0; i < 10; i++) {
+        // initialRequestsCount * hystrix.command.default.circuitBreaker.errorThresholdPercentage
+        int failuresCount = 10;
+
+        for (int i = 0; i < failuresCount; i++) {
             String response = Request.Get(url).execute().returnContent().asString();
             assertThat(response).isEqualTo(expectedFallbackResponse);
         }
 
-        await().atMost(10, TimeUnit.SECONDS).untilAsserted(() -> {
+        // @CircuitBreaker.delay
+        long circuitBreakerDelayMillis = 5000;
+        long maxWaitTime = circuitBreakerDelayMillis + 1000;
+
+        await().atMost(maxWaitTime, TimeUnit.MILLISECONDS).untilAsserted(() -> {
             String response = Request.Get(url).execute().returnContent().asString();
             assertThat(response).isEqualTo(expectedOkResponse);
         });
