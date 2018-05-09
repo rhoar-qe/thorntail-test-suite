@@ -14,7 +14,6 @@
     <modules>
         <module>common</module>
 
-        <module>javaee/batch</module>
         <module>javaee/bean-validation</module>
         <module>javaee/cdi</module>
         <module>javaee/cdi-bean-validation</module>
@@ -23,9 +22,6 @@
         <module>javaee/concurrency</module>
         <module>javaee/datasources</module>
         <module>javaee/ejb</module>
-        <module>javaee/ejb-passivation</module>
-        <module>javaee/ejb-remote</module>
-        <module>javaee/ejb-remote-security</module>
         <module>javaee/el</module>
         <module>javaee/interceptors-cdi</module>
         <module>javaee/interceptors-ejb</module>
@@ -36,19 +32,13 @@
         <module>javaee/jaxrs-jaxb</module>
         <module>javaee/jaxrs-jsonp</module>
         <module>javaee/jaxrs-multipart</module>
-        <module>javaee/jaxws</module>
         <module>javaee/jmx</module>
         <module>javaee/jpa</module>
-        <module>javaee/jpa-2lc</module>
         <module>javaee/jsf</module>
         <module>javaee/jsonp</module>
         <module>javaee/jsp-jstl</module>
         <module>javaee/jta</module>
-        <module>javaee/mail</module>
-        <module>javaee/messaging</module>
-        <module>javaee/messaging-remote</module>
         <module>javaee/naming</module>
-        <module>javaee/resource-adapter</module>
         <module>javaee/servlet</module>
         <module>javaee/servlet-cdi</module>
         <module>javaee/servlet-ejb</module>
@@ -57,7 +47,6 @@
 
         <module>wildfly/cdi-config</module>
         <module>wildfly/hibernate-validator</module>
-        <module>wildfly/jgroups</module>
         <module>wildfly/keycloak</module>
         <module>wildfly/logging</module>
         <module>wildfly/management</module>
@@ -94,7 +83,6 @@
         <module>custom-main/war</module>
 
         <module>hollow-jar/web</module>
-        <module>hollow-jar/full</module>
         <module>hollow-jar/microprofile</module>
     </modules>
 
@@ -616,5 +604,27 @@ remove this line to avoid the JBoss.org Maven repo -->
     </pluginRepositories>
 <!-- remove this line to avoid the JBoss.org Maven repo
 -->
+
+    <profiles>
+        <profile>
+            <id>community</id>
+            <modules>
+                <module>javaee/batch</module>
+                <module>javaee/ejb-passivation</module>
+                <module>javaee/ejb-remote</module>
+                <module>javaee/ejb-remote-security</module>
+                <module>javaee/jaxws</module>
+                <module>javaee/jpa-2lc</module>
+                <module>javaee/mail</module>
+                <module>javaee/messaging</module>
+                <module>javaee/messaging-remote</module>
+                <module>javaee/resource-adapter</module>
+
+                <module>wildfly/jgroups</module>
+
+                <module>hollow-jar/full</module>
+            </modules>
+        </profile>
+    </profiles>
 
 </project>
