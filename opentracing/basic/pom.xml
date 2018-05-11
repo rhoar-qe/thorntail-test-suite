@@ -18,20 +18,24 @@
 
     <dependencies>
         <dependency>
-            <groupId>io.jaegertracing</groupId>
-            <artifactId>jaeger-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.jaegertracing</groupId>
-            <artifactId>jaeger-tracerresolver</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.wildfly.swarm</groupId>
             <artifactId>opentracing</artifactId>
         </dependency>
         <dependency>
             <groupId>org.wildfly.swarm</groupId>
             <artifactId>undertow</artifactId>
+        </dependency>
+
+        <!-- bring your own tracer -->
+        <dependency>
+            <groupId>io.jaegertracing</groupId>
+            <artifactId>jaeger-core</artifactId>
+            <version>${version.io.jaegertracing.everything}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.jaegertracing</groupId>
+            <artifactId>jaeger-tracerresolver</artifactId>
+            <version>${version.io.jaegertracing.everything}</version>
         </dependency>
 
         <dependency>
