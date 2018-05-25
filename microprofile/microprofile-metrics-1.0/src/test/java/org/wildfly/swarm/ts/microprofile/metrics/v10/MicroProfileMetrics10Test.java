@@ -1,11 +1,14 @@
 package org.wildfly.swarm.ts.microprofile.metrics.v10;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.google.gson.JsonPrimitive;
 import org.apache.http.client.fluent.Request;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.junit.InSequence;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.wildfly.swarm.arquillian.DefaultDeployment;
@@ -128,5 +131,72 @@ public class MicroProfileMetrics10Test {
         assertThat(vendor.has("loadedModules")).isTrue();
         assertThat(vendor.has("mscLoadedModules")).isFalse();
         assertThat(vendor.has("test")).isFalse();
+    }
+
+    @Test
+    @RunAsClient
+    @InSequence(7)
+    @Ignore("THORN-2050")
+    public void metricRegistryInjection() throws IOException {
+        String response = Request.Get("http://localhost:8080/summary?of=all-registries").execute().returnContent().asString();
+        JsonObject json = new JsonParser().parse(response).getAsJsonObject();
+
+        assertThat(json.has("base")).isTrue();
+        JsonArray base = json.getAsJsonArray("base");
+        assertThat(base.contains(new JsonPrimitive("memory.usedHeap"))).isTrue();
+        assertThat(base.contains(new JsonPrimitive("memory.committedHeap"))).isTrue();
+        assertThat(base.contains(new JsonPrimitive("memory.maxHeap"))).isTrue();
+        assertThat(base.contains(new JsonPrimitive("jvm.uptime"))).isTrue();
+        assertThat(base.contains(new JsonPrimitive("thread.count"))).isTrue();
+        assertThat(base.contains(new JsonPrimitive("thread.daemon.count"))).isTrue();
+        assertThat(base.contains(new JsonPrimitive("thread.max.count"))).isTrue();
+        assertThat(base.contains(new JsonPrimitive("classloader.currentLoadedClass.count"))).isTrue();
+        assertThat(base.contains(new JsonPrimitive("classloader.totalLoadedClass.count"))).isTrue();
+        assertThat(base.contains(new JsonPrimitive("classloader.totalUnloadedClass.count"))).isTrue();
+        assertThat(base.contains(new JsonPrimitive("cpu.availableProcessors"))).isTrue();
+
+        assertThat(json.has("vendor")).isTrue();
+        JsonArray vendor = json.getAsJsonArray("vendor");
+        // don't want to hardcode all values, as they can change, so just pick one
+        assertThat(vendor.contains(new JsonPrimitive("loadedModules"))).isTrue();
+
+        assertThat(json.has("app")).isTrue();
+        JsonArray app = json.getAsJsonArray("app");
+        assertThat(app.size()).isEqualTo(3);
+        assertThat(app.contains(new JsonPrimitive("hello-count"))).isTrue();
+        assertThat(app.contains(new JsonPrimitive("hello-time"))).isTrue();
+        assertThat(app.contains(new JsonPrimitive("hello-freq"))).isTrue();
+    }
+
+    @Test
+    @RunAsClient
+    @InSequence(8)
+    @Ignore("THORN-2051")
+    public void getAllRegisteredMetricsOfGivenType() throws IOException {
+        String response = Request.Get("http://localhost:8080/summary?of=app-registry").execute().returnContent().asString();
+        JsonObject json = new JsonParser().parse(response).getAsJsonObject();
+
+        assertThat(json.has("app-counters")).isTrue();
+        JsonArray appCounters = json.getAsJsonArray("app-counters");
+        assertThat(appCounters.size()).isEqualTo(1);
+        assertThat(appCounters.contains(new JsonPrimitive("hello-count"))).isTrue();
+
+        assertThat(json.has("app-timers")).isTrue();
+        JsonArray appTimers = json.getAsJsonArray("app-timers");
+        assertThat(appTimers.size()).isEqualTo(1);
+        assertThat(appTimers.contains(new JsonPrimitive("hello-time"))).isTrue();
+
+        assertThat(json.has("app-meters")).isTrue();
+        JsonArray appMeters = json.getAsJsonArray("app-meters");
+        assertThat(appMeters.size()).isEqualTo(1);
+        assertThat(appMeters.contains(new JsonPrimitive("hello-freq"))).isTrue();
+
+        assertThat(json.has("app-gauges")).isTrue();
+        JsonArray appGauges = json.getAsJsonArray("app-gauges");
+        assertThat(appGauges.size()).isEqualTo(0);
+
+        assertThat(json.has("app-histograms")).isTrue();
+        JsonArray appHistograms = json.getAsJsonArray("app-histograms");
+        assertThat(appHistograms.size()).isEqualTo(0);
     }
 }
