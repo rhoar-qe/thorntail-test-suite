@@ -1,4 +1,4 @@
-# WildFly Swarm Standalone Test Suite
+# Thorntail Standalone Test Suite
 
 - tests for fractions
   - `javaee`: Java EE technologies
