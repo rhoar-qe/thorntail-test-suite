@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.wildfly.swarm.ts</groupId>
+        <groupId>io.thorntail.ts</groupId>
         <artifactId>ts-parent</artifactId>
         <version>1.0.0-SNAPSHOT</version>
         <relativePath>../..</relativePath>
@@ -14,7 +14,7 @@
     <artifactId>ts-hollow-jar-web</artifactId>
     <packaging>war</packaging>
 
-    <name>Swarm TS: Hollow JAR: Web</name>
+    <name>Thorntail TS: Hollow JAR: Web</name>
 
     <dependencies>
         <dependency>
@@ -58,15 +58,15 @@
                             <stripVersion>true</stripVersion>
                             <artifactItems>
                                 <artifactItem>
-                                    <groupId>org.wildfly.swarm.servers</groupId>
-                                    <artifactId>web</artifactId>
-                                    <version>${version.org.wildfly.swarm}</version>
-                                    <classifier>hollowswarm</classifier>
-                                </artifactItem>
-                                <artifactItem>
                                     <groupId>com.h2database</groupId>
                                     <artifactId>h2</artifactId>
                                     <version>${version.com.h2database.h2}</version>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>io.thorntail.servers</groupId>
+                                    <artifactId>web</artifactId>
+                                    <version>${version.io.thorntail}</version>
+                                    <classifier>hollow-thorntail</classifier>
                                 </artifactItem>
                             </artifactItems>
                         </configuration>
@@ -87,7 +87,7 @@
                                 <argument>${java.home}/bin/java</argument>
                                 <argument>-Dswarm.classpath=dependency/h2.jar</argument>
                                 <argument>-jar</argument>
-                                <argument>dependency/web-hollowswarm.jar</argument>
+                                <argument>dependency/web-hollow-thorntail.jar</argument>
                                 <argument>${project.build.finalName}.${project.packaging}</argument>
                                 <argument>-s</argument>
                                 <argument>classes/project-defaults.yml</argument>

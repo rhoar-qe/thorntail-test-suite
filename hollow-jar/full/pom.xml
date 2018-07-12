@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.wildfly.swarm.ts</groupId>
+        <groupId>io.thorntail.ts</groupId>
         <artifactId>ts-parent</artifactId>
         <version>1.0.0-SNAPSHOT</version>
         <relativePath>../..</relativePath>
@@ -14,7 +14,7 @@
     <artifactId>ts-hollow-jar-full</artifactId>
     <packaging>war</packaging>
 
-    <name>Swarm TS: Hollow JAR: Full</name>
+    <name>Thorntail TS: Hollow JAR: Full</name>
 
     <dependencyManagement>
         <dependencies>
@@ -116,16 +116,16 @@
                                     <version>${version.com.h2database.h2}</version>
                                 </artifactItem>
                                 <artifactItem>
+                                    <groupId>io.thorntail.servers</groupId>
+                                    <artifactId>full</artifactId>
+                                    <version>${version.io.thorntail}</version>
+                                    <classifier>hollow-thorntail</classifier>
+                                </artifactItem>
+                                <artifactItem>
                                     <groupId>net.java.xadisk</groupId>
                                     <artifactId>xadisk</artifactId>
                                     <version>${version.net.java.xadisk}</version>
                                     <type>rar</type>
-                                </artifactItem>
-                                <artifactItem>
-                                    <groupId>org.wildfly.swarm.servers</groupId>
-                                    <artifactId>full</artifactId>
-                                    <version>${version.org.wildfly.swarm}</version>
-                                    <classifier>hollowswarm</classifier>
                                 </artifactItem>
                             </artifactItems>
                         </configuration>
@@ -151,7 +151,7 @@
                                 <argument>-Djava.net.preferIPv4Stack=true</argument>
                                 <argument>-Dswarm.classpath=dependency/h2.jar</argument>
                                 <argument>-jar</argument>
-                                <argument>dependency/full-hollowswarm.jar</argument>
+                                <argument>dependency/full-hollow-thorntail.jar</argument>
                                 <argument>dependency/xadisk.rar</argument>
                                 <argument>${project.build.finalName}.${project.packaging}</argument>
                                 <argument>-s</argument>

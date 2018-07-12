@@ -4,12 +4,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.wildfly.swarm.ts</groupId>
+    <groupId>io.thorntail.ts</groupId>
     <artifactId>ts-parent</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <name>Swarm TS: Parent</name>
+    <name>Thorntail TS: Parent</name>
 
     <modules>
         <module>common</module>
@@ -96,9 +96,10 @@
         <version.com.google.guava>25.0-jre</version.com.google.guava>
         <version.com.h2database.h2>1.4.197</version.com.h2database.h2>
         <version.com.icegreen.greenmail>1.5.7</version.com.icegreen.greenmail>
+        <version.io.fabric8.docker-maven-plugin>0.25.2</version.io.fabric8.docker-maven-plugin>
         <version.io.jaegertracing.everything>0.27.0</version.io.jaegertracing.everything>
         <version.io.jsonwebtoken.jjwt>0.9.0</version.io.jsonwebtoken.jjwt>
-        <version.io.fabric8.docker-maven-plugin>0.25.2</version.io.fabric8.docker-maven-plugin>
+        <version.io.thorntail>2.0.0.Final</version.io.thorntail>
         <version.javax.enterprise.cdi-api>1.2</version.javax.enterprise.cdi-api>
         <version.junit.junit>4.12</version.junit.junit>
         <version.net.java.xadisk>1.2.2</version.net.java.xadisk>
@@ -137,11 +138,10 @@ remove this line for EAP Client BOMs -->
 <!-- remove this line for EAP Client BOMs
         <version.org.wildfly.client-bom>7.1.1.GA-redhat-2</version.org.wildfly.client-bom>
 remove this line for EAP Client BOMs -->
-        <version.org.wildfly.swarm>2018.5.0</version.org.wildfly.swarm>
         <version.org.xmlunit>2.6.0</version.org.xmlunit>
 
         <!--
-          - when updating version.org.wildfly.swarm, check and possibly update these properties as well:
+          - when updating version.io.thorntail, check and possibly update these properties as well:
           -   version.org.jboss.remotingjmx
           -   version.org.jboss.resteasy
           -   version.org.jgroups
@@ -164,24 +164,24 @@ remove this line for EAP Client BOMs -->
         <dependencies>
             <!-- modules -->
             <dependency>
-                <groupId>org.wildfly.swarm.ts</groupId>
+                <groupId>io.thorntail.ts</groupId>
                 <artifactId>ts-common</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <!-- Swarm BOMs -->
             <dependency>
-                <groupId>org.wildfly.swarm</groupId>
+                <groupId>io.thorntail</groupId>
                 <artifactId>bom</artifactId>
-                <version>${version.org.wildfly.swarm}</version>
+                <version>${version.io.thorntail}</version>
                 <scope>import</scope>
                 <type>pom</type>
             </dependency>
 <!-- remove this line for bom-certified
             <dependency>
-                <groupId>org.wildfly.swarm</groupId>
+                <groupId>io.thorntail</groupId>
                 <artifactId>bom-certified</artifactId>
-                <version>${version.org.wildfly.swarm}</version>
+                <version>${version.io.thorntail}</version>
                 <scope>import</scope>
                 <type>pom</type>
             </dependency>
@@ -322,19 +322,19 @@ remove this line for bom-certified -->
                 <version>${version.org.wildfly.core}</version>
             </dependency>
             <dependency>
-                <groupId>org.wildfly.swarm</groupId>
+                <groupId>io.thorntail</groupId>
                 <artifactId>monitor</artifactId>
-                <version>${version.org.wildfly.swarm}</version>
+                <version>${version.io.thorntail}</version>
             </dependency>
             <dependency>
-                <groupId>org.wildfly.swarm</groupId>
+                <groupId>io.thorntail</groupId>
                 <artifactId>msc</artifactId>
-                <version>${version.org.wildfly.swarm}</version>
+                <version>${version.io.thorntail}</version>
             </dependency>
             <dependency>
-                <groupId>org.wildfly.swarm</groupId>
+                <groupId>io.thorntail</groupId>
                 <artifactId>topology</artifactId>
-                <version>${version.org.wildfly.swarm}</version>
+                <version>${version.io.thorntail}</version>
             </dependency>
 
             <!-- for the JGroups test -->
@@ -540,9 +540,9 @@ remove this line for bom-certified -->
                 </plugin>
 
                 <plugin>
-                    <groupId>org.wildfly.swarm</groupId>
-                    <artifactId>wildfly-swarm-plugin</artifactId>
-                    <version>${version.org.wildfly.swarm}</version>
+                    <groupId>io.thorntail</groupId>
+                    <artifactId>thorntail-maven-plugin</artifactId>
+                    <version>${version.io.thorntail}</version>
                     <configuration>
                         <stdoutFile>target/stdout.log</stdoutFile>
                         <stderrFile>target/stderr.log</stderrFile>
