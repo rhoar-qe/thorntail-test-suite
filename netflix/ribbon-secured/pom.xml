@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.wildfly.swarm.ts</groupId>
+        <groupId>io.thorntail.ts</groupId>
         <artifactId>ts-parent</artifactId>
         <version>1.0.0-SNAPSHOT</version>
         <relativePath>../..</relativePath>
@@ -14,23 +14,23 @@
     <artifactId>ts-netflix-ribbon-secured</artifactId>
     <packaging>war</packaging>
 
-    <name>Swarm TS: Netflix: Ribbon Secured</name>
+    <name>Thorntail TS: Netflix: Ribbon Secured</name>
 
     <dependencies>
         <dependency>
-            <groupId>org.wildfly.swarm</groupId>
+            <groupId>io.thorntail</groupId>
             <artifactId>jaxrs</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.wildfly.swarm</groupId>
+            <groupId>io.thorntail</groupId>
             <artifactId>keycloak</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.wildfly.swarm</groupId>
+            <groupId>io.thorntail</groupId>
             <artifactId>msc</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.wildfly.swarm</groupId>
+            <groupId>io.thorntail</groupId>
             <artifactId>ribbon-secured</artifactId>
         </dependency>
 
@@ -40,6 +40,11 @@
             <scope>provided</scope>
         </dependency>
 
+        <dependency>
+            <groupId>io.thorntail</groupId>
+            <artifactId>arquillian</artifactId>
+            <scope>test</scope>
+        </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -73,11 +78,6 @@
         <dependency>
             <groupId>org.keycloak</groupId>
             <artifactId>keycloak-authz-client</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.wildfly.swarm</groupId>
-            <artifactId>arquillian</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>

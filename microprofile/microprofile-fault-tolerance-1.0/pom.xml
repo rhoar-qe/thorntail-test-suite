@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.wildfly.swarm.ts</groupId>
+        <groupId>io.thorntail.ts</groupId>
         <artifactId>ts-parent</artifactId>
         <version>1.0.0-SNAPSHOT</version>
         <relativePath>../..</relativePath>
@@ -14,18 +14,23 @@
     <artifactId>ts-microprofile-fault-tolerance-1.0</artifactId>
     <packaging>war</packaging>
 
-    <name>Swarm TS: MicroProfile Fault Tolerance 1.0</name>
+    <name>Thorntail TS: MicroProfile Fault Tolerance 1.0</name>
 
     <dependencies>
         <dependency>
-            <groupId>org.wildfly.swarm</groupId>
+            <groupId>io.thorntail</groupId>
             <artifactId>microprofile-fault-tolerance</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.wildfly.swarm</groupId>
+            <groupId>io.thorntail</groupId>
             <artifactId>undertow</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>io.thorntail</groupId>
+            <artifactId>arquillian</artifactId>
+            <scope>test</scope>
+        </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -44,11 +49,6 @@
         <dependency>
             <groupId>org.awaitility</groupId>
             <artifactId>awaitility</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.wildfly.swarm</groupId>
-            <artifactId>arquillian</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>

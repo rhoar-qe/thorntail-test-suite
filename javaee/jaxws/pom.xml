@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.wildfly.swarm.ts</groupId>
+        <groupId>io.thorntail.ts</groupId>
         <artifactId>ts-parent</artifactId>
         <version>1.0.0-SNAPSHOT</version>
         <relativePath>../..</relativePath>
@@ -14,24 +14,29 @@
     <artifactId>ts-javaee-jaxws</artifactId>
     <packaging>war</packaging>
 
-    <name>Swarm TS: Java EE: JAX-WS</name>
+    <name>Thorntail TS: Java EE: JAX-WS</name>
 
     <dependencies>
 <!--
 remove this line for "full" -->
         <dependency>
-            <groupId>org.wildfly.swarm</groupId>
+            <groupId>io.thorntail</groupId>
             <artifactId>webservices</artifactId>
         </dependency>
 <!-- remove this line for "full"
 -->
 <!-- remove this line for "full"
         <dependency>
-            <groupId>org.wildfly.swarm</groupId>
+            <groupId>io.thorntail</groupId>
             <artifactId>full</artifactId>
         </dependency>
 remove this line for "full" -->
 
+        <dependency>
+            <groupId>io.thorntail</groupId>
+            <artifactId>arquillian</artifactId>
+            <scope>test</scope>
+        </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -45,11 +50,6 @@ remove this line for "full" -->
         <dependency>
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.wildfly.swarm</groupId>
-            <artifactId>arquillian</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>

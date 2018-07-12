@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.wildfly.swarm.ts</groupId>
+        <groupId>io.thorntail.ts</groupId>
         <artifactId>ts-parent</artifactId>
         <version>1.0.0-SNAPSHOT</version>
         <relativePath>../..</relativePath>
@@ -14,37 +14,42 @@
     <artifactId>ts-javaee-ejb-passivation</artifactId>
     <packaging>war</packaging>
 
-    <name>Swarm TS: Java EE: EJB passivation</name>
+    <name>Thorntail TS: Java EE: EJB passivation</name>
 
     <dependencies>
         <!-- dependency on ejb-remote is needed because of SWARM-1989 -->
 <!--
 remove this line for "full" -->
         <dependency>
-            <groupId>org.wildfly.swarm</groupId>
+            <groupId>io.thorntail</groupId>
             <artifactId>ejb</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.wildfly.swarm</groupId>
+            <groupId>io.thorntail</groupId>
             <artifactId>ejb-remote</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.wildfly.swarm</groupId>
+            <groupId>io.thorntail</groupId>
             <artifactId>infinispan</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.wildfly.swarm</groupId>
+            <groupId>io.thorntail</groupId>
             <artifactId>undertow</artifactId>
         </dependency>
 <!-- remove this line for "full"
 -->
 <!-- remove this line for "full"
         <dependency>
-            <groupId>org.wildfly.swarm</groupId>
+            <groupId>io.thorntail</groupId>
             <artifactId>full</artifactId>
         </dependency>
 remove this line for "full" -->
 
+        <dependency>
+            <groupId>io.thorntail</groupId>
+            <artifactId>arquillian</artifactId>
+            <scope>test</scope>
+        </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -63,11 +68,6 @@ remove this line for "full" -->
         <dependency>
             <groupId>org.awaitility</groupId>
             <artifactId>awaitility</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.wildfly.swarm</groupId>
-            <artifactId>arquillian</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>

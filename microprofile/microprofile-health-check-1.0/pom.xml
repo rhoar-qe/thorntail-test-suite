@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.wildfly.swarm.ts</groupId>
+        <groupId>io.thorntail.ts</groupId>
         <artifactId>ts-parent</artifactId>
         <version>1.0.0-SNAPSHOT</version>
         <relativePath>../..</relativePath>
@@ -14,17 +14,22 @@
     <artifactId>ts-microprofile-health-check-1.0</artifactId>
     <packaging>war</packaging>
 
-    <name>Swarm TS: MicroProfile Health Check 1.0</name>
+    <name>Thorntail TS: MicroProfile Health Check 1.0</name>
 
     <dependencies>
         <dependency>
-            <groupId>org.wildfly.swarm</groupId>
+            <groupId>io.thorntail</groupId>
             <artifactId>microprofile-health</artifactId>
         </dependency>
 
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.thorntail</groupId>
+            <artifactId>arquillian</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -40,11 +45,6 @@
         <dependency>
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.wildfly.swarm</groupId>
-            <artifactId>arquillian</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>
