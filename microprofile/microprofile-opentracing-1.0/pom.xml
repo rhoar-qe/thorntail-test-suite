@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>io.thorntail.ts</groupId>
+        <artifactId>ts-parent</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+        <relativePath>../..</relativePath>
+    </parent>
+
+    <artifactId>ts-microprofile-opentracing-1.0</artifactId>
+    <packaging>war</packaging>
+
+    <name>Thorntail TS: MicroProfile OpenTracing 1.0</name>
+
+    <dependencies>
+       <dependency>
+            <groupId>io.thorntail</groupId>
+            <artifactId>microprofile-opentracing</artifactId>
+            <version>${version.io.thorntail}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.wildfly.swarm</groupId>
+                    <artifactId>config-api-runtime</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>io.thorntail</groupId>
+            <artifactId>undertow</artifactId>
+        </dependency>
+
+        <!-- bring your own tracer -->
+        <dependency>
+            <groupId>io.jaegertracing</groupId>
+            <artifactId>jaeger-tracerresolver</artifactId>
+            <version>${version.io.jaegertracing.everything}</version>
+       </dependency>
+
+        <dependency>
+            <groupId>io.thorntail</groupId>
+            <artifactId>arquillian</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>fluent-hc</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.awaitility</groupId>
+            <artifactId>awaitility</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>io.fabric8</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <configuration>
+                    <images>
+                        <image>
+                            <name>jaegertracing/all-in-one:latest</name>
+                            <alias>jaeger</alias>
+                            <run>
+                                <ports>
+                                    <port>6831:6831/udp</port> <!-- default Jaeger agent -->
+                                    <port>16686:16686</port> <!-- query service and UI -->
+                                </ports>
+                                <wait>
+                                    <time>600000</time>
+                                    <log>Connected to peer</log>
+                                </wait>
+                            </run>
+                        </image>
+                    </images>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <configuration>
+                    <environmentVariables>
+                        <!-- https://www.jaegertracing.io/docs/client-features/ -->
+                        <JAEGER_SERVICE_NAME>test-traced-service</JAEGER_SERVICE_NAME>
+                        <!-- https://www.jaegertracing.io/docs/sampling/ -->
+                        <JAEGER_SAMPLER_TYPE>const</JAEGER_SAMPLER_TYPE>
+                        <JAEGER_SAMPLER_PARAM>1</JAEGER_SAMPLER_PARAM>
+                    </environmentVariables>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
