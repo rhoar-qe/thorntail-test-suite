@@ -1,0 +1,9 @@
+swarm:
+  microprofile:
+    config:
+      config-sources:
+        default:
+          dir: ${project.build.directory}/classes/configs
+        propertiesSource:
+          properties:
+            arrayProperty: element1,element2,element3,element41\\,element42

@@ -59,10 +59,15 @@
 
         <module>microprofile/microprofile-1.0</module>
         <module>microprofile/microprofile-config-1.1</module>
+        <module>microprofile/microprofile-config-1.2</module>
         <module>microprofile/microprofile-health-check-1.0</module>
         <module>microprofile/microprofile-jwt-1.0</module>
         <module>microprofile/microprofile-metrics-1.0</module>
+        <module>microprofile/microprofile-metrics-1.1</module>
         <module>microprofile/microprofile-fault-tolerance-1.0</module>
+        <module>microprofile/microprofile-openapi-1.0</module>
+        <module>microprofile/microprofile-opentracing-1.0</module>
+        <module>microprofile/microprofile-restclient-1.0</module>
 
         <module>netflix/archaius</module>
         <module>netflix/hystrix</module>
@@ -97,7 +102,7 @@
         <version.com.h2database.h2>1.4.197</version.com.h2database.h2>
         <version.com.icegreen.greenmail>1.5.7</version.com.icegreen.greenmail>
         <version.io.fabric8.docker-maven-plugin>0.25.2</version.io.fabric8.docker-maven-plugin>
-        <version.io.jaegertracing.everything>0.27.0</version.io.jaegertracing.everything>
+        <version.io.jaegertracing.everything>0.29.0</version.io.jaegertracing.everything>
         <version.io.jsonwebtoken.jjwt>0.9.0</version.io.jsonwebtoken.jjwt>
         <version.io.thorntail>2.0.0.Final</version.io.thorntail>
         <version.javax.enterprise.cdi-api>1.2</version.javax.enterprise.cdi-api>
@@ -129,6 +134,7 @@
         <version.org.jgroups>3.6.13.Final</version.org.jgroups>
         <version.org.keycloak.everything>3.4.3.Final</version.org.keycloak.everything>
         <version.org.kohsuke.ajp-client>1.0</version.org.kohsuke.ajp-client>
+        <version.org.yaml.snakeyaml>1.16</version.org.yaml.snakeyaml>
         <version.org.wildfly.core>3.0.10.Final</version.org.wildfly.core>
 <!--
 remove this line for EAP Client BOMs -->
@@ -310,6 +316,12 @@ remove this line for bom-certified -->
                 <version>${version.org.xmlunit}</version>
             </dependency>
 
+            <dependency>
+                <groupId>org.yaml</groupId>
+                <artifactId>snakeyaml</artifactId>
+                <version>${version.org.yaml.snakeyaml}</version>
+            </dependency>
+
             <!-- for database tests -->
             <dependency>
                 <groupId>com.h2database</groupId>
@@ -406,7 +418,6 @@ remove this line for bom-certified -->
                 <type>pom</type>
             </dependency>
 
-            <!-- For hollow jar microprofile test -->
         </dependencies>
     </dependencyManagement>
 
