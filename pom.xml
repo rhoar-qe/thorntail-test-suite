@@ -65,6 +65,7 @@
         <module>microprofile/microprofile-metrics-1.0</module>
         <module>microprofile/microprofile-metrics-1.1</module>
         <module>microprofile/microprofile-fault-tolerance-1.0</module>
+        <module>microprofile/microprofile-openapi-1.0</module>
 
         <module>netflix/archaius</module>
         <module>netflix/hystrix</module>
@@ -141,6 +142,7 @@ remove this line for EAP Client BOMs -->
         <version.org.wildfly.client-bom>7.1.1.GA-redhat-2</version.org.wildfly.client-bom>
 remove this line for EAP Client BOMs -->
         <version.org.xmlunit>2.6.0</version.org.xmlunit>
+        <version.org.yaml.snakeyaml>1.16</version.org.yaml.snakeyaml>
 
         <!--
           - when updating version.io.thorntail, check and possibly update these properties as well:
@@ -310,6 +312,11 @@ remove this line for bom-certified -->
                 <groupId>org.xmlunit</groupId>
                 <artifactId>xmlunit-core</artifactId>
                 <version>${version.org.xmlunit}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.yaml</groupId>
+                <artifactId>snakeyaml</artifactId>
+                <version>${version.org.yaml.snakeyaml}</version>
             </dependency>
 
             <!-- for database tests -->
