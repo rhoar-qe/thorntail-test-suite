@@ -59,6 +59,7 @@
 
         <module>microprofile/microprofile-1.0</module>
         <module>microprofile/microprofile-config-1.1</module>
+        <module>microprofile/microprofile-config-1.2</module>
         <module>microprofile/microprofile-health-check-1.0</module>
         <module>microprofile/microprofile-jwt-1.0</module>
         <module>microprofile/microprofile-metrics-1.0</module>
@@ -405,8 +406,6 @@ remove this line for bom-certified -->
                 <version>${version.org.jboss.spec.all.7.0.api}</version>
                 <type>pom</type>
             </dependency>
-
-            <!-- For hollow jar microprofile test -->
         </dependencies>
     </dependencyManagement>
 
