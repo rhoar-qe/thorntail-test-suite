@@ -20,14 +20,6 @@
         <dependency>
             <groupId>io.thorntail</groupId>
             <artifactId>microprofile-openapi</artifactId>
-            <version>${version.io.thorntail}</version> <!-- TODO remove with 2.1.0.Final, the fraction is 'experimental' in 2.0.0.Final -->
-            <!-- workaround for https://issues.jboss.org/browse/THORN-2015 -->
-            <exclusions>
-                <exclusion>
-                    <groupId>org.wildfly.swarm</groupId>
-                    <artifactId>config-api-runtime</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
 
         <dependency>

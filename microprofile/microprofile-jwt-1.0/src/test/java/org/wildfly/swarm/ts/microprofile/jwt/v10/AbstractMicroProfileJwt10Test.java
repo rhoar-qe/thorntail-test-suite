@@ -244,7 +244,6 @@ public abstract class AbstractMicroProfileJwt10Test {
         assertThat(response).isEqualTo("Hello, world!");
     }
 
-    @Ignore("SWARM-1955")
     @Test
     @RunAsClient
     public void contentTypes_plain_webGroup() throws IOException, GeneralSecurityException {
@@ -265,7 +264,6 @@ public abstract class AbstractMicroProfileJwt10Test {
         assertThat(response).isEqualTo("<html>Hello, world!</html>");
     }
 
-    @Ignore("SWARM-1955")
     @Test
     @RunAsClient
     public void contentTypes_web_plainGroup() throws IOException, GeneralSecurityException {
@@ -283,7 +281,6 @@ public abstract class AbstractMicroProfileJwt10Test {
         assertThat(response).isEqualTo("Admin accessed foo");
     }
 
-    @Ignore("SWARM-1972")
     @Test
     @RunAsClient
     public void parameterizedPaths_admin_viewGroup() throws IOException, GeneralSecurityException {
@@ -298,7 +295,6 @@ public abstract class AbstractMicroProfileJwt10Test {
         assertThat(response).isEqualTo("View accessed foo");
     }
 
-    @Ignore("SWARM-1972")
     @Test
     @RunAsClient
     public void parameterizedPaths_view_adminGroup() throws IOException, GeneralSecurityException {

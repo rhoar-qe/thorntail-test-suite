@@ -20,13 +20,6 @@
         <dependency>
             <groupId>io.thorntail</groupId>
             <artifactId>microprofile-metrics</artifactId>
-            <!-- workaround for https://issues.jboss.org/browse/THORN-2015 -->
-            <exclusions>
-                <exclusion>
-                    <groupId>org.wildfly.swarm</groupId>
-                    <artifactId>config-api-runtime</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
             <groupId>io.thorntail</groupId>
