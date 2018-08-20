@@ -4,6 +4,7 @@ swarm:
       token:
         issued-by: https://my.auth.server/
         signer-pub-key: classpath:public-key.pem
+        exp-grace-period: 120
   security:
     security-domains:
       test-realm:

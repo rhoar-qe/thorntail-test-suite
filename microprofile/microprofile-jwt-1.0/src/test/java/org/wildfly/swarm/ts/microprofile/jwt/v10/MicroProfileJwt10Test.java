@@ -29,4 +29,9 @@ public class MicroProfileJwt10Test extends AbstractMicroProfileJwt10Test {
     protected boolean isMethodWithMissingPermissionsDenied() {
         return true;
     }
+
+    @Override
+    protected boolean isLongerExpirationGracePeriod() {
+        return true;
+    }
 }

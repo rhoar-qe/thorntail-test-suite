@@ -5,18 +5,8 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.fluent.Request;
 import org.apache.http.client.fluent.Response;
-import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
-import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.shrinkwrap.api.Archive;
-import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.asset.ClassLoaderAsset;
-import org.jboss.shrinkwrap.api.asset.EmptyAsset;
-import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.wildfly.swarm.arquillian.DefaultDeployment;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -31,6 +21,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Supplier;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -47,17 +38,21 @@ public abstract class AbstractMicroProfileJwt10Test {
     }
 
     private static String createToken(String... groups) throws IOException, GeneralSecurityException {
-        return createToken(null, groups);
+        return createToken(Date::new, null, groups);
     }
 
     private static String createToken(Invalidity invalidity, String... groups) throws IOException, GeneralSecurityException {
+        return createToken(Date::new, invalidity, groups);
+    }
+
+    private static String createToken(Supplier<Date> clock, Invalidity invalidity, String... groups) throws IOException, GeneralSecurityException {
         String issuer = "https://my.auth.server/";
         if (invalidity == Invalidity.WRONG_ISSUER) {
             issuer = "https://wrong/";
         }
 
-        Date now = new Date();
-        Date expiration = new Date(TimeUnit.MINUTES.toMillis(10) + now.getTime());
+        Date now = clock.get();
+        Date expiration = new Date(TimeUnit.SECONDS.toMillis(10) + now.getTime());
         if (invalidity == Invalidity.WRONG_DATE) {
             now = new Date(now.getTime() - TimeUnit.DAYS.toMillis(10));
             expiration = new Date(now.getTime() - TimeUnit.DAYS.toMillis(10));
@@ -91,6 +86,8 @@ public abstract class AbstractMicroProfileJwt10Test {
     protected abstract boolean isSuperUser();
 
     protected abstract boolean isMethodWithMissingPermissionsDenied();
+
+    protected abstract boolean isLongerExpirationGracePeriod();
 
     @Test
     @RunAsClient
@@ -300,5 +297,23 @@ public abstract class AbstractMicroProfileJwt10Test {
     public void parameterizedPaths_view_adminGroup() throws IOException, GeneralSecurityException {
         HttpResponse response = request("http://localhost:8080/parameterized-paths/my/foo/view", createToken("admin")).returnResponse();
         assertThat(response.getStatusLine().getStatusCode()).isEqualTo(403);
+    }
+
+    @Test
+    @RunAsClient
+    public void tokenExpirationGracePeriod() throws IOException, GeneralSecurityException {
+        Supplier<Date> clock = () -> {
+            Date now = new Date();
+            now = new Date(now.getTime() - TimeUnit.SECONDS.toMillis(90));
+            return now;
+        };
+        String token = createToken(clock, null, "admin");
+        if (isLongerExpirationGracePeriod()) {
+            String response = request("http://localhost:8080/secured/admin", token).returnContent().asString();
+            assertThat(response).isEqualTo("Restricted area! Admin access granted!");
+        } else {
+            HttpResponse response = request("http://localhost:8080/secured/admin", token).returnResponse();
+            assertThat(response.getStatusLine().getStatusCode()).isEqualTo(401);
+        }
     }
 }
