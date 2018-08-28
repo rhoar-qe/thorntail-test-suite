@@ -28,11 +28,11 @@ public class MicroProfileMetrics10Test {
         String response = Request.Options("http://localhost:8080/metrics")
                 .addHeader("Accept", "application/json").execute().returnContent().asString();
         JsonObject json = new JsonParser().parse(response).getAsJsonObject();
-        // SWARM-1897
-        assertThat(json.has("application")).isFalse();
-/*
         assertThat(json.has("application")).isTrue();
         JsonObject app = json.getAsJsonObject("application");
+        // THORN-1897
+        assertThat(app.size()).isEqualTo(0);
+/*
         assertThat(app.has("hello-count")).isTrue();
         assertThat(app.has("hello-time")).isTrue();
         assertThat(app.has("hello-freq")).isTrue();
@@ -136,7 +136,6 @@ public class MicroProfileMetrics10Test {
     @Test
     @RunAsClient
     @InSequence(7)
-    @Ignore("THORN-2050")
     public void metricRegistryInjection() throws IOException {
         String response = Request.Get("http://localhost:8080/summary?of=all-registries").execute().returnContent().asString();
         JsonObject json = new JsonParser().parse(response).getAsJsonObject();
@@ -171,7 +170,6 @@ public class MicroProfileMetrics10Test {
     @Test
     @RunAsClient
     @InSequence(8)
-    @Ignore("THORN-2051")
     public void getAllRegisteredMetricsOfGivenType() throws IOException {
         String response = Request.Get("http://localhost:8080/summary?of=app-registry").execute().returnContent().asString();
         JsonObject json = new JsonParser().parse(response).getAsJsonObject();
