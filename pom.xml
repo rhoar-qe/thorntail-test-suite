@@ -39,6 +39,7 @@
         <module>javaee/jsp-jstl</module>
         <module>javaee/jta</module>
         <module>javaee/naming</module>
+        <module>javaee/resource-adapter</module>
         <module>javaee/servlet</module>
         <module>javaee/servlet-cdi</module>
         <module>javaee/servlet-ejb</module>
@@ -616,7 +617,6 @@ remove this line to avoid the JBoss.org Maven repo -->
                 <module>javaee/mail</module>
                 <module>javaee/messaging</module>
                 <module>javaee/messaging-remote</module>
-                <module>javaee/resource-adapter</module>
 
                 <module>wildfly/jgroups</module>
 
