@@ -2,7 +2,8 @@ package org.wildfly.swarm.ts.protocols.https;
 
 import org.apache.http.client.fluent.Executor;
 import org.apache.http.client.fluent.Request;
-import org.apache.http.conn.ssl.TrustStrategy;
+import org.apache.http.conn.ssl.NoopHostnameVerifier;
+import org.apache.http.conn.ssl.TrustAllStrategy;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.ssl.SSLContexts;
@@ -23,7 +24,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class HttpsTest {
     @Test
     @RunAsClient
-    public void http() throws IOException, GeneralSecurityException {
+    public void http() throws IOException {
         String response = Request.Get("http://localhost:8080/").execute().returnContent().asString();
         assertThat(response).isEqualTo("Hello on port 8080, secure: false");
     }
@@ -32,10 +33,11 @@ public class HttpsTest {
     @RunAsClient
     public void https() throws IOException, GeneralSecurityException {
         SSLContext sslContext = SSLContexts.custom()
-                .loadTrustMaterial((TrustStrategy) (chain, authType) -> true)
+                .loadTrustMaterial(TrustAllStrategy.INSTANCE)
                 .build();
         try (CloseableHttpClient httpClient = HttpClients.custom()
                 .setSSLContext(sslContext)
+                .setSSLHostnameVerifier(NoopHostnameVerifier.INSTANCE)
                 .build()) {
 
             String response = Executor.newInstance(httpClient)
