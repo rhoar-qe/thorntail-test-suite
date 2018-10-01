@@ -1,5 +1,6 @@
 package org.wildfly.swarm.ts.netflix.ribbon.secured;
 
+import org.apache.http.HttpResponse;
 import org.apache.http.client.fluent.Request;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
@@ -8,6 +9,7 @@ import org.jboss.msc.service.ServiceActivator;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.junit.AfterClass;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,8 +26,8 @@ import org.wildfly.swarm.spi.api.JARArchive;
 
 import javax.ws.rs.core.Response;
 import java.io.File;
+import java.io.IOException;
 import java.net.URI;
-import java.util.Collections;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -75,7 +77,6 @@ public class RibbonSecuredTopologyIT {
             ClientRepresentation client = new ClientRepresentation();
             client.setClientId("test-client");
             client.setProtocol("openid-connect");
-            client.setRedirectUris(Collections.singletonList("http://localhost:8080/protected/*"));
             client.setClientAuthenticatorType("client-secret");
             client.setSecret("19666a4f-32dd-4049-b082-684c74115f28");
             client.setEnabled(true);
@@ -123,19 +124,71 @@ public class RibbonSecuredTopologyIT {
         return path.substring(path.lastIndexOf('/') + 1);
     }
 
+    @Before
+    @RunAsClient
+    public void setUp() throws IOException {
+        Request.Post("http://localhost:8080/hello/enable").execute().discardContent();
+    }
+
     @Test
     @RunAsClient
-    public void testAccessSecuredContentTokenWithFallback() throws Exception {
+    public void directAccess_withoutToken() throws Exception {
+        HttpResponse response = Request.Get("http://localhost:8080/hello")
+                .execute().returnResponse();
+        assertThat(response.getStatusLine().getStatusCode()).isEqualTo(400);
+    }
+
+    @Test
+    @RunAsClient
+    public void directAccess_withToken_serviceEnabled() throws Exception {
+        String token = authzClient.obtainAccessToken("test-user", "test-password").getToken();
+
+        String response = Request.Get("http://localhost:8080/hello")
+                .addHeader("Authorization", "Bearer " + token)
+                .execute().returnContent().asString();
+        assertThat(response).contains("Hello, World!");
+    }
+
+    @Test
+    @RunAsClient
+    public void directAccess_withToken_serviceDisabled() throws Exception {
+        Request.Post("http://localhost:8080/hello/disable").execute().discardContent();
+
+        String token = authzClient.obtainAccessToken("test-user", "test-password").getToken();
+
+        HttpResponse response = Request.Get("http://localhost:8080/hello")
+                .addHeader("Authorization", "Bearer " + token)
+                .execute().returnResponse();
+        assertThat(response.getStatusLine().getStatusCode()).isEqualTo(500);
+    }
+
+    @Test
+    @RunAsClient
+    public void accessThroughRibbon_withoutToken() throws Exception {
+        HttpResponse response = Request.Get("http://localhost:8080/test")
+                .execute().returnResponse();
+        assertThat(response.getStatusLine().getStatusCode()).isEqualTo(500);
+    }
+
+    @Test
+    @RunAsClient
+    public void accessThroughRibbon_withToken_serviceEnabled() throws Exception {
         String token = authzClient.obtainAccessToken("test-user", "test-password").getToken();
 
         String response = Request.Get("http://localhost:8080/test")
                 .addHeader("Authorization", "Bearer " + token)
                 .execute().returnContent().asString();
         assertThat(response).contains("Hello, World!");
+    }
 
+    @Test
+    @RunAsClient
+    public void accessThroughRibbon_withToken_serviceDisabled() throws Exception {
         Request.Post("http://localhost:8080/hello/disable").execute().discardContent();
 
-        response = Request.Get("http://localhost:8080/test")
+        String token = authzClient.obtainAccessToken("test-user", "test-password").getToken();
+
+        String response = Request.Get("http://localhost:8080/test")
                 .addHeader("Authorization", "Bearer " + token)
                 .execute().returnContent().asString();
         assertThat(response).contains("Fallback string");

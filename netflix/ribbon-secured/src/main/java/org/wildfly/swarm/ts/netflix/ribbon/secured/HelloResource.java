@@ -20,6 +20,12 @@ public class HelloResource {
     }
 
     @POST
+    @Path("/enable")
+    public void enable() {
+        enabled.set(true);
+    }
+
+    @POST
     @Path("/disable")
     public void disable() {
         enabled.set(false);
