@@ -23,3 +23,4 @@ branch:
 
 - `7.0.x` for RHOAR WildFly Swarm 7.0.x (corresponding upstream version: `2017.10.1+`)
 - `7.1.x` for RHOAR WildFly Swarm 7.1.x (corresponding upstream version: `2018.3.3+`)
+- `2.2.x` for RHOAR Thorntail 2.2.x (corresponding upstream version: `2.2.0.Final+`)
