@@ -1,0 +1,7 @@
+swarm:
+  infinispan:
+    cache-containers:
+      test-cache-container:
+        default-cache: test-cache
+        local-caches:
+          test-cache:

@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<!-- this file only exists for manual tests; InfinispanTest uses @DeploymentModule -->
+<jboss-deployment-structure>
+    <deployment>
+        <dependencies>
+            <!-- needed for CacheInitializer to be able to inject Infinispan classes -->
+            <module name="org.infinispan"/>
+        </dependencies>
+    </deployment>
+</jboss-deployment-structure>
