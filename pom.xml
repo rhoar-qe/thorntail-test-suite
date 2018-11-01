@@ -105,7 +105,7 @@
         <version.io.fabric8.docker-maven-plugin>0.25.2</version.io.fabric8.docker-maven-plugin>
         <version.io.jaegertracing.everything>0.27.0</version.io.jaegertracing.everything>
         <version.io.jsonwebtoken.jjwt>0.9.0</version.io.jsonwebtoken.jjwt>
-        <version.io.thorntail>2.2.0.Final</version.io.thorntail>
+        <version.io.thorntail>2.2.1.Final</version.io.thorntail>
         <version.javax.enterprise.cdi-api>1.2</version.javax.enterprise.cdi-api>
         <version.junit.junit>4.12</version.junit.junit>
         <version.net.java.xadisk>1.2.2</version.net.java.xadisk>
