@@ -13,3 +13,11 @@ swarm:
       handlers:
       - CONSOLE
       - FILE
+  undertow:
+    servers:
+      default-server:
+        hosts:
+          default-host:
+            access-log-setting:
+              directory: target
+              pattern: CUSTOM ACCESS LOG FORMAT %m %U - %s
