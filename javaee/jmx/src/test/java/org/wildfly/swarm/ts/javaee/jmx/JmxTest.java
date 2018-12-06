@@ -17,12 +17,8 @@ import javax.management.remote.JMXServiceURL;
 import java.io.IOException;
 import java.lang.management.ManagementFactory;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
-/**
- * Need to use JUnit's assertion methods instead of AssertJ because AssertJ isn't available in the in-container test.
- */
 @RunWith(Arquillian.class)
 @DefaultDeployment
 public class JmxTest {
@@ -30,7 +26,7 @@ public class JmxTest {
     @RunAsClient
     public void hello() throws IOException {
         String response = Request.Get("http://localhost:8080/").execute().returnContent().asString();
-        assertEquals("Hello", response);
+        assertThat(response).isEqualTo("Hello");
     }
 
     @Test
@@ -38,7 +34,7 @@ public class JmxTest {
         MBeanServer jmx = ManagementFactory.getPlatformMBeanServer();
 
         String os = (String) jmx.getAttribute(new ObjectName("java.lang:type=OperatingSystem"), "Name");
-        assertEquals(System.getProperty("os.name"), os);
+        assertThat(os).isEqualTo(System.getProperty("os.name"));
 
         // the jboss.as domains aren't available from inside the deployment, which is probably intentional?
     }
@@ -51,10 +47,10 @@ public class JmxTest {
             MBeanServerConnection jmx = connector.getMBeanServerConnection();
 
             String os = (String) jmx.getAttribute(new ObjectName("java.lang:type=OperatingSystem"), "Name");
-            assertEquals(System.getProperty("os.name"), os);
+            assertThat(os).isEqualTo(System.getProperty("os.name"));
 
             Boolean showModel = (Boolean) jmx.getAttribute(new ObjectName("jboss.as:subsystem=jmx"), "showModel");
-            assertTrue(showModel);
+            assertThat(showModel).isTrue();
         }
     }
 }
