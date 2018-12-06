@@ -6,6 +6,7 @@ import org.apache.http.entity.ContentType;
 import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.util.EntityUtils;
+import org.assertj.core.api.Condition;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;
 import org.junit.Test;
@@ -14,6 +15,7 @@ import org.wildfly.swarm.arquillian.DefaultDeployment;
 
 import java.io.IOException;
 
+import static org.assertj.core.api.Assertions.anyOf;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(Arquillian.class)
@@ -45,7 +47,7 @@ public class JaxrsMultipartTest {
         String actualResponse = EntityUtils.toString(response.getEntity()).replace("\r\n", "\n");
 
         // this is fragile, but will do for now
-        String expectedResponse = ""
+        String expectedResponse_option1 = ""
                 + boundary + "\n"
                 + "Content-Disposition: form-data; name=\"text\"\n"
                 + "Content-Type: text/plain\n"
@@ -58,6 +60,22 @@ public class JaxrsMultipartTest {
                 + "MULTIPART!\n"
                 + boundary + "--";
 
-        assertThat(actualResponse).isEqualTo(expectedResponse);
+        String expectedResponse_option2 = ""
+                + boundary + "\n"
+                + "Content-Disposition: form-data; name=\"binary\"\n"
+                + "Content-Type: application/octet-stream\n"
+                + "\n"
+                + "MULTIPART!\n"
+                + boundary + "\n"
+                + "Content-Disposition: form-data; name=\"text\"\n"
+                + "Content-Type: text/plain\n"
+                + "\n"
+                + "Hello, World!\n"
+                + boundary + "--";
+
+        assertThat(actualResponse).is(anyOf(
+                new Condition<>(expectedResponse_option1::equals, expectedResponse_option1),
+                new Condition<>(expectedResponse_option2::equals, expectedResponse_option2)
+        ));
     }
 }
