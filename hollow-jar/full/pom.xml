@@ -42,7 +42,7 @@
         </dependency>
         <dependency>
             <groupId>org.jboss.spec</groupId>
-            <artifactId>jboss-javaee-all-7.0</artifactId>
+            <artifactId>jboss-javaee-all-8.0</artifactId>
             <type>pom</type>
             <scope>provided</scope>
         </dependency>
@@ -81,6 +81,12 @@
             <!-- org.apache.activemq:artemis-jms-client requires this, but doesn't declare a dependency -->
             <groupId>org.glassfish</groupId>
             <artifactId>javax.json</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <!-- org.apache.activemq:artemis-jms-client should bring in Netty transitively, but it doesn't work -->
+            <groupId>io.netty</groupId>
+            <artifactId>netty-all</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -144,7 +150,7 @@
                           <goal>start</goal>
                         </goals>
                         <configuration>
-                            <name>swarm</name>
+                            <name>thorntail</name>
                             <workingDir>${project.build.directory}</workingDir>
                             <arguments>
                                 <argument>${java.home}/bin/java</argument>
