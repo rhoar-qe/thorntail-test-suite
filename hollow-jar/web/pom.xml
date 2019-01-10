@@ -19,8 +19,7 @@
     <dependencies>
         <dependency>
             <groupId>org.jboss.spec</groupId>
-            <artifactId>jboss-javaee-web-7.0</artifactId>
-            <version>${version.org.jboss.spec.web.7.0.api}</version>
+            <artifactId>jboss-javaee-web-8.0</artifactId>
             <type>pom</type>
             <scope>provided</scope>
         </dependency>
@@ -81,7 +80,7 @@
                     <execution>
                         <id>start</id>
                         <configuration>
-                            <name>swarm</name>
+                            <name>thorntail</name>
                             <workingDir>${project.build.directory}</workingDir>
                             <arguments>
                                 <argument>${java.home}/bin/java</argument>

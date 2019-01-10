@@ -89,6 +89,12 @@ remove this line for "full" -->
             <scope>test</scope>
         </dependency>
         <dependency>
+            <!-- org.apache.activemq:artemis-jms-client should bring in Netty transitively, but it doesn't work -->
+            <groupId>io.netty</groupId>
+            <artifactId>netty-all</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>org.wildfly</groupId>
             <artifactId>wildfly-naming-client</artifactId>
             <scope>test</scope>
