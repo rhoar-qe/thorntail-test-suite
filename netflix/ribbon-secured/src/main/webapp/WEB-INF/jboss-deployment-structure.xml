@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<!-- this file only exists for manual tests; RibbonSecuredTopologyIT uses @DeploymentModule -->
+<jboss-deployment-structure>
+    <deployment>
+        <dependencies>
+            <!-- needed for mock topology connector -->
+            <module name="org.wildfly.swarm.topology" slot="runtime"/>
+            <module name="org.jboss.as.network"/>
+        </dependencies>
+    </deployment>
+</jboss-deployment-structure>

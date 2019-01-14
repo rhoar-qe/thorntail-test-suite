@@ -1,0 +1,42 @@
+swarm:
+  keycloak:
+    secure-deployments:
+      # for the Arquillian test
+      RibbonSecuredTopologyIT.war:
+        auth-server-url: "http://localhost:8180/auth"
+        realm: test-realm
+        resource: test-client
+        credentials:
+          secret:
+            value: 19666a4f-32dd-4049-b082-684c74115f28
+      # for the actual uberjar
+      ts-netflix-ribbon-secured-1.0.0-SNAPSHOT.war:
+        auth-server-url: "http://localhost:8180/auth"
+        realm: test-realm
+        resource: test-client
+        credentials:
+          secret:
+            value: 19666a4f-32dd-4049-b082-684c74115f28
+  deployment:
+    # for the Arquillian test
+    RibbonSecuredTopologyIT.war:
+      ribbon:
+        advertise: ts-netflix-ribbon-secured
+      web:
+        security-constraints:
+        - url-pattern: /hello
+          methods:
+          - GET
+          roles:
+          - "*"
+    # for the actual uberjar
+    ts-netflix-ribbon-secured-1.0.0-SNAPSHOT.war:
+      ribbon:
+        advertise: ts-netflix-ribbon-secured
+      web:
+        security-constraints:
+        - url-pattern: /hello
+          methods:
+          - GET
+          roles:
+          - "*"

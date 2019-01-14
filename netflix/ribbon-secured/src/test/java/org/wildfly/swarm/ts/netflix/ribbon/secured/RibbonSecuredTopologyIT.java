@@ -19,10 +19,12 @@ import org.keycloak.representations.idm.ClientRepresentation;
 import org.keycloak.representations.idm.CredentialRepresentation;
 import org.keycloak.representations.idm.RealmRepresentation;
 import org.keycloak.representations.idm.UserRepresentation;
+import org.wildfly.swarm.arquillian.DefaultDeployment;
 import org.wildfly.swarm.jaxrs.JAXRSArchive;
 import org.wildfly.swarm.keycloak.Secured;
 import org.wildfly.swarm.netflix.ribbon.RibbonArchive;
 import org.wildfly.swarm.spi.api.JARArchive;
+import org.wildfly.swarm.spi.api.annotations.DeploymentModule;
 
 import javax.ws.rs.core.Response;
 import java.io.File;
@@ -35,30 +37,13 @@ import static org.assertj.core.api.Assertions.assertThat;
  * This is only {@code *IT} so that it runs between the Docker Maven plugin starting and stopping Keycloak.
  */
 @RunWith(Arquillian.class)
+@DefaultDeployment
+@DeploymentModule(name = "org.wildfly.swarm.topology", slot = "runtime") // needed for mock topology connector
+@DeploymentModule(name = "org.jboss.as.network")                         // needed for mock topology connector
 public class RibbonSecuredTopologyIT {
     private static Keycloak keycloak;
 
     private static AuthzClient authzClient;
-
-    @Deployment(testable = false)
-    public static Archive<?> getDeployment() {
-        JAXRSArchive deployment = ShrinkWrap.create(JAXRSArchive.class)
-                .addPackage(RestApplication.class.getPackage())
-                .addAsServiceProvider(ServiceActivator.class, MockTopologyConnectorServiceActivator.class);
-
-        deployment.addAsWebInfResource(new File("src/test/resources/keycloak.json"), "keycloak.json");
-
-        deployment.as(JARArchive.class).addModule("org.wildfly.swarm.topology", "runtime"); // needed for mock topology connector
-        deployment.as(JARArchive.class).addModule("org.jboss.as.network");                  // needed for mock topology connector
-        deployment.as(RibbonArchive.class).advertise("ts-netflix-ribbon-secured");
-
-        deployment.as(Secured.class)
-                .protect("/hello")
-                .withMethod("GET")
-                .withRole("*");
-
-        return deployment;
-    }
 
     @BeforeClass
     public static void setupKeycloakRealm() {
