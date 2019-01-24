@@ -51,6 +51,22 @@
             <artifactId>remoting-jmx</artifactId>
             <scope>test</scope>
         </dependency>
+        <!--
+          - manually overriding JBoss Marshalling version because the version brought in transitively
+          - through JBoss Remoting JMX doesn't work well on Java 9+
+          -->
+        <dependency>
+            <groupId>org.jboss.marshalling</groupId>
+            <artifactId>jboss-marshalling</artifactId>
+            <version>${version.org.jboss.marshalling}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.marshalling</groupId>
+            <artifactId>jboss-marshalling-river</artifactId>
+            <version>${version.org.jboss.marshalling}</version>
+            <scope>test</scope>
+        </dependency>
         <dependency>
             <groupId>io.thorntail.ts</groupId>
             <artifactId>ts-common</artifactId>

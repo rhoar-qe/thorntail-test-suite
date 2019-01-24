@@ -1,9 +1,7 @@
 package org.wildfly.swarm.ts.microprofile.openapi.v10;
 
-import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 
-@XmlRootElement
 public class MyResponse implements Serializable {
     private String attribute1;
 

@@ -180,7 +180,7 @@ public class MicroProfileHollowJarIT {
     }
 
     @Test
-    public void healtCheck() throws IOException {
+    public void healthCheck() throws IOException {
         String response = Request.Get("http://localhost:8080/health").execute().returnContent().asString();
         JsonElement json = new JsonParser().parse(response);
         assertThat(json.isJsonObject()).isTrue();
