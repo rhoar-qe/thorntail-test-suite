@@ -41,6 +41,7 @@ public class JsfTest {
             String response = Request.Get("http://localhost:8080/index.jsf").execute().returnContent().asString();
             assertThat(response).doesNotContain("index.jsf");
             assertThat(response).contains("Hello from JSF");
+            assertThat(response).contains("Hey there!");
         }
     }
 }
