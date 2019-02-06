@@ -5,8 +5,8 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
 @Model
-public class Hello {
-    public String hello() {
-        return "Hello from JSF";
+public class Action {
+    public void perform() {
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Hey there!"));
     }
 }
