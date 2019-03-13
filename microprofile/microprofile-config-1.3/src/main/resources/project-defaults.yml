@@ -1,0 +1,9 @@
+swarm:
+  microprofile:
+    config:
+      config-sources:
+        default:
+          dir: ${project.build.directory}/classes/configs
+        propertiesSource:
+          properties:
+            my.existing.string.property: my.existing.string.property
