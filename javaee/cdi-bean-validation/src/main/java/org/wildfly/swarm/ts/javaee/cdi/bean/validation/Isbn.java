@@ -4,7 +4,11 @@ import javax.validation.Constraint;
 import javax.validation.Payload;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-import java.lang.annotation.*;
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 @NotNull(message = "ISBN must be set")
 @Pattern(regexp = "^\\d{9}[\\d|X]$", message = "ISBN must be valid") // the regexp here is very simplistic
@@ -13,7 +17,7 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface Isbn {
-    String message() default "{org.wildfly.swarm.ts.cdi.bean.validation.Isbn.message}";
+    String message() default "{org.wildfly.swarm.ts.javaee.cdi.bean.validation.Isbn.message}";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }
