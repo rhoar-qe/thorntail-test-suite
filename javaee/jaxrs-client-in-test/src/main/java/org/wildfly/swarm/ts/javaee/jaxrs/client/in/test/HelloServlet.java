@@ -1,4 +1,4 @@
-package org.wildfly.swarm.ts.javaee.jaxrs.client;
+package org.wildfly.swarm.ts.javaee.jaxrs.client.in.test;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
