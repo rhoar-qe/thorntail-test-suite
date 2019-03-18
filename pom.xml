@@ -28,6 +28,7 @@
         <module>javaee/jaxrs</module>
         <module>javaee/jaxrs-bean-validation</module>
         <module>javaee/jaxrs-cdi</module>
+        <module>javaee/jaxrs-client</module>
         <module>javaee/jaxrs-client-in-test</module>
         <module>javaee/jaxrs-jaxb</module>
         <module>javaee/jaxrs-jsonp</module>
