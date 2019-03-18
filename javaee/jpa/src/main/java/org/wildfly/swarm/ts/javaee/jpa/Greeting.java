@@ -1,6 +1,11 @@
 package org.wildfly.swarm.ts.javaee.jpa;
 
-import javax.persistence.*;
+import javax.persistence.Basic;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import java.util.Objects;
 
 @Entity

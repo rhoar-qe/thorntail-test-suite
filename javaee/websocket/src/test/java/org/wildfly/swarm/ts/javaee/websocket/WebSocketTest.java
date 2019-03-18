@@ -9,7 +9,14 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.wildfly.swarm.undertow.WARArchive;
 
-import javax.websocket.*;
+import javax.websocket.ClientEndpoint;
+import javax.websocket.ContainerProvider;
+import javax.websocket.DeploymentException;
+import javax.websocket.OnClose;
+import javax.websocket.OnMessage;
+import javax.websocket.OnOpen;
+import javax.websocket.Session;
+import javax.websocket.WebSocketContainer;
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
