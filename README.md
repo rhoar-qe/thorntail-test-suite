@@ -12,6 +12,7 @@
   - `fraction-autodetection`: tests for fraction autodetection
   - `custom-main`: tests for custom `main` method
   - `hollow-jar`: tests for hollow JARs
+  - `java11`: tests for Java 11+
 
 For some tests, Docker is required.
 

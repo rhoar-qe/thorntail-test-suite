@@ -647,6 +647,16 @@ remove this line to avoid the JBoss.org Maven repo -->
                 <module>hollow-jar/full</module>
             </modules>
         </profile>
+
+        <profile>
+            <id>java11</id>
+            <activation>
+                <jdk>[11,)</jdk>
+            </activation>
+            <modules>
+                <module>java11/http-client</module>
+            </modules>
+        </profile>
     </profiles>
 
 </project>
