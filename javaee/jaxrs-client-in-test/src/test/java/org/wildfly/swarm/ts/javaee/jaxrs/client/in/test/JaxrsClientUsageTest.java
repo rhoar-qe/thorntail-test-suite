@@ -1,4 +1,4 @@
-package org.wildfly.swarm.ts.javaee.jaxrs.client;
+package org.wildfly.swarm.ts.javaee.jaxrs.client.in.test;
 
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;
@@ -16,7 +16,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(Arquillian.class)
 @DefaultDeployment
-public class JaxrsClientTest {
+public class JaxrsClientUsageTest {
     @Test
     @RunAsClient
     public void test() throws IOException {
