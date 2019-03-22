@@ -74,7 +74,7 @@
                                 </ports>
                                 <wait>
                                     <time>600000</time>
-                                    <log>Connected to peer</log>
+                                    <log>"Health Check state change","status":"ready"</log>
                                 </wait>
                             </run>
                         </image>
