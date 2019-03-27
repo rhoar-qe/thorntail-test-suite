@@ -608,8 +608,6 @@ remove this line for bom-certified -->
         </pluginManagement>
     </build>
 
-<!--
-remove this line to avoid the JBoss.org Maven repo -->
     <repositories>
         <repository>
             <id>jboss-public-repository-group</id>
@@ -624,8 +622,6 @@ remove this line to avoid the JBoss.org Maven repo -->
             <url>http://repository.jboss.org/nexus/content/groups/public/</url>
         </pluginRepository>
     </pluginRepositories>
-<!-- remove this line to avoid the JBoss.org Maven repo
--->
 
     <profiles>
         <profile>
