@@ -1,0 +1,2 @@
+org.wildfly.swarm.ts.microprofile.config.v13.StringWrapperConverter
+org.wildfly.swarm.ts.microprofile.config.v13.StringWrapperIgnoredConverter

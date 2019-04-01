@@ -7,3 +7,10 @@ swarm:
         propertiesSource:
           properties:
             my.existing.string.property: my.existing.string.property
+            my.boolean.property: true
+            my.int.property: 42
+            my.long.property: 9223372036854775807
+            my.float.property: 3.14F
+            my.double.property: 1e1d
+            my.stringWrapper.property: stringWrapperContent
+            my.animals.array.property: Zebra,Alligator
