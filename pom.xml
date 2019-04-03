@@ -106,7 +106,6 @@
         <version.com.google.guava>25.0-jre</version.com.google.guava>
         <version.com.h2database.h2>1.4.197</version.com.h2database.h2>
         <version.com.icegreen.greenmail>1.5.7</version.com.icegreen.greenmail>
-        <version.io.fabric8.docker-maven-plugin>0.25.2</version.io.fabric8.docker-maven-plugin>
         <version.io.jaegertracing.everything>0.30.6</version.io.jaegertracing.everything>
         <version.io.jsonwebtoken.jjwt-everything>0.10.5</version.io.jsonwebtoken.jjwt-everything>
         <version.io.thorntail>2.4.0.Final</version.io.thorntail>
@@ -441,30 +440,6 @@ remove this line for bom-certified -->
     <build>
         <pluginManagement>
             <plugins>
-                <plugin>
-                    <groupId>io.fabric8</groupId>
-                    <artifactId>docker-maven-plugin</artifactId>
-                    <version>${version.io.fabric8.docker-maven-plugin}</version>
-                    <configuration>
-                        <showLogs>true</showLogs>
-                    </configuration>
-                    <executions>
-                        <execution>
-                            <id>start</id>
-                            <phase>pre-integration-test</phase>
-                            <goals>
-                                <goal>start</goal>
-                            </goals>
-                        </execution>
-                        <execution>
-                            <id>stop</id>
-                            <phase>post-integration-test</phase>
-                            <goals>
-                                <goal>stop</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-clean-plugin</artifactId>

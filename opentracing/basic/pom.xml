@@ -73,33 +73,15 @@
             <artifactId>awaitility</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>io.thorntail.ts</groupId>
+            <artifactId>ts-common</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
         <plugins>
-            <plugin>
-                <groupId>io.fabric8</groupId>
-                <artifactId>docker-maven-plugin</artifactId>
-                <configuration>
-                    <images>
-                        <image>
-                            <name>jaegertracing/all-in-one:latest</name>
-                            <alias>jaeger</alias>
-                            <run>
-                                <ports>
-                                    <port>6831:6831/udp</port> <!-- default Jaeger agent -->
-                                    <port>16686:16686</port> <!-- query service and UI -->
-                                </ports>
-                                <wait>
-                                    <time>600000</time>
-                                    <log>"Health Check state change","status":"ready"</log>
-                                </wait>
-                            </run>
-                        </image>
-                    </images>
-                </configuration>
-            </plugin>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>

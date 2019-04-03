@@ -14,6 +14,7 @@ import org.keycloak.representations.idm.ClientRepresentation;
 import org.keycloak.representations.idm.CredentialRepresentation;
 import org.keycloak.representations.idm.RealmRepresentation;
 import org.keycloak.representations.idm.UserRepresentation;
+import org.wildfly.swarm.ts.common.DockerRunner;
 
 import javax.ws.rs.core.Response;
 import java.io.IOException;
@@ -32,8 +33,19 @@ public class KeycloakIT {
 
     private static String userId;
 
+    private static DockerRunner dockerRunner;
+
     @BeforeClass
-    public static void setupKeycloakRealm() {
+    public static void setupKeycloakRealm() throws Exception {
+
+        dockerRunner = new DockerRunner("jboss/keycloak:" + System.getProperty("KEYCLOAK_VERSION"),"keycloak").
+                logWait("WFLYSRV0025: Keycloak").
+                port("8180:8080").
+                envVar("KEYCLOAK_USER", "admin").
+                envVar("KEYCLOAK_PASSWORD", "admin");
+
+        dockerRunner.start();
+
         keycloak = Keycloak.getInstance("http://localhost:8180/auth", "master", "admin", "admin", "admin-cli");
 
         {
@@ -72,9 +84,11 @@ public class KeycloakIT {
     }
 
     @AfterClass
-    public static void tearDownKeycloakRealm() {
+    public static void tearDownKeycloakRealm() throws IOException, InterruptedException {
         keycloak.realms().realm("test-realm").remove();
         keycloak.close();
+
+        dockerRunner.stop();
     }
 
     private static String getIdOfCreatedUser(Response response) {
