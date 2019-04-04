@@ -46,6 +46,11 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>io.thorntail.ts</groupId>
+            <artifactId>ts-common</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <scope>test</scope>
@@ -85,34 +90,13 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>io.fabric8</groupId>
-                <artifactId>docker-maven-plugin</artifactId>
-                <configuration>
-                    <images>
-                        <image>
-                            <name>jboss/keycloak:${version.org.keycloak.everything}</name>
-                            <alias>keycloak</alias>
-                            <run>
-                                <ports>
-                                    <port>8180:8080</port>
-                                </ports>
-                                <env>
-                                    <KEYCLOAK_USER>admin</KEYCLOAK_USER>
-                                    <KEYCLOAK_PASSWORD>admin</KEYCLOAK_PASSWORD>
-                                </env>
-                                <wait>
-                                    <time>600000</time>
-                                    <log>WFLYSRV0025: Keycloak</log>
-                                </wait>
-                            </run>
-                        </image>
-                    </images>
-                </configuration>
-            </plugin>
-
-            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>
+                <configuration>
+                    <systemPropertyVariables>
+                         <keycloak.version>${version.org.keycloak.everything}</keycloak.version>
+                    </systemPropertyVariables>
+                </configuration>
             </plugin>
         </plugins>
     </build>

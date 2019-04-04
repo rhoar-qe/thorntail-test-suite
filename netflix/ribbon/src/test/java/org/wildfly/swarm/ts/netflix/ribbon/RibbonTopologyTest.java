@@ -1,18 +1,11 @@
 package org.wildfly.swarm.ts.netflix.ribbon;
 
 import org.apache.http.client.fluent.Request;
-import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.msc.service.ServiceActivator;
-import org.jboss.shrinkwrap.api.Archive;
-import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.wildfly.swarm.arquillian.DefaultDeployment;
-import org.wildfly.swarm.jaxrs.JAXRSArchive;
-import org.wildfly.swarm.netflix.ribbon.RibbonArchive;
-import org.wildfly.swarm.spi.api.JARArchive;
 import org.wildfly.swarm.spi.api.annotations.DeploymentModule;
 
 import static org.assertj.core.api.Assertions.assertThat;

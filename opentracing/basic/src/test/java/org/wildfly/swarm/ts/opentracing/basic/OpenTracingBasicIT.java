@@ -8,9 +8,13 @@ import org.apache.http.client.fluent.Request;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.junit.InSequence;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.wildfly.swarm.arquillian.DefaultDeployment;
+import org.wildfly.swarm.ts.common.docker.Docker;
+import org.wildfly.swarm.ts.common.docker.DockerContainer;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -21,6 +25,22 @@ import static org.awaitility.Awaitility.await;
 @RunWith(Arquillian.class)
 @DefaultDeployment
 public class OpenTracingBasicIT {
+    private static DockerContainer jaegerContainer;
+
+    @BeforeClass
+    public static void setupJaeger() throws Exception {
+        jaegerContainer = new Docker("jaeger", "jaegertracing/all-in-one:latest")
+                .waitForLogLine("\"Health Check state change\",\"status\":\"ready\"")
+                .port("6831:6831/udp") // default Jaeger agent
+                .port("16686:16686") // query service and UI
+                .start();
+    }
+
+    @AfterClass
+    public static void tearDownJaeger() throws IOException, InterruptedException {
+        jaegerContainer.stop();
+    }
+
     @Test
     @InSequence(1)
     @RunAsClient

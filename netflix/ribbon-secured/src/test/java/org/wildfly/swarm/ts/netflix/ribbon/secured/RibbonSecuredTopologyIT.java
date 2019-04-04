@@ -2,12 +2,8 @@ package org.wildfly.swarm.ts.netflix.ribbon.secured;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.fluent.Request;
-import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.msc.service.ServiceActivator;
-import org.jboss.shrinkwrap.api.Archive;
-import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -20,33 +16,40 @@ import org.keycloak.representations.idm.CredentialRepresentation;
 import org.keycloak.representations.idm.RealmRepresentation;
 import org.keycloak.representations.idm.UserRepresentation;
 import org.wildfly.swarm.arquillian.DefaultDeployment;
-import org.wildfly.swarm.jaxrs.JAXRSArchive;
-import org.wildfly.swarm.keycloak.Secured;
-import org.wildfly.swarm.netflix.ribbon.RibbonArchive;
-import org.wildfly.swarm.spi.api.JARArchive;
 import org.wildfly.swarm.spi.api.annotations.DeploymentModule;
+import org.wildfly.swarm.ts.common.docker.Docker;
+import org.wildfly.swarm.ts.common.docker.DockerContainer;
 
 import javax.ws.rs.core.Response;
-import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * This is only {@code *IT} so that it runs between the Docker Maven plugin starting and stopping Keycloak.
+ * This is only {@code *IT} so that it runs between Docker container
+ * starting and stopping Keycloak.
  */
 @RunWith(Arquillian.class)
 @DefaultDeployment
 @DeploymentModule(name = "org.wildfly.swarm.topology", slot = "runtime") // needed for mock topology connector
-@DeploymentModule(name = "org.jboss.as.network")                         // needed for mock topology connector
+@DeploymentModule(name = "org.jboss.as.network") // needed for mock topology connector
 public class RibbonSecuredTopologyIT {
+    private static DockerContainer keycloakContainer;
+
     private static Keycloak keycloak;
 
     private static AuthzClient authzClient;
 
     @BeforeClass
-    public static void setupKeycloakRealm() {
+    public static void setupKeycloak() throws Exception {
+        keycloakContainer = new Docker("keycloak", "jboss/keycloak:" + System.getProperty("keycloak.version"))
+                .waitForLogLine("WFLYSRV0025: Keycloak")
+                .port("8180:8080")
+                .envVar("KEYCLOAK_USER", "admin")
+                .envVar("KEYCLOAK_PASSWORD", "admin")
+                .start();
+
         keycloak = Keycloak.getInstance("http://localhost:8180/auth", "master", "admin", "admin", "admin-cli");
 
         {
@@ -91,9 +94,11 @@ public class RibbonSecuredTopologyIT {
     }
 
     @AfterClass
-    public static void tearDownKeycloakRealm() {
+    public static void tearDownKeycloak() throws IOException, InterruptedException {
         keycloak.realms().realm("test-realm").remove();
         keycloak.close();
+
+        keycloakContainer.stop();
     }
 
     private static String getIdOfCreatedUser(Response response) {

@@ -10,18 +10,38 @@ import org.apache.http.client.fluent.Request;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.junit.InSequence;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.wildfly.swarm.arquillian.DefaultDeployment;
+import org.wildfly.swarm.ts.common.docker.Docker;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import org.wildfly.swarm.ts.common.docker.DockerContainer;
 
 @RunWith(Arquillian.class)
 @DefaultDeployment
 public class MicroProfileOpenTracing10IT {
+    private static DockerContainer jaegerContainer;
+
+    @BeforeClass
+    public static void setUpJaeger() throws Exception {
+        jaegerContainer = new Docker("jaeger", "jaegertracing/all-in-one:latest")
+                .waitForLogLine("\"Health Check state change\",\"status\":\"ready\"")
+                .port("6831:6831/udp") // default Jaeger agent
+                .port("16686:16686") // query service and UI
+                .start();
+    }
+
+    @AfterClass
+    public static void tearDownJaeger() throws IOException, InterruptedException {
+        jaegerContainer.stop();
+    }
+
     @Test
     @InSequence(1)
     @RunAsClient
