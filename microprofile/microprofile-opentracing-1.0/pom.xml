@@ -31,13 +31,18 @@
         </dependency>
 
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
+            <groupId>io.thorntail</groupId>
+            <artifactId>arquillian</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>io.thorntail</groupId>
-            <artifactId>arquillian</artifactId>
+            <groupId>io.thorntail.ts</groupId>
+            <artifactId>ts-common</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -53,11 +58,6 @@
         <dependency>
             <groupId>org.awaitility</groupId>
             <artifactId>awaitility</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>io.thorntail.ts</groupId>
-            <artifactId>ts-common</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>

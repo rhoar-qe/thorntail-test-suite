@@ -123,6 +123,7 @@
         <version.org.awaitility>3.1.5</version.org.awaitility>
         <version.org.codehaus.mojo.keytool-maven-plugin>1.5</version.org.codehaus.mojo.keytool-maven-plugin>
         <version.org.eclipse.microprofile>1.4</version.org.eclipse.microprofile>
+        <version.org.fusesource.jansi>1.18</version.org.fusesource.jansi>
         <version.org.glassfish.tyrus>1.14</version.org.glassfish.tyrus>
         <version.org.honton.chas.process-exec-maven-plugin>0.9.2</version.org.honton.chas.process-exec-maven-plugin>
         <version.org.infinispan>9.4.3.Final</version.org.infinispan>
@@ -138,7 +139,7 @@
         <version.org.jboss.spec.web.8.0.api>1.0.2.Final</version.org.jboss.spec.web.8.0.api>
         <version.org.jboss.spec.all.8.0.api>1.0.2.Final</version.org.jboss.spec.all.8.0.api>
         <version.org.jgroups>4.0.15.Final</version.org.jgroups>
-        <version.org.keycloak.everything>4.8.1.Final</version.org.keycloak.everything>
+        <version.org.keycloak.everything>4.8.3.Final</version.org.keycloak.everything>
         <version.org.kohsuke.ajp-client>1.0</version.org.kohsuke.ajp-client>
         <version.org.wildfly.core>7.0.0.Final</version.org.wildfly.core>
 <!--
@@ -276,6 +277,11 @@ remove this line for bom-certified -->
                         <artifactId>junit</artifactId>
                     </exclusion>
                 </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>org.fusesource.jansi</groupId>
+                <artifactId>jansi</artifactId>
+                <version>${version.org.fusesource.jansi}</version>
             </dependency>
             <dependency>
                 <groupId>org.glassfish.tyrus.bundles</groupId>

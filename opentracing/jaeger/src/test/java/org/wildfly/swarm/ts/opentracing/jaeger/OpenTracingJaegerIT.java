@@ -13,7 +13,8 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.wildfly.swarm.arquillian.DefaultDeployment;
-import org.wildfly.swarm.ts.common.DockerRunner;
+import org.wildfly.swarm.ts.common.docker.Docker;
+import org.wildfly.swarm.ts.common.docker.DockerContainer;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -25,22 +26,22 @@ import static org.awaitility.Awaitility.await;
 @DefaultDeployment
 public class OpenTracingJaegerIT {
     
-    private static DockerRunner dockerRunner;
+    private static DockerContainer jaegerContainer;
 
     @BeforeClass
     public static void setupJaeger() throws Exception {
-        dockerRunner = new DockerRunner("jaegertracing/all-in-one:latest","jaeger").
-                logWait("\"Health Check state change\",\"status\":\"ready\"").
-                port("26831:6831/udp").  //default Jaeger agent
-                port("16686:16686");  //query service and UI
-
-        dockerRunner.start();
+        jaegerContainer = new Docker("jaeger", "jaegertracing/all-in-one:latest")
+                .waitForLogLine("\"Health Check state change\",\"status\":\"ready\"")
+                .port("26831:6831/udp") // default Jaeger agent
+                .port("16686:16686") // query service and UI
+                .start();
     }
 
     @AfterClass
     public static void tearDownJaeger() throws IOException, InterruptedException {
-        dockerRunner.stop();
+        jaegerContainer.stop();
     }
+
     @Test
     @InSequence(1)
     @RunAsClient
