@@ -100,6 +100,12 @@ public class Docker {
                 return result;
             }
 
+            try {
+                result.stop();
+            } catch (Exception ignored) {
+                // ignored because we're about to throw another exception
+            }
+
             throw new TimeoutException("Container '" + name + " (" + uuid + ")' didn't print '"
                     + awaitedLogLine + "' in " + waitTimeoutInMillis + " ms");
         } else {
