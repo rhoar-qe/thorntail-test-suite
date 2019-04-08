@@ -4,6 +4,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+
 import org.apache.http.client.fluent.Request;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;
@@ -34,7 +35,14 @@ public class OpenTracingJaegerIT {
                 .waitForLogLine("\"Health Check state change\",\"status\":\"ready\"")
                 .port("26831:6831/udp") // default Jaeger agent
                 .port("16686:16686") // query service and UI
-                .port("14250:14250") // gRPC
+                .port("14250:14250") // jaeger collector: used by jaeger-agent to send spans in model.proto format
+                .port("14267:14267") // jaeger collector: used by jaeger-agent to send spans in jaeger.thrift format
+                .port("14268:14268") // jaeger collector: can accept spans directly from clients in jaeger.thrift format over binary thrift protocol
+                .port("14269:14269") // jaeger collector: Health check at /
+
+                .port("5775:5775") // jaeger agent: accept zipkin.thrift over compact thrift protocol
+                .port("5778:5778") // jaeger agent serve configs, sampling strategies
+                .port("6832:6832") // jaeger agent: accept jaeger.thrift over binary thrift protocol
                 .start();
     }
 
