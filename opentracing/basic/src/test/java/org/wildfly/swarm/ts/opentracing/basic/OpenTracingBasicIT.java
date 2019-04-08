@@ -33,6 +33,7 @@ public class OpenTracingBasicIT {
                 .waitForLogLine("\"Health Check state change\",\"status\":\"ready\"")
                 .port("6831:6831/udp") // default Jaeger agent
                 .port("16686:16686") // query service and UI
+                .port("14250:14250") // gRPC
                 .start();
     }
 
