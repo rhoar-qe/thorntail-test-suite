@@ -11,10 +11,8 @@ import org.junit.runner.RunWith;
 
 @RunWith(Arquillian.class)
 public class ConfigLocationJwt11Test extends AbstractConfigJwt11Test {
-
     @Deployment
     public static Archive<?> deployment() {
-
         return ShrinkWrap.create(WebArchive.class)
                 .addPackage(ConfigLocationJwt11Test.class.getPackage())
                 .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
