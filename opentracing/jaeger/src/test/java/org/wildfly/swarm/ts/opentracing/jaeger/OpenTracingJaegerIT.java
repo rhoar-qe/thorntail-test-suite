@@ -32,9 +32,15 @@ public class OpenTracingJaegerIT {
     public static void setupJaeger() throws Exception {
         jaegerContainer = new Docker("jaeger", "jaegertracing/all-in-one:latest")
                 .waitForLogLine("\"Health Check state change\",\"status\":\"ready\"")
-                .port("26831:6831/udp") // default Jaeger agent
-                .port("16686:16686") // query service and UI
-                .port("14250:14250") // gRPC
+                 // https://www.jaegertracing.io/docs/latest/getting-started/
+                .port("5775:5775/udp")
+                .port("26831:6831/udp") // Jaeger port configured in project-defaults.yml
+                .port("6832:6832/udp")
+                .port("5778:5778")
+                .port("16686:16686")
+                .port("14268:14268")
+                .port("14250:14250")
+                .port("9411:9411")
                 .start();
     }
 
