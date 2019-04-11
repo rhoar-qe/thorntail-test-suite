@@ -4,7 +4,6 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-
 import org.apache.http.client.fluent.Request;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;
@@ -33,16 +32,15 @@ public class OpenTracingJaegerIT {
     public static void setupJaeger() throws Exception {
         jaegerContainer = new Docker("jaeger", "jaegertracing/all-in-one:latest")
                 .waitForLogLine("\"Health Check state change\",\"status\":\"ready\"")
-                // Port documentation at https://www.jaegertracing.io/docs/latest/getting-started/
+                 // https://www.jaegertracing.io/docs/latest/getting-started/
                 .port("5775:5775/udp")
-                .port("5778:5778")
-                .port("9411:9411")
-                .port("26831:6831/udp") //Jaeger port configured in project-defaults.yml
+                .port("26831:6831/udp") // Jaeger port configured in project-defaults.yml
                 .port("6832:6832/udp")
-                .port("14250:14250")
-                .port("14267:14267")
-                .port("14268:14268")
+                .port("5778:5778")
                 .port("16686:16686")
+                .port("14268:14268")
+                .port("14250:14250")
+                .port("9411:9411")
                 .start();
     }
 
