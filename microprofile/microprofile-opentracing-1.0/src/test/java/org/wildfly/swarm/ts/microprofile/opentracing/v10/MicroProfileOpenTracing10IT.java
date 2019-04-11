@@ -48,7 +48,7 @@ public class MicroProfileOpenTracing10IT {
     @RunAsClient
     public void applicationRequest() throws IOException {
         String response = Request.Get("http://localhost:8080/rest").execute().returnContent().asString();
-        assertThat(response).isEqualTo("Hello from traced endpoint");
+        assertThat(response).isEqualTo("Hello from traced service");
     }
 
     @Test
@@ -65,21 +65,38 @@ public class MicroProfileOpenTracing10IT {
             assertThat(data.size()).isEqualTo(1);
             JsonObject trace = data.get(0).getAsJsonObject();
             assertThat(trace.has("spans")).isTrue();
-            JsonObject span = trace.getAsJsonArray("spans").get(0).getAsJsonObject();
-            assertThat(span.has("tags")).isTrue();
-            JsonArray tags = span.getAsJsonArray("tags");
-            for (JsonElement tagElement : tags) {
-                JsonObject tag = tagElement.getAsJsonObject();
-                switch (tag.get("key").getAsString()) {
-                    case "http.method":
-                        assertThat(tag.get("value").getAsString()).isEqualTo("GET");
-                        break;
-                    case "http.url":
-                        assertThat(tag.get("value").getAsString()).isEqualTo("http://localhost:8080/rest");
-                        break;
-                    case "http.status.code":
-                        assertThat(tag.get("value").getAsInt()).isEqualTo(200);
-                        break;
+            JsonArray spans = trace.getAsJsonArray("spans");
+            assertThat(spans).hasSize(2);
+            {
+                JsonObject span = spans.get(0).getAsJsonObject();
+                assertThat(span.get("operationName").getAsString())
+                        .isEqualTo("org.wildfly.swarm.ts.microprofile.opentracing.v10.MyService.hello");
+                assertThat(span.has("logs")).isTrue();
+                JsonArray logs = span.getAsJsonArray("logs");
+                assertThat(logs).hasSize(1);
+                JsonObject log = logs.get(0).getAsJsonObject();
+                assertThat(log.getAsJsonArray("fields").get(0).getAsJsonObject().get("value").getAsString())
+                        .isEqualTo("Hello tracer");
+            }
+            {
+                JsonObject span = spans.get(1).getAsJsonObject();
+                assertThat(span.get("operationName").getAsString())
+                        .isEqualTo("GET:org.wildfly.swarm.ts.microprofile.opentracing.v10.RestSimpleResource.tracedOperation");
+                assertThat(span.has("tags")).isTrue();
+                JsonArray tags = span.getAsJsonArray("tags");
+                for (JsonElement tagElement : tags) {
+                    JsonObject tag = tagElement.getAsJsonObject();
+                    switch (tag.get("key").getAsString()) {
+                        case "http.method":
+                            assertThat(tag.get("value").getAsString()).isEqualTo("GET");
+                            break;
+                        case "http.url":
+                            assertThat(tag.get("value").getAsString()).isEqualTo("http://localhost:8080/rest");
+                            break;
+                        case "http.status.code":
+                            assertThat(tag.get("value").getAsInt()).isEqualTo(200);
+                            break;
+                    }
                 }
             }
         });
