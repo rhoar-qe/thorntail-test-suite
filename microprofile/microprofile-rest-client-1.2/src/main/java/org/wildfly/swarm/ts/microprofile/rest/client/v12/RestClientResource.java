@@ -17,57 +17,56 @@ public class RestClientResource {
 
     @Inject
     @RestClient
-    private RestClient1 restClient1;
+    private Client1 client1;
 
     @Inject
     @RestClient
-    private RestClient2 restClient2;
+    private Client2 client2;
 
     @Inject
     @RestClient
-    private RestClient3 restClient3;
+    private Client3 client3;
 
     @GET
     @Path("/injected1")
     public String injected() {
-        return restClient1.simpleOperation1();
+        return client1.simpleOperation1();
     }
 
     @GET
     @Path("/programatic1")
     public String programatic() throws Exception {
-        RestClient1 programaticRestClient = RestClientBuilder.newBuilder()
+        Client1 programaticRestClient = RestClientBuilder.newBuilder()
                 .baseUrl(new URL(HTTP_LOCALHOST_8080))
-                .build(RestClient1.class);
+                .build(Client1.class);
         return programaticRestClient.simpleOperation1();
     }
 
     @GET
     @Path("/injected2")
     public String injected2() {
-        return restClient2.simpleOperation2();
+        return client2.simpleOperation2();
     }
 
     @GET
     @Path("/programatic2")
     public String programatic2() { // using CDI
-        RestClient2 client = CDI.current().select(RestClient2.class,
-                                                  RestClient.LITERAL).get();
+        Client2 client = CDI.current().select(Client2.class, RestClient.LITERAL).get();
         return client.simpleOperation2();
     }
 
     @GET
     @Path("/injected3")
     public String injected3() {
-        return restClient3.simpleOperation3();
+        return client3.simpleOperation3();
     }
 
     @GET
     @Path("/programatic3")
     public String programatic3() throws Exception {
-        RestClient3 client = RestClientBuilder.newBuilder()
+        Client3 client = RestClientBuilder.newBuilder()
                 .baseUri(new URI(HTTP_LOCALHOST_8080)) // since 1.1 New baseUri method on RestClientBuilder
-                .build(RestClient3.class);
+                .build(Client3.class);
         return client.simpleOperation3();
     }
 }

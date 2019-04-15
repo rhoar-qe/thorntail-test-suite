@@ -9,10 +9,10 @@ import javax.ws.rs.Path;
 import java.net.URL;
 
 @Path("/client")
-public class RestClientResource {
+public class ClientResource {
     @Inject
     @RestClient
-    private RestSimpleResourceRestClient restClient;
+    private SimpleResourceClient restClient;
 
     @GET
     @Path("/injected")
@@ -23,9 +23,9 @@ public class RestClientResource {
     @GET
     @Path("/programatic")
     public String programatic() throws Exception {
-        RestSimpleResourceRestClient programaticRestClient = RestClientBuilder.newBuilder()
+        SimpleResourceClient programaticRestClient = RestClientBuilder.newBuilder()
                 .baseUrl(new URL("http://localhost:8080"))
-                .build(RestSimpleResourceRestClient.class);
+                .build(SimpleResourceClient.class);
         return programaticRestClient.simpleOperation();
     }
 }

@@ -5,7 +5,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
 
 @Path("/simple3")
-public class RestSimpleResource3 {
+public class SimpleResource3 {
     @GET
     public Response simpleOperation3() {
         return Response.ok().entity("Hello from endpoint3").build();

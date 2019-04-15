@@ -84,7 +84,7 @@
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-failsafe-plugin</artifactId>
+                <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
                     <environmentVariables>
                         <!-- https://www.jaegertracing.io/docs/client-features/ -->

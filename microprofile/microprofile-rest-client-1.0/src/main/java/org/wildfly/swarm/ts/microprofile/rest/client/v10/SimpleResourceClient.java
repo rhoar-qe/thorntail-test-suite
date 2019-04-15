@@ -6,7 +6,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 
 @RegisterRestClient
-public interface RestSimpleResourceRestClient {
+public interface SimpleResourceClient {
     @GET
     @Path("/rest/simple")
     String simpleOperation();

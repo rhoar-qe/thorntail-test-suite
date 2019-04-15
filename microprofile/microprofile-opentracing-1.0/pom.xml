@@ -23,11 +23,11 @@
         </dependency>
         <dependency>
             <groupId>io.thorntail</groupId>
-            <artifactId>microprofile-opentracing</artifactId>
+            <artifactId>jaxrs</artifactId>
         </dependency>
         <dependency>
             <groupId>io.thorntail</groupId>
-            <artifactId>undertow</artifactId>
+            <artifactId>microprofile-opentracing</artifactId>
         </dependency>
 
         <dependency>
@@ -61,14 +61,5 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-failsafe-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
 
 </project>

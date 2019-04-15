@@ -1,4 +1,4 @@
-package org.wildfly.swarm.ts.opentracing.jaeger;
+package org.wildfly.swarm.ts.opentracing.basic;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -24,8 +24,7 @@ import static org.awaitility.Awaitility.await;
 
 @RunWith(Arquillian.class)
 @DefaultDeployment
-public class OpenTracingJaegerIT {
-    
+public class OpenTracingBasicTest {
     private static DockerContainer jaegerContainer;
 
     @BeforeClass
@@ -34,7 +33,7 @@ public class OpenTracingJaegerIT {
                 .waitForLogLine("\"Health Check state change\",\"status\":\"ready\"")
                  // https://www.jaegertracing.io/docs/latest/getting-started/
                 .port("5775:5775/udp")
-                .port("26831:6831/udp") // Jaeger port configured in project-defaults.yml
+                .port("6831:6831/udp")
                 .port("6832:6832/udp")
                 .port("5778:5778")
                 .port("16686:16686")
@@ -71,7 +70,9 @@ public class OpenTracingJaegerIT {
             assertThat(data.size()).isEqualTo(1);
             JsonObject trace = data.get(0).getAsJsonObject();
             assertThat(trace.has("spans")).isTrue();
-            JsonObject span = trace.getAsJsonArray("spans").get(0).getAsJsonObject();
+            JsonArray spans = trace.getAsJsonArray("spans");
+            assertThat(spans).hasSize(1);
+            JsonObject span = spans.get(0).getAsJsonObject();
             assertThat(span.has("tags")).isTrue();
             JsonArray tags = span.getAsJsonArray("tags");
             for (JsonElement tagElement : tags) {

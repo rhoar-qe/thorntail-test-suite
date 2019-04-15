@@ -1,11 +1,9 @@
 package org.wildfly.swarm.ts.microprofile.opentracing.v10;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.awaitility.Awaitility.await;
-
-import java.io.IOException;
-import java.util.concurrent.TimeUnit;
-
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import org.apache.http.client.fluent.Request;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;
@@ -16,16 +14,17 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.wildfly.swarm.arquillian.DefaultDeployment;
 import org.wildfly.swarm.ts.common.docker.Docker;
-
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import org.wildfly.swarm.ts.common.docker.DockerContainer;
+
+import java.io.IOException;
+import java.util.concurrent.TimeUnit;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.awaitility.Awaitility.await;
 
 @RunWith(Arquillian.class)
 @DefaultDeployment
-public class MicroProfileOpenTracing10IT {
+public class MicroProfileOpenTracing10Test {
     private static DockerContainer jaegerContainer;
 
     @BeforeClass
@@ -73,8 +72,8 @@ public class MicroProfileOpenTracing10IT {
             assertThat(trace.has("spans")).isTrue();
             JsonArray spans = trace.getAsJsonArray("spans");
             assertThat(spans).hasSize(2);
-            {
-                JsonObject span = spans.get(0).getAsJsonObject();
+            assertThat(spans).anySatisfy(element -> {
+                JsonObject span = element.getAsJsonObject();
                 assertThat(span.get("operationName").getAsString())
                         .isEqualTo("org.wildfly.swarm.ts.microprofile.opentracing.v10.MyService.hello");
                 assertThat(span.has("logs")).isTrue();
@@ -83,9 +82,9 @@ public class MicroProfileOpenTracing10IT {
                 JsonObject log = logs.get(0).getAsJsonObject();
                 assertThat(log.getAsJsonArray("fields").get(0).getAsJsonObject().get("value").getAsString())
                         .isEqualTo("Hello tracer");
-            }
-            {
-                JsonObject span = spans.get(1).getAsJsonObject();
+            });
+            assertThat(spans).anySatisfy(element -> {
+                JsonObject span = element.getAsJsonObject();
                 assertThat(span.get("operationName").getAsString())
                         .isEqualTo("GET:org.wildfly.swarm.ts.microprofile.opentracing.v10.RestSimpleResource.tracedOperation");
                 assertThat(span.has("tags")).isTrue();
@@ -104,7 +103,7 @@ public class MicroProfileOpenTracing10IT {
                             break;
                     }
                 }
-            }
+            });
         });
     }
 }
