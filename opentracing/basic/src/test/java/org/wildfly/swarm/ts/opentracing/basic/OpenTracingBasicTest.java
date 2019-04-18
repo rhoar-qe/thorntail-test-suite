@@ -38,8 +38,8 @@ public class OpenTracingBasicTest {
                 .port("5778:5778")
                 .port("16686:16686")
                 .port("14268:14268")
-                .port("14250:14250")
                 .port("9411:9411")
+                .envVar("COLLECTOR_ZIPKIN_HTTP_PORT", "9411")
                 .start();
     }
 
