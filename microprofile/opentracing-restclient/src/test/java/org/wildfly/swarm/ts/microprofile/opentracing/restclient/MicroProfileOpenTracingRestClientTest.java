@@ -78,7 +78,7 @@ public class MicroProfileOpenTracingRestClientTest {
     public void traces() {
         // the tracer inside the application doesn't send traces to the Jaeger server immediately,
         // they are batched, so we need to wait a bit
-        await().atMost(10, TimeUnit.SECONDS).untilAsserted(() -> {
+        await().atMost(20, TimeUnit.SECONDS).untilAsserted(() -> {
             String response = Request.Get("http://localhost:16686/api/traces?service=test-traced-service").execute().returnContent().asString();
             JsonObject json = new JsonParser().parse(response).getAsJsonObject();
             assertThat(json.has("data")).isTrue();
