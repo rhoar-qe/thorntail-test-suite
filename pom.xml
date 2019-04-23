@@ -31,6 +31,7 @@
         <module>javaee/jaxrs-cdi-jpa-jta</module>
         <module>javaee/jaxrs-client</module>
         <module>javaee/jaxrs-client-in-test</module>
+        <module>javaee/jaxrs-client-json</module>
         <module>javaee/jaxrs-jaxb</module>
         <module>javaee/jaxrs-jsonp</module>
         <module>javaee/jaxrs-multipart</module>
