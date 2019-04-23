@@ -97,6 +97,7 @@
 
         <module>hollow-jar/web</module>
         <module>hollow-jar/microprofile</module>
+        <module>hollow-jar/custom</module>
     </modules>
 
     <properties>

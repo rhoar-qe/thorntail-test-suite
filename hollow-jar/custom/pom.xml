@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>io.thorntail.ts</groupId>
+        <artifactId>ts-parent</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+        <relativePath>../..</relativePath>
+    </parent>
+
+    <artifactId>ts-hollow-jar-custom</artifactId>
+    <packaging>war</packaging>
+
+    <name>Thorntail TS: Hollow JAR: Custom</name>
+
+    <dependencies>
+        <dependency>
+            <groupId>io.thorntail</groupId>
+            <artifactId>cdi</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.thorntail</groupId>
+            <artifactId>jaxrs</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>fluent-hc</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>io.thorntail</groupId>
+                <artifactId>thorntail-maven-plugin</artifactId>
+                <configuration>
+                    <hollow>true</hollow>
+                </configuration>
+                <executions>
+                    <!-- remove irrelevant executions inherited from parent -->
+                    <execution>
+                        <id>start</id>
+                        <phase>none</phase>
+                    </execution>
+                    <execution>
+                        <id>stop</id>
+                        <phase>none</phase>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.honton.chas</groupId>
+                <artifactId>process-exec-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>start</id>
+                        <configuration>
+                            <name>thorntail</name>
+                            <workingDir>${project.build.directory}</workingDir>
+                            <arguments>
+                                <argument>${java.home}/bin/java</argument>
+                                <argument>-jar</argument>
+                                <argument>${project.build.finalName}-hollow-thorntail.jar</argument>
+                                <argument>${project.build.finalName}.${project.packaging}</argument>
+                            </arguments>
+                            <healthCheckUrl>http://localhost:8080/rest/hello</healthCheckUrl>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <configuration>
+                    <systemPropertyVariables>
+                        <app.war.path>${project.build.directory}/${project.build.finalName}.${project.packaging}</app.war.path>
+                    </systemPropertyVariables>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
