@@ -38,6 +38,7 @@
         <module>javaee/jaxrs-multipart</module>
         <module>javaee/jmx</module>
         <module>javaee/jpa</module>
+        <module>javaee/jpa-2lc</module>
         <module>javaee/jsf</module>
         <module>javaee/jsonp</module>
         <module>javaee/jsp-jstl</module>
@@ -52,6 +53,7 @@
 
         <module>wildfly/cdi-config</module>
         <module>wildfly/hibernate-validator</module>
+        <module>wildfly/infinispan</module>
         <module>wildfly/keycloak</module>
         <module>wildfly/logging</module>
         <module>wildfly/management</module>
@@ -621,12 +623,10 @@ remove this line for bom-certified -->
                 <module>javaee/ejb-remote</module>
                 <module>javaee/ejb-remote-security</module>
                 <module>javaee/jaxws</module>
-                <module>javaee/jpa-2lc</module>
                 <module>javaee/mail</module>
                 <module>javaee/messaging</module>
                 <module>javaee/messaging-remote</module>
 
-                <module>wildfly/infinispan</module>
                 <module>wildfly/jgroups</module>
 
                 <module>hollow-jar/full</module>
