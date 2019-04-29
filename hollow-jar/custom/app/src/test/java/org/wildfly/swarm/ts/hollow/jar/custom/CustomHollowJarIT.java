@@ -21,8 +21,6 @@ public class CustomHollowJarIT {
     @Test
     public void warHasEmptyWebInfLib() {
         WebArchive war = ShrinkWrap.createFromZipFile(WebArchive.class, new File(System.getProperty("app.war.path")));
-        Node webInfLib = war.get("WEB-INF/lib");
-        assertThat(webInfLib.getAsset()).isNull();
-        assertThat(webInfLib.getChildren()).isEmpty();
+        assertThat(war.get("WEB-INF/lib")).isNull();
     }
 }

@@ -8,13 +8,13 @@
         <groupId>io.thorntail.ts</groupId>
         <artifactId>ts-parent</artifactId>
         <version>1.0.0-SNAPSHOT</version>
-        <relativePath>../..</relativePath>
+        <relativePath>../../..</relativePath>
     </parent>
 
-    <artifactId>ts-hollow-jar-custom</artifactId>
+    <artifactId>ts-hollow-jar-custom-app</artifactId>
     <packaging>war</packaging>
 
-    <name>Thorntail TS: Hollow JAR: Custom</name>
+    <name>Thorntail TS: Hollow JAR: Custom: Application + Test</name>
 
     <dependencies>
         <dependency>
@@ -46,22 +46,48 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>io.thorntail</groupId>
-                <artifactId>thorntail-maven-plugin</artifactId>
-                <configuration>
-                    <hollow>true</hollow>
-                </configuration>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
                 <executions>
-                    <!-- remove irrelevant executions inherited from parent -->
                     <execution>
-                        <id>start</id>
-                        <phase>none</phase>
-                    </execution>
-                    <execution>
-                        <id>stop</id>
-                        <phase>none</phase>
+                        <id>copy-standalone-server</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>copy</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>io.thorntail.ts</groupId>
+                                    <artifactId>ts-hollow-jar-custom-server</artifactId>
+                                    <version>${project.version}</version>
+                                    <type>jar</type>
+                                    <classifier>hollow-thorntail</classifier>
+                                </artifactItem>
+                            </artifactItems>
+                            <outputDirectory>${project.build.directory}</outputDirectory>
+                            <stripVersion>true</stripVersion>
+                        </configuration>
                     </execution>
                 </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <configuration>
+                    <systemPropertyVariables>
+                        <app.war.path>${project.build.directory}/${project.build.finalName}.${project.packaging}</app.war.path>
+                    </systemPropertyVariables>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <configuration>
+                    <packagingExcludes>WEB-INF/lib/**</packagingExcludes>
+                </configuration>
             </plugin>
 
             <plugin>
@@ -76,23 +102,13 @@
                             <arguments>
                                 <argument>${java.home}/bin/java</argument>
                                 <argument>-jar</argument>
-                                <argument>${project.build.finalName}-hollow-thorntail.jar</argument>
+                                <argument>ts-hollow-jar-custom-server-hollow-thorntail.jar</argument>
                                 <argument>${project.build.finalName}.${project.packaging}</argument>
                             </arguments>
                             <healthCheckUrl>http://localhost:8080/rest/hello</healthCheckUrl>
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-failsafe-plugin</artifactId>
-                <configuration>
-                    <systemPropertyVariables>
-                        <app.war.path>${project.build.directory}/${project.build.finalName}.${project.packaging}</app.war.path>
-                    </systemPropertyVariables>
-                </configuration>
             </plugin>
         </plugins>
     </build>

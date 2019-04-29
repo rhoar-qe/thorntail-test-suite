@@ -99,7 +99,8 @@
 
         <module>hollow-jar/web</module>
         <module>hollow-jar/microprofile</module>
-        <module>hollow-jar/custom</module>
+        <module>hollow-jar/custom/server</module> <!-- must be before `app` -->
+        <module>hollow-jar/custom/app</module>
     </modules>
 
     <properties>
