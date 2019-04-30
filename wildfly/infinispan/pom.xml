@@ -22,8 +22,7 @@
             <artifactId>infinispan-core</artifactId>
             <scope>provided</scope>
         </dependency>
-<!--
-remove this line for "full" -->
+
         <dependency>
             <groupId>io.thorntail</groupId>
             <artifactId>ejb</artifactId>
@@ -36,14 +35,6 @@ remove this line for "full" -->
             <groupId>io.thorntail</groupId>
             <artifactId>undertow</artifactId>
         </dependency>
-<!-- remove this line for "full"
--->
-<!-- remove this line for "full"
-        <dependency>
-            <groupId>io.thorntail</groupId>
-            <artifactId>full</artifactId>
-        </dependency>
-remove this line for "full" -->
 
         <dependency>
             <groupId>io.thorntail</groupId>
