@@ -21,8 +21,7 @@
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
         </dependency>
-<!--
-remove this line for "full" -->
+
         <dependency>
             <groupId>io.thorntail</groupId>
             <artifactId>cdi</artifactId>
@@ -43,14 +42,6 @@ remove this line for "full" -->
             <groupId>io.thorntail</groupId>
             <artifactId>transactions</artifactId>
         </dependency>
-<!-- remove this line for "full"
--->
-<!-- remove this line for "full"
-        <dependency>
-            <groupId>io.thorntail</groupId>
-            <artifactId>full</artifactId>
-        </dependency>
-remove this line for "full" -->
 
         <dependency>
             <groupId>io.thorntail</groupId>
