@@ -1,4 +1,4 @@
-package org.wildfly.swarm.ts.javaee.jsonp;
+package org.wildfly.swarm.ts.javaee.jaxrs.jsonb;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
@@ -15,11 +15,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(Arquillian.class)
 @DefaultDeployment
-public class JsonpTest {
+public class JaxrsJsonbTest {
     @Test
     @RunAsClient
     public void test() throws IOException {
         String response = Request.Get("http://localhost:8080/").execute().returnContent().asString();
+
         JsonElement json = new JsonParser().parse(response);
         assertThat(json.isJsonObject()).isTrue();
         assertThat(json.getAsJsonObject().size()).isEqualTo(1);

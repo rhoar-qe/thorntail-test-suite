@@ -1,4 +1,4 @@
-package org.wildfly.swarm.ts.javaee.jsonp;
+package org.wildfly.swarm.ts.javaee.jsonb;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
@@ -15,7 +15,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(Arquillian.class)
 @DefaultDeployment
-public class JsonpTest {
+public class JsonbTest {
     @Test
     @RunAsClient
     public void test() throws IOException {
