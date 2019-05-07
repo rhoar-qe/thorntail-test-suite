@@ -29,17 +29,20 @@ public class OpenTracingJaegerTest {
 
     @BeforeClass
     public static void setupJaeger() throws Exception {
-        jaegerContainer = new Docker("jaeger", "jaegertracing/all-in-one:latest")
+        jaegerContainer = new Docker("jaeger", "jaegertracing/all-in-one:1.11")
                 .waitForLogLine("\"Health Check state change\",\"status\":\"ready\"")
-                 // https://www.jaegertracing.io/docs/latest/getting-started/
+                // https://www.jaegertracing.io/docs/1.11/getting-started/
                 .port("5775:5775/udp")
                 .port("26831:6831/udp") // Jaeger port configured in project-defaults.yml
                 .port("6832:6832/udp")
                 .port("5778:5778")
                 .port("16686:16686")
+                .port("14250:14250")
+                .port("14267:14267")
                 .port("14268:14268")
                 .port("9411:9411")
                 .envVar("COLLECTOR_ZIPKIN_HTTP_PORT", "9411")
+                .cmdArg("--reporter.grpc.host-port=localhost:14250")
                 .start();
     }
 

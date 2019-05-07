@@ -21,6 +21,7 @@ public class Docker {
     private final String image;
     private final List<String> ports = new ArrayList<>();
     private final Map<String, String> environmentVariables = new HashMap<>();
+    private final List<String> commandArguments = new ArrayList<>();
     private String awaitedLogLine;
     private long waitTimeoutInMillis = 600_000; // 10 minutes
 
@@ -49,6 +50,11 @@ public class Docker {
         return this;
     }
 
+    public Docker cmdArg(String commandArgument) {
+        commandArguments.add(commandArgument);
+        return this;
+    }
+
     public DockerContainer start() throws Exception {
         List<String> cmd = new ArrayList<>();
 
@@ -71,6 +77,11 @@ public class Docker {
 
         cmd.add(image);
 
+        cmd.addAll(commandArguments);
+
+        System.out.println(Ansi.ansi().reset().a("Starting container ").fgCyan().a(name).reset()
+                .a(" with ID ").fgYellow().a(uuid).reset());
+
         Process dockerRunProcess = new ProcessBuilder()
                 .redirectErrorStream(true)
                 .command(cmd)
@@ -83,7 +94,7 @@ public class Docker {
             try (BufferedReader reader = new BufferedReader(new InputStreamReader(dockerRunProcess.getInputStream()))) {
                 String line;
                 while ((line = reader.readLine()) != null) {
-                    System.out.println(Ansi.ansi().fgCyan().a(name).fgDefault().a("> ").a(line));
+                    System.out.println(Ansi.ansi().fgCyan().a(name).reset().a("> ").a(line));
 
                     if (awaitedLogLine != null && line.contains(awaitedLogLine)) {
                         latch.countDown();
@@ -93,7 +104,7 @@ public class Docker {
             }
         });
 
-        DockerContainer result = new DockerContainer(uuid, outputPrinter);
+        DockerContainer result = new DockerContainer(name, uuid, outputPrinter);
 
         if (awaitedLogLine != null) {
             if (latch.await(waitTimeoutInMillis, TimeUnit.MILLISECONDS)) {
