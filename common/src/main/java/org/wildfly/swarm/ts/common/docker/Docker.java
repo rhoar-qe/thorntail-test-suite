@@ -1,6 +1,7 @@
 package org.wildfly.swarm.ts.common.docker;
 
 import org.fusesource.jansi.Ansi;
+import org.junit.rules.ExternalResource;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -16,7 +17,11 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
-public class Docker {
+/**
+ * Intended to be used as a JUnit {@link org.junit.ClassRule ClassRule}.
+ */
+public class Docker extends ExternalResource {
+    private final String uuid;
     private final String name;
     private final String image;
     private final List<String> ports = new ArrayList<>();
@@ -25,7 +30,10 @@ public class Docker {
     private String awaitedLogLine;
     private long waitTimeoutInMillis = 600_000; // 10 minutes
 
+    private final ExecutorService outputPrinter = Executors.newSingleThreadExecutor();
+
     public Docker(String name, String image) {
+        this.uuid = UUID.randomUUID().toString();
         this.name = name;
         this.image = image;
     }
@@ -55,10 +63,8 @@ public class Docker {
         return this;
     }
 
-    public DockerContainer start() throws Exception {
+    private void start() throws IOException, TimeoutException, InterruptedException {
         List<String> cmd = new ArrayList<>();
-
-        String uuid = UUID.randomUUID().toString();
 
         cmd.add("docker");
         cmd.add("run");
@@ -89,7 +95,6 @@ public class Docker {
 
         CountDownLatch latch = new CountDownLatch(1);
 
-        ExecutorService outputPrinter = Executors.newSingleThreadExecutor();
         outputPrinter.execute(() -> {
             try (BufferedReader reader = new BufferedReader(new InputStreamReader(dockerRunProcess.getInputStream()))) {
                 String line;
@@ -104,23 +109,54 @@ public class Docker {
             }
         });
 
-        DockerContainer result = new DockerContainer(name, uuid, outputPrinter);
-
         if (awaitedLogLine != null) {
             if (latch.await(waitTimeoutInMillis, TimeUnit.MILLISECONDS)) {
-                return result;
+                return;
             }
 
             try {
-                result.stop();
+                stop();
             } catch (Exception ignored) {
                 // ignored because we're about to throw another exception
             }
 
             throw new TimeoutException("Container '" + name + " (" + uuid + ")' didn't print '"
                     + awaitedLogLine + "' in " + waitTimeoutInMillis + " ms");
-        } else {
-            return result;
+        }
+    }
+
+    private void stop() throws IOException, InterruptedException {
+        System.out.println(Ansi.ansi().reset().a("Stopping container ").fgCyan().a(name).reset()
+                .a(" with ID ").fgYellow().a(uuid).reset());
+
+        new ProcessBuilder()
+                .command("docker", "stop", uuid)
+                .start()
+                .waitFor(10, TimeUnit.SECONDS);
+
+        outputPrinter.shutdown();
+        outputPrinter.awaitTermination(10, TimeUnit.SECONDS);
+
+        new ProcessBuilder()
+                .command("docker", "rm", uuid)
+                .start()
+                .waitFor(10, TimeUnit.SECONDS);
+    }
+
+    // ---
+
+    @Override
+    protected void before() throws Throwable {
+        start();
+    }
+
+    @Override
+    protected void after() {
+        try {
+            stop();
+        } catch (IOException | InterruptedException e) {
+            System.out.println(Ansi.ansi().reset().a("Failed stopping container ").fgCyan().a(name).reset()
+                    .a(" with ID ").fgYellow().a(uuid).reset());
         }
     }
 }
