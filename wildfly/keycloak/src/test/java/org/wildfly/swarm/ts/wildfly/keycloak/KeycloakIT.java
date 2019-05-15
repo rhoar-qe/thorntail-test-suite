@@ -8,6 +8,7 @@ import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.message.BasicNameValuePair;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
+import org.junit.ClassRule;
 import org.junit.Test;
 import org.keycloak.admin.client.Keycloak;
 import org.keycloak.representations.idm.ClientRepresentation;
@@ -15,7 +16,6 @@ import org.keycloak.representations.idm.CredentialRepresentation;
 import org.keycloak.representations.idm.RealmRepresentation;
 import org.keycloak.representations.idm.UserRepresentation;
 import org.wildfly.swarm.ts.common.docker.Docker;
-import org.wildfly.swarm.ts.common.docker.DockerContainer;
 
 import javax.ws.rs.core.Response;
 import java.io.IOException;
@@ -30,21 +30,19 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class KeycloakIT {
     private static final Pattern LOGIN_FORM_URL_PATTERN = Pattern.compile("<form .*? action=\"(.*?)\"");
 
-    private static DockerContainer keycloakContainer;
+    @ClassRule
+    public static Docker keycloakContainer = new Docker("keycloak", "jboss/keycloak:" + System.getProperty("keycloak.version"))
+            .waitForLogLine("WFLYSRV0025: Keycloak")
+            .port("8180:8080")
+            .envVar("KEYCLOAK_USER", "admin")
+            .envVar("KEYCLOAK_PASSWORD", "admin");
 
     private static Keycloak keycloak;
 
     private static String userId;
 
     @BeforeClass
-    public static void setupKeycloak() throws Exception {
-        keycloakContainer = new Docker("keycloak", "jboss/keycloak:" + System.getProperty("keycloak.version"))
-                .waitForLogLine("WFLYSRV0025: Keycloak")
-                .port("8180:8080")
-                .envVar("KEYCLOAK_USER", "admin")
-                .envVar("KEYCLOAK_PASSWORD", "admin")
-                .start();
-
+    public static void setupKeycloak() {
         keycloak = Keycloak.getInstance("http://localhost:8180/auth", "master", "admin", "admin", "admin-cli");
 
         {
@@ -83,11 +81,9 @@ public class KeycloakIT {
     }
 
     @AfterClass
-    public static void tearDownKeycloak() throws IOException, InterruptedException {
+    public static void tearDownKeycloak() {
         keycloak.realms().realm("test-realm").remove();
         keycloak.close();
-
-        keycloakContainer.stop();
     }
 
     private static String getIdOfCreatedUser(Response response) {
