@@ -63,4 +63,10 @@ public class TracedService {
         tracer.activeSpan().log("twoWildcard: " + id + ", " + txt);
         return "Hello from twoWildcard: " + id + ", " + txt;
     }
+
+    @Traced
+    public String traceError() {
+        tracer.activeSpan().log("traceError");
+        throw new RuntimeException();
+    }
 }

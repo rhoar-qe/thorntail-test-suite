@@ -1,16 +1,12 @@
 package org.wildfly.swarm.ts.microprofile.opentracing.v13;
 
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import org.apache.http.client.fluent.Request;
-import org.assertj.core.api.Assertions;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.junit.InSequence;
@@ -20,7 +16,14 @@ import org.junit.runner.RunWith;
 import org.wildfly.swarm.arquillian.DefaultDeployment;
 import org.wildfly.swarm.ts.common.docker.Docker;
 
+import java.io.IOException;
+import java.util.AbstractMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
+
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 import static org.awaitility.Awaitility.await;
 
 @RunWith(Arquillian.class)
@@ -32,7 +35,7 @@ public class MPOpenTracing13Test {
 
     private static final String URL_REST = "http://localhost:8080/rest/";
 
-    private ImmutableMap<String, String> URL_TO_RESPONSES = ImmutableMap.<String, String>builder()
+    private Map<String, String> URL_TO_RESPONSES = ImmutableMap.<String, String>builder()
             .put("tracedlogged", "Hello from tracedLoggedMethod")
             .put("traced", "Hello from tracedMethod")
             .put("logged", "Hello from loggedMethod")
@@ -46,23 +49,30 @@ public class MPOpenTracing13Test {
             .put("test/1/hello", "Hello from twoWildcard: 1, hello")
             .build();
 
-    private List<Trace> EXPECTED_TRACES = Arrays.asList(
+    private Map<String, Integer> URL_EXPECTED_ERRORS = ImmutableMap.<String, Integer>builder()
+            .put("traceerror", 500)
+            .build();
+
+    private List<ExpectedTrace> EXPECTED_TRACES = ImmutableList.<ExpectedTrace>builder()
             // traced and tracer.span.logging combinations
-            new Trace("Resource.tracedLoggedMethod", null, PREFIX + "TracedService.tracedLoggedMethod", "tracer: tracedLoggedMethod"),
-            new Trace("Resource.tracedMethod", null, PREFIX + "TracedService.tracedMethod", null),
-            new Trace("Resource.loggedMethod", "tracer: loggedMethod"),
-            new Trace("Resource.notTracedNotLoggedMethod"),
+            .add(new ExpectedTrace("Resource.tracedLoggedMethod", null, null, PREFIX + "TracedService.tracedLoggedMethod", "event", "tracer: tracedLoggedMethod"))
+            .add(new ExpectedTrace("Resource.tracedMethod", null, null, PREFIX + "TracedService.tracedMethod", null, null))
+            .add(new ExpectedTrace("Resource.loggedMethod", "event", "tracer: loggedMethod"))
+            .add(new ExpectedTrace("Resource.notTracedNotLoggedMethod"))
             // operationName with on/off combination
-            new Trace("Resource.tracedNamedTrue", null, "operationName-should-appear-tracedNamedTrue", "tracedNamedTrue"),
-            new Trace("Resource.tracedTrue", null, PREFIX + "TracedService.tracedTrue", "tracedTrue"),
-            new Trace("Resource.tracedNamedFalse", "tracedNamedFalse"),
-            new Trace("Resource.tracedFalse", "tracedFalse"),
+            .add(new ExpectedTrace("Resource.tracedNamedTrue", null, null, "operationName-should-appear-tracedNamedTrue", "event", "tracedNamedTrue"))
+            .add(new ExpectedTrace("Resource.tracedTrue", null, null, PREFIX + "TracedService.tracedTrue", "event", "tracedTrue"))
+            .add(new ExpectedTrace("Resource.tracedNamedFalse", "event", "tracedNamedFalse"))
+            .add(new ExpectedTrace("Resource.tracedFalse", "event", "tracedFalse"))
             // two wild cards
-            new Trace("Resource.twoWildcard", null, PREFIX + "TracedService.twoWildcard", "twoWildcard: 1, hello")
-    );
+            .add(new ExpectedTrace("Resource.twoWildcard", null, null, PREFIX + "TracedService.twoWildcard", "event", "twoWildcard: 1, hello"))
+
+            // errors
+            .add(new ExpectedTrace("Resource.traceError", "event", "error", "error", "true", PREFIX + "TracedService.traceError", "error.object", "java.lang.RuntimeException", "error", "true"))
+            .build();
 
     @ClassRule
-    public static Docker jaegerContainer = new Docker("jaeger", "jaegertracing/all-in-one:latest")
+    public static Docker jaegerContainer = new Docker("jaeger", "jaegertracing/all-in-one:1.11")
             .waitForLogLine("\"Health Check state change\",\"status\":\"ready\"")
             // https://www.jaegertracing.io/docs/1.11/getting-started/
             .port("5775:5775/udp")
@@ -86,8 +96,19 @@ public class MPOpenTracing13Test {
                 assertThat(Request.Get(URL_REST + url).execute().returnContent().asString())
                         .isEqualTo(expectedResponse);
             } catch (IOException e) {
-                Assertions.fail("IOException occurred for url: " + URL_REST + url +
-                                        ", when expecting: \"" + expectedResponse + "\": " + e.getMessage());
+                fail("IOException occurred for url: " + URL_REST + url +
+                                        "when expecting: \"" + expectedResponse + "\": " + e.getMessage());
+            }
+        });
+
+        URL_EXPECTED_ERRORS.forEach((url, expectedResponse) -> {
+            try {
+                assertThat(Request.Get(URL_REST + url).execute().returnResponse().getStatusLine().getStatusCode())
+                        .as("Error response was expected for url: " + URL_REST + url)
+                        .isEqualTo(expectedResponse);
+            } catch (IOException e) {
+                fail("IOException occurred for url: " + URL_REST + url +
+                        " when expecting " + expectedResponse + ": " + e.getMessage());
             }
         });
     }
@@ -106,99 +127,112 @@ public class MPOpenTracing13Test {
 
             assertThat(data.size()).isEqualTo(EXPECTED_TRACES.size());
 
-            EXPECTED_TRACES.forEach(trace -> checkTrace(data,
-                                                        trace.getOperationName(),
-                                                        trace.getLog(),
-                                                        trace.getChildOperationName(),
-                                                        trace.getChildLog()));
+            EXPECTED_TRACES.forEach(trace -> checkTrace(data, trace));
         });
     }
 
-    private static void checkTrace(final JsonArray data, final String operationName, final String log,
-                                   final String childOperationName, final String childLog) {
+    private static void checkTrace(JsonArray data, ExpectedTrace trace) {
         assertThat(data).anySatisfy(element -> {
-            JsonObject elemObj = element.getAsJsonObject();
-            assertThat(elemObj.has("spans")).isTrue();
-            JsonArray spans = elemObj.getAsJsonArray("spans");
+            JsonObject traceJson = element.getAsJsonObject();
+            assertThat(traceJson.has("spans")).isTrue();
+            JsonArray spans = traceJson.getAsJsonArray("spans");
             if (spans.size() == 1) {
                 JsonObject span = spans.get(0).getAsJsonObject();
-                // check operation name match
-                assertThat(span.get("operationName").getAsString()).isEqualTo(operationName);
-                // check log is empty or has desired value from tracer
-                checkLogPart(log, span);
+                assertThat(span.get("operationName").getAsString()).isEqualTo(trace.operationName);
+                checkSpanLog(trace.log, span);
+                checkSpanTag(trace.tag, span);
             } else if (spans.size() == 2) {
-                if (childOperationName != null) {
-                    JsonObject span1 = spans.get(0).getAsJsonObject();
-                    JsonObject span2 = spans.get(1).getAsJsonObject();
-                    if (operationName.equals(span1.get("operationName").getAsString())) {
-                        checkLogPart(log, span1);
-                        // check child
-                        assertThat(childOperationName).isEqualTo(span2.get("operationName").getAsString());
-                        checkLogPart(childLog, span2);
-                    } else if (operationName.equals(span2.get("operationName").getAsString())) {
-                        checkLogPart(log, span2);
-                        // check child
-                        assertThat(childOperationName).isEqualTo(span1.get("operationName").getAsString());
-                        checkLogPart(childLog, span1);
-                    } else {
-                        Assertions.fail("Unable to find parent span with name: " + operationName);
-                    }
-                }
+                assertThat(trace.childOperationName).isNotNull();
+                assertThat(spans).anySatisfy(spanElement -> {
+                    JsonObject span = spanElement.getAsJsonObject();
+                    assertThat(span.get("operationName").getAsString()).isEqualTo(trace.operationName);
+                    checkSpanLog(trace.log, span);
+                    checkSpanTag(trace.tag, span);
+                });
+                assertThat(spans).anySatisfy(spanElement -> {
+                    JsonObject span = spanElement.getAsJsonObject();
+                    assertThat(span.get("operationName").getAsString()).isEqualTo(trace.childOperationName);
+                    checkSpanLog(trace.childLog, span);
+                    checkSpanTag(trace.childTag, span);
+                });
+            } else {
+                fail("Unexpected trace with " + spans.size() + " spans");
             }
         });
     }
 
-    private static void checkLogPart(String log, JsonObject span) {
-        JsonArray logArray = span.get("logs").getAsJsonArray();
-        // there should be only 0 or 1 log included
-        if (log == null) {
-            assertThat(logArray.size()).isEqualTo(0);
-        } else {
-            assertThat(logArray.size()).isEqualTo(1);
-            String logValue = logArray.get(0).getAsJsonObject().getAsJsonArray("fields").get(0).getAsJsonObject().get("value").getAsString();
-            assertThat(logValue).isEqualTo(log);
+    private static void checkSpanLog(Map.Entry<String, String> expectedLog, JsonObject span) {
+        if (expectedLog == null) {
+            return;
         }
+
+        JsonObject foundLog = null;
+        for (JsonElement log : span.get("logs").getAsJsonArray()) {
+            for (JsonElement logFieldElement : log.getAsJsonObject().getAsJsonArray("fields")) {
+                JsonObject logField = logFieldElement.getAsJsonObject();
+                if (logField.get("key").getAsString().equals(expectedLog.getKey())) {
+                    foundLog = logField;
+                    break;
+                }
+            }
+        }
+
+        assertThat(foundLog).isNotNull();
+        assertThat(foundLog.get("key").getAsString()).isEqualTo(expectedLog.getKey());
+        assertThat(foundLog.get("value").getAsString()).isEqualTo(expectedLog.getValue());
     }
 
-    private class Trace {
-        private String operationName;
-
-        private String log;
-
-        private String childOperationName;
-
-        private String childLog;
-
-        Trace(String operationName) {
-            new Trace(operationName, null);
+    private static void checkSpanTag(Map.Entry<String, String> expectedTag, JsonObject span) {
+        if (expectedTag == null) {
+            return;
         }
 
-        Trace(String operationName, String log) {
-            new Trace(operationName, log, null, null);
+        JsonObject foundTag = null;
+        for (JsonElement tag : span.get("tags").getAsJsonArray()) {
+            if (tag.getAsJsonObject().get("key").getAsString().equals(expectedTag.getKey())) {
+                foundTag = tag.getAsJsonObject();
+                break;
+            }
         }
 
-        Trace(String operationName, String log, String childOperationName, String childLog) {
+        assertThat(foundTag).isNotNull();
+        assertThat(foundTag.get("key").getAsString()).isEqualTo(expectedTag.getKey());
+        assertThat(foundTag.get("value").getAsString()).isEqualTo(expectedTag.getValue());
+    }
+
+    private class ExpectedTrace {
+        final String operationName;
+
+        final Map.Entry<String, String> log;
+
+        final Map.Entry<String, String> tag;
+
+        final String childOperationName;
+
+        final Map.Entry<String, String> childLog;
+
+        final Map.Entry<String, String> childTag;
+
+        ExpectedTrace(String operationName) {
+            this(operationName, null, null);
+        }
+
+        ExpectedTrace(String operationName, String logKey, String logValue) {
+            this(operationName, logKey, logValue, null, null, null);
+        }
+
+        ExpectedTrace(String operationName, String logKey, String logValue, String childOperationName, String childLogKey, String childLogValue) {
+            this(operationName, logKey, logValue, null, null, childOperationName, childLogKey, childLogValue, null, null);
+        }
+
+        ExpectedTrace(String operationName, String logKey, String logValue, String tagKey, String tagValue,
+                      String childOperationName, String childLogKey, String childLogValue, String childTagKey, String childTagValue) {
             this.operationName = GET_PREFIX + operationName;
-            this.log = log;
+            this.log = logKey != null ? new AbstractMap.SimpleImmutableEntry<>(logKey, logValue) : null;
+            this.tag = tagKey != null ? new AbstractMap.SimpleImmutableEntry<>(tagKey, tagValue) : null;
             this.childOperationName = childOperationName;
-            this.childLog = childLog;
-
-        }
-
-        String getOperationName() {
-            return operationName;
-        }
-
-        String getLog() {
-            return log;
-        }
-
-        String getChildOperationName() {
-            return childOperationName;
-        }
-
-        String getChildLog() {
-            return childLog;
+            this.childLog = childLogKey != null ? new AbstractMap.SimpleImmutableEntry<>(childLogKey, childLogValue) : null;
+            this.childTag = childTagKey != null ? new AbstractMap.SimpleImmutableEntry<>(childTagKey, childTagValue) : null;
         }
     }
 }
