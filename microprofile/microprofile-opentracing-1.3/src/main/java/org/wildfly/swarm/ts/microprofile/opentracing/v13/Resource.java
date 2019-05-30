@@ -65,4 +65,10 @@ public class Resource {
     public Response twoWildcard(@PathParam("id") long id, @PathParam("txt") String txt) {
         return Response.ok().entity(service.twoWildcard(id, txt)).build();
     }
+
+    @GET
+    @Path("/traceerror")
+    public Response traceError() {
+        return Response.ok().entity(service.traceError()).build();
+    }
 }
