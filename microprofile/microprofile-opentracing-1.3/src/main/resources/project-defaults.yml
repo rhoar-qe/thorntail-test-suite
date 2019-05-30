@@ -1,0 +1,5 @@
+thorntail:
+  jaeger:
+    service-name: test-traced-service
+    sampler-type: const
+    sampler-parameter: 1
