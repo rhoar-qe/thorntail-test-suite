@@ -13,6 +13,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.wildfly.swarm.arquillian.DefaultDeployment;
 import org.wildfly.swarm.ts.common.docker.Docker;
+import org.wildfly.swarm.ts.common.docker.DockerContainers;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -24,20 +25,7 @@ import static org.awaitility.Awaitility.await;
 @DefaultDeployment
 public class OpenTracingBasicTest {
     @ClassRule
-    public static Docker jaegerContainer = new Docker("jaeger", "jaegertracing/all-in-one:1.11")
-            .waitForLogLine("\"Health Check state change\",\"status\":\"ready\"")
-            // https://www.jaegertracing.io/docs/1.11/getting-started/
-            .port("5775:5775/udp")
-            .port("6831:6831/udp")
-            .port("6832:6832/udp")
-            .port("5778:5778")
-            .port("16686:16686")
-            .port("14250:14250")
-            .port("14267:14267")
-            .port("14268:14268")
-            .port("9411:9411")
-            .envVar("COLLECTOR_ZIPKIN_HTTP_PORT", "9411")
-            .cmdArg("--reporter.grpc.host-port=localhost:14250");
+    public static Docker jaegerContainer = DockerContainers.jaeger();
 
     @Test
     @InSequence(1)
