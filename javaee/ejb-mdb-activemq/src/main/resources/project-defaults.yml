@@ -1,0 +1,28 @@
+thorntail:
+  deployment:
+    org.apache.activemq:activemq-rar.rar:
+  resource-adapters:
+    resource-adapters:
+      activemq-ra:
+        archive: activemq-rar.rar
+        transaction-support: XATransaction
+        config-properties:
+          UseInboundSession:
+            value: false
+          UserName:
+            value: amq
+          Password:
+            value: amq
+          ServerUrl:
+            value: tcp://localhost:61616?jms.rmIdFromConnectionId=true
+        connection-definitions:
+          default:
+            jndi-name: java:global/jms/activemq
+            class-name: org.apache.activemq.ra.ActiveMQManagedConnectionFactory
+            same-rm-override: false
+  ejb3:
+    default-resource-adapter-name: activemq-ra
+  ee:
+    annotation-property-replacement: true
+    default-bindings-service:
+      jms-connection-factory: java:global/jms/activemq

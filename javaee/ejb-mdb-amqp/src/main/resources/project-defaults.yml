@@ -1,0 +1,27 @@
+thorntail:
+  deployment:
+    org.amqphub.jca:resource-adapter.rar:
+  resource-adapters:
+    resource-adapters:
+      amqp-ra:
+        archive: resource-adapter.rar
+        transaction-support: NoTransaction
+        connection-definitions:
+          default:
+            jndi-name: java:global/jms/amqp
+            class-name: org.jboss.resource.adapter.jms.JmsManagedConnectionFactory
+            config-properties:
+              ConnectionFactory:
+                value: my-factory
+              UserName:
+                value: amq
+              Password:
+                value: amq
+              JndiParameters:
+                value: "java.naming.factory.initial=org.apache.qpid.jms.jndi.JmsInitialContextFactory;connectionFactory.my-factory=amqp://${env.MESSAGING_SERVICE_HOST:localhost}:${env.MESSAGING_SERVICE_PORT:5672}"
+  ejb3:
+    default-resource-adapter-name: amqp-ra
+  ee:
+    annotation-property-replacement: true
+    default-bindings-service:
+      jms-connection-factory: java:global/jms/amqp
