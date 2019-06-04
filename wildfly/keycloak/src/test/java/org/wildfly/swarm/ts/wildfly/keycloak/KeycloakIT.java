@@ -16,6 +16,7 @@ import org.keycloak.representations.idm.CredentialRepresentation;
 import org.keycloak.representations.idm.RealmRepresentation;
 import org.keycloak.representations.idm.UserRepresentation;
 import org.wildfly.swarm.ts.common.docker.Docker;
+import org.wildfly.swarm.ts.common.docker.DockerContainers;
 
 import javax.ws.rs.core.Response;
 import java.io.IOException;
@@ -31,11 +32,7 @@ public class KeycloakIT {
     private static final Pattern LOGIN_FORM_URL_PATTERN = Pattern.compile("<form .*? action=\"(.*?)\"");
 
     @ClassRule
-    public static Docker keycloakContainer = new Docker("keycloak", "jboss/keycloak:" + System.getProperty("keycloak.version"))
-            .waitForLogLine("WFLYSRV0025: Keycloak")
-            .port("8180:8080")
-            .envVar("KEYCLOAK_USER", "admin")
-            .envVar("KEYCLOAK_PASSWORD", "admin");
+    public static Docker keycloakContainer = DockerContainers.keycloak();
 
     private static Keycloak keycloak;
 
