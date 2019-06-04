@@ -1,0 +1,27 @@
+thorntail:
+  deployment:
+    org.apache.activemq.examples.modules:artemis-rar.rar:
+  resource-adapters:
+    resource-adapters:
+      artemis-ra:
+        archive: artemis-rar.rar
+        transaction-support: XATransaction
+        config-properties:
+          ConnectorClassName:
+            value: org.apache.activemq.artemis.core.remoting.impl.netty.NettyConnectorFactory
+          ConnectionParameters:
+            value: host=localhost;port=61616
+          UserName:
+            value: amq
+          Password:
+            value: amq
+        connection-definitions:
+          default:
+            jndi-name: java:global/jms/artemis
+            class-name: org.apache.activemq.artemis.ra.ActiveMQRAManagedConnectionFactory
+  ejb3:
+    default-resource-adapter-name: artemis-ra
+  ee:
+    annotation-property-replacement: true
+    default-bindings-service:
+      jms-connection-factory: java:global/jms/artemis

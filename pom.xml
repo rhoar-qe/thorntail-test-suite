@@ -22,6 +22,9 @@
         <module>javaee/concurrency</module>
         <module>javaee/datasources</module>
         <module>javaee/ejb</module>
+        <module>javaee/ejb-mdb-activemq</module>
+        <module>javaee/ejb-mdb-amqp</module>
+        <module>javaee/ejb-mdb-artemis</module>
         <module>javaee/el</module>
         <module>javaee/interceptors-cdi</module>
         <module>javaee/interceptors-ejb</module>
@@ -126,7 +129,9 @@
         <version.javax.enterprise.cdi-api>2.0.SP1</version.javax.enterprise.cdi-api>
         <version.junit.junit>4.12</version.junit.junit>
         <version.net.java.xadisk>1.2.2</version.net.java.xadisk>
-        <version.org.assertj.assertj-core>3.11.1</version.org.assertj.assertj-core>
+        <version.org.amqphub.jca.resource-adapter>1.0.0</version.org.amqphub.jca.resource-adapter>
+        <version.org.apache.activemq.activemq-rar>5.15.9</version.org.apache.activemq.activemq-rar>
+        <version.org.apache.activemq.examples.modules.artemis-rar>2.8.1</version.org.apache.activemq.examples.modules.artemis-rar>
         <version.org.apache.httpcomponents.httpclient>4.5.5</version.org.apache.httpcomponents.httpclient>
         <version.org.apache.maven.plugins.maven-clean-plugin>3.1.0</version.org.apache.maven.plugins.maven-clean-plugin>
         <version.org.apache.maven.plugins.maven-compiler-plugin>3.7.0</version.org.apache.maven.plugins.maven-compiler-plugin>
@@ -134,6 +139,7 @@
         <version.org.apache.maven.plugins.maven-resources-plugin>3.0.2</version.org.apache.maven.plugins.maven-resources-plugin>
         <version.org.apache.maven.plugins.maven-surefire-plugin>2.21.0</version.org.apache.maven.plugins.maven-surefire-plugin>
         <version.org.apache.maven.plugins.maven-war-plugin>3.2.0</version.org.apache.maven.plugins.maven-war-plugin>
+        <version.org.assertj.assertj-core>3.11.1</version.org.assertj.assertj-core>
         <version.org.awaitility>3.1.5</version.org.awaitility>
         <version.org.codehaus.mojo.keytool-maven-plugin>1.5</version.org.codehaus.mojo.keytool-maven-plugin>
         <version.org.eclipse.microprofile>1.4</version.org.eclipse.microprofile>
