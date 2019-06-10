@@ -240,8 +240,8 @@ public class MicroProfileHollowJarIT {
     @Test
     public void metrics_4_prometheusData() throws IOException {
         String response = Request.Get("http://localhost:8080/metrics").execute().returnContent().asString();
-        assertThat(response).contains("application:hello_count 11.0");
-        assertThat(response).contains("application:hello_freq_total 11.0");
+        assertThat(response).contains("application_hello_count_total 11.0");
+        assertThat(response).contains("application_hello_freq_total 11.0");
     }
 
     private static PrivateKey loadPrivateKey() throws IOException, GeneralSecurityException {

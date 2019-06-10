@@ -105,7 +105,7 @@
                             <goal>start</goal>
                         </goals>
                         <configuration>
-                            <name>swarm</name>
+                            <name>thorntail</name>
                             <workingDir>${project.build.directory}</workingDir>
                             <arguments>
                                 <argument>${java.home}/bin/java</argument>
