@@ -1,6 +1,7 @@
-package org.wildfly.swarm.ts.hollow.jar.microprofile.metrics.v10;
+package org.wildfly.swarm.ts.microprofile.metrics.v20;
 
 import org.eclipse.microprofile.metrics.MetricUnits;
+import org.eclipse.microprofile.metrics.annotation.ConcurrentGauge;
 import org.eclipse.microprofile.metrics.annotation.Counted;
 import org.eclipse.microprofile.metrics.annotation.Metered;
 import org.eclipse.microprofile.metrics.annotation.Timed;
@@ -9,12 +10,13 @@ import javax.enterprise.context.ApplicationScoped;
 import java.util.Random;
 
 @ApplicationScoped
-public class CountedTimedMeteredService {
+public class HelloService {
     @Counted(
             name = "hello-count",
             absolute = true,
             displayName = "Hello Count",
-            description = "Number of hello invocations"
+            description = "Number of hello invocations",
+            reusable = true
     )
     @Timed(
             unit = MetricUnits.MILLISECONDS,
@@ -29,8 +31,14 @@ public class CountedTimedMeteredService {
             displayName = "Hello Freq",
             description = "Frequency of hello invocations"
     )
+    @ConcurrentGauge(
+            name = "hello-invocations",
+            absolute = true,
+            displayName = "Hello Invocations",
+            description = "Number of current hello invocations"
+    )
     public String hello() throws InterruptedException {
         Thread.sleep(new Random().nextInt(100) + 1);
-        return "Hello from counted and timed and metered method";
+        return "Hello from counted and timed and metered and concurrent-gauged method";
     }
 }

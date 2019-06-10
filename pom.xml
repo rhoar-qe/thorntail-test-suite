@@ -76,8 +76,7 @@
         <module>microprofile/microprofile-health-check-2.0</module>
         <module>microprofile/microprofile-jwt-1.0</module>
         <module>microprofile/microprofile-jwt-1.1</module>
-        <module>microprofile/microprofile-metrics-1.0</module>
-        <module>microprofile/microprofile-metrics-1.1</module>
+        <module>microprofile/microprofile-metrics-2.0</module>
         <module>microprofile/microprofile-fault-tolerance-1.0</module>
         <module>microprofile/microprofile-fault-tolerance-2.0</module>
         <module>microprofile/microprofile-openapi-1.0</module>
