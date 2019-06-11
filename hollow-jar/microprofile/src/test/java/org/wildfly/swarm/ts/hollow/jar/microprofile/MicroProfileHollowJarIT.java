@@ -184,18 +184,18 @@ public class MicroProfileHollowJarIT {
         String response = Request.Get("http://localhost:8080/health").execute().returnContent().asString();
         JsonElement json = new JsonParser().parse(response);
         assertThat(json.isJsonObject()).isTrue();
-        assertThat(json.getAsJsonObject().has("outcome")).isTrue();
-        assertThat(json.getAsJsonObject().get("outcome").getAsString()).isEqualTo("UP");
+        assertThat(json.getAsJsonObject().has("status")).isTrue();
+        assertThat(json.getAsJsonObject().get("status").getAsString()).isEqualTo("UP");
         assertThat(json.getAsJsonObject().has("checks")).isTrue();
         JsonArray checks = json.getAsJsonObject().getAsJsonArray("checks");
         assertThat(checks.size()).isEqualTo(1);
         JsonObject check = checks.get(0).getAsJsonObject();
         assertThat(check.has("name")).isTrue();
-        assertThat(check.get("name").getAsString()).isEqualTo("elvis-lives");
-        assertThat(check.has("state")).isTrue();
-        assertThat(check.get("state").getAsString()).isEqualTo("UP");
+        assertThat(check.get("name").getAsString()).isEqualTo("health");
+        assertThat(check.has("status")).isTrue();
+        assertThat(check.get("status").getAsString()).isEqualTo("UP");
         assertThat(check.has("data")).isTrue();
-        assertThat(check.get("data").getAsJsonObject().get("it's").getAsString()).isEqualTo("true");
+        assertThat(check.get("data").getAsJsonObject().get("key").getAsString()).isEqualTo("value");
     }
 
     @Test
