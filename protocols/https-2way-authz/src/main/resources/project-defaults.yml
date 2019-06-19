@@ -1,0 +1,50 @@
+thorntail:
+  management:
+    security-realms:
+      my-ssl-realm:
+        ssl-server-identity:
+          keystore-path: ${project.build.directory}/server-keystore.jks
+          keystore-password: server-password
+          alias: server-key
+          key-password: server-password
+        truststore-authentication:
+          keystore-path: ${project.build.directory}/server-truststore.jks
+          keystore-password: server-password
+  security:
+    security-domains:
+      my-security-domain:
+        classic-jsse:
+          keystore:
+            url: ${project.build.directory}/server-keystore.jks
+            password: server-password
+          truststore:
+            url: ${project.build.directory}/server-truststore.jks
+            password: server-password
+          client-auth: true
+        classic-authentication:
+          login-modules:
+            my-login-module:
+              code: CertificateRoles
+              flag: required
+              module-options:
+                securityDomain: my-security-domain
+                verifier: org.jboss.security.auth.certs.AnyCertVerifier
+  undertow:
+    servers:
+      default-server:
+        https-listeners:
+          my-https-listener:
+            security-realm: my-ssl-realm
+            socket-binding: https
+            verify-client: REQUESTED
+  deployment:
+    # for the Arquillian test
+    Https2wayAuthzTest.war:
+      web:
+        login-config:
+          auth-method: CLIENT-CERT
+          security-domain: my-security-domain
+        security-constraints:
+        - url-pattern: /secured/*
+          roles:
+          - UserRole

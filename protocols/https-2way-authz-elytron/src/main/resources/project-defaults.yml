@@ -1,0 +1,80 @@
+thorntail:
+  elytron:
+    key-stores:
+      my-key-store:
+        path: ${project.build.directory}/server-keystore.jks
+        type: JKS
+        credential-reference:
+          clear-text: server-password
+      my-trust-store:
+        path: ${project.build.directory}/server-truststore.jks
+        type: JKS
+        credential-reference:
+          clear-text: server-password
+    key-managers:
+      my-key-manager:
+        key-store: my-key-store
+        alias-filter: server-key
+        credential-reference:
+          clear-text: server-password
+    trust-managers:
+      my-trust-manager:
+        key-store: my-trust-store
+    server-ssl-contexts:
+      my-server-ssl-context:
+        key-manager: my-key-manager
+        trust-manager: my-trust-manager
+        want-client-auth: true
+        protocols:
+        - TLSv1.2
+    key-store-realms:
+      my-truststore-realm:
+        key-store: my-trust-store
+    properties-realms:
+      my-roles-realm:
+        users-properties:
+          path: ${project.build.directory}/classes/unused.properties
+        groups-properties:
+          path: ${project.build.directory}/classes/roles.properties
+        groups-attribute: Roles
+    aggregate-realms:
+      my-security-realm:
+        authentication-realm: my-truststore-realm
+        authorization-realm: my-roles-realm
+    x500-attribute-principal-decoders:
+      my-cn-decoder:
+        attribute-name: CN
+        maximum-segments: 1
+    regex-principal-transformers:
+      my-cn-to-cert-transformer:
+        pattern: "(.*)"
+        replacement: "$1-cert"
+    security-domains:
+      my-security-domain:
+        realms:
+        - realm: my-security-realm
+        default-realm: my-security-realm
+        principal-decoder: my-cn-decoder
+        pre-realm-principal-transformer: my-cn-to-cert-transformer
+        permission-mapper: default-permission-mapper
+  undertow:
+    application-security-domains:
+      my-application-security-domain:
+        security-domain: my-security-domain
+    servers:
+      default-server:
+        https-listeners:
+          my-https-listener:
+            ssl-context: my-server-ssl-context
+            socket-binding: https
+  deployment:
+    # for the Arquillian test
+    Https2wayAuthzElytronTest.war:
+      web:
+        login-config:
+          auth-method: CLIENT-CERT
+          security-domain: my-application-security-domain
+        security-constraints:
+        - url-pattern: /secured/*
+          roles:
+          - UserRole

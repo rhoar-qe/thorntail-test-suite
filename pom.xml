@@ -99,6 +99,12 @@
 
         <module>protocols/ajp</module>
         <module>protocols/https</module>
+        <module>protocols/https-1way</module> <!-- same as protocols/https, but more verbose/low-level configuration -->
+        <module>protocols/https-2way</module>
+        <module>protocols/https-2way-authz</module>
+        <module>protocols/https-1way-elytron</module> <!-- same as protocols/https-1way, but using Elytron -->
+        <module>protocols/https-2way-elytron</module> <!-- same as protocols/https-2way, but using Elytron -->
+        <module>protocols/https-2way-authz-elytron</module> <!-- same as protocols/https-2way-authz, but using Elytron -->
 
         <module>fraction-autodetection/cdi-jaxrs-ejb</module>
         <module>fraction-autodetection/jsonp-servlet</module>
