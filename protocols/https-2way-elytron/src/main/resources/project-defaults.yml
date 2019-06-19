@@ -1,0 +1,36 @@
+thorntail:
+  elytron:
+    key-stores:
+      my-key-store:
+        path: ${project.build.directory}/server-keystore.jks
+        type: JKS
+        credential-reference:
+          clear-text: server-password
+      my-trust-store:
+        path: ${project.build.directory}/server-truststore.jks
+        type: JKS
+        credential-reference:
+          clear-text: server-password
+    key-managers:
+      my-key-manager:
+        key-store: my-key-store
+        alias-filter: server-key
+        credential-reference:
+          clear-text: server-password
+    trust-managers:
+      my-trust-manager:
+        key-store: my-trust-store
+    server-ssl-contexts:
+      my-server-ssl-context:
+        key-manager: my-key-manager
+        trust-manager: my-trust-manager
+        need-client-auth: true
+        protocols:
+          - TLSv1.2
+  undertow:
+    servers:
+      default-server:
+        https-listeners:
+          my-https-listener:
+            ssl-context: my-server-ssl-context
+            socket-binding: https

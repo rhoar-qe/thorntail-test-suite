@@ -1,4 +1,4 @@
-package org.wildfly.swarm.ts.protocols.https;
+package org.wildfly.swarm.ts.protocols.https.twoway.elytron;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;

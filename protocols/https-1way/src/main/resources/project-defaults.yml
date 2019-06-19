@@ -1,0 +1,16 @@
+thorntail:
+  management:
+    security-realms:
+      my-ssl-realm:
+        ssl-server-identity:
+          keystore-path: ${project.build.directory}/server-keystore.jks
+          keystore-password: server-password
+          alias: server-key
+          key-password: server-password
+  undertow:
+    servers:
+      default-server:
+        https-listeners:
+          my-https-listener:
+            security-realm: my-ssl-realm
+            socket-binding: https
