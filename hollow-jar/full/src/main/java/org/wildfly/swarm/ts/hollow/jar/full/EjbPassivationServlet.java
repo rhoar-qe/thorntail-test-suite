@@ -16,7 +16,7 @@ import java.io.IOException;
 @WebServlet("/ejbpassivation")
 public class EjbPassivationServlet extends HttpServlet {
     @Inject
-    private ProcessResult processResult;
+    private Result result;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
@@ -30,7 +30,7 @@ public class EjbPassivationServlet extends HttpServlet {
                 throw new ServletException(e);
             }
         } else {
-            processResult.getWrittenItems().forEach(resp.getWriter()::println);
+            result.getItems().forEach(resp.getWriter()::println);
         }
     }
 }

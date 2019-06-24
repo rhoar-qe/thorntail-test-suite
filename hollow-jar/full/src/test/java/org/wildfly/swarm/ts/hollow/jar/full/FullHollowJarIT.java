@@ -49,7 +49,7 @@ public class FullHollowJarIT {
     public void setup() throws IOException {
         Awaitility.setDefaultPollInterval(10, TimeUnit.MILLISECONDS);
 
-        String response = Request.Get("http://localhost:8080/clear-process-result").execute().returnContent().asString();
+        String response = Request.Get("http://localhost:8080/clear-result").execute().returnContent().asString();
         assertThat(response).isEqualTo("OK");
     }
 

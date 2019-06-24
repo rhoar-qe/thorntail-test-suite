@@ -2,7 +2,6 @@ package org.wildfly.swarm.ts.hollow.jar.full;
 
 import javax.batch.operations.JobOperator;
 import javax.batch.runtime.BatchRuntime;
-import javax.batch.runtime.JobExecution;
 import javax.inject.Inject;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -14,7 +13,7 @@ import java.util.Properties;
 @WebServlet("/batch")
 public class BatchServlet extends HttpServlet {
     @Inject
-    private ProcessResult processResult;
+    private Result result;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -25,7 +24,7 @@ public class BatchServlet extends HttpServlet {
         }
 
         if (operation.equals("start")) {
-            processResult.clear();
+            result.clear();
 
             JobOperator jobOperator = BatchRuntime.getJobOperator();
             Properties jobProperties = new Properties();
@@ -36,7 +35,7 @@ public class BatchServlet extends HttpServlet {
 
             resp.getWriter().print(id);
         } else if (operation.equals("results")) {
-            processResult.getWrittenItems().forEach(resp.getWriter()::println);
+            result.getItems().forEach(resp.getWriter()::println);
         }
     }
 }

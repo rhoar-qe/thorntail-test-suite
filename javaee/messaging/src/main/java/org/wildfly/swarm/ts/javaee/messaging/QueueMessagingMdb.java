@@ -14,13 +14,13 @@ import javax.jms.TextMessage;
 })
 public class QueueMessagingMdb implements MessageListener {
     @Inject
-    private ProcessResult processResult;
+    private Result result;
 
     @Override
     public void onMessage(Message message) {
         try {
             String text = ((TextMessage) message).getText();
-            processResult.addWrittenItems(text);
+            result.addItem(text);
         } catch (JMSException e) {
         }
     }

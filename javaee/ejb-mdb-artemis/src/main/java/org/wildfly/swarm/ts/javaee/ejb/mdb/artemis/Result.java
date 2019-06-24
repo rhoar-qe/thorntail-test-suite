@@ -3,18 +3,16 @@ package org.wildfly.swarm.ts.javaee.ejb.mdb.artemis;
 import javax.enterprise.context.ApplicationScoped;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Queue;
-import java.util.concurrent.ConcurrentLinkedQueue;
 
 @ApplicationScoped
 public class Result {
-    private Queue<String> items = new ConcurrentLinkedQueue<>();
+    private final List<String> items = new ArrayList<>();
 
-    public List<String> getItems() {
+    public synchronized List<String> getItems() {
         return new ArrayList<>(items);
     }
 
-    public void addItem(String item) {
+    public synchronized void addItem(String item) {
         this.items.add(item);
     }
 }

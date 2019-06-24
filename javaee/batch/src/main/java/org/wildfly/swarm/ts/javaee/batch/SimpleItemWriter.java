@@ -33,7 +33,7 @@ import javax.inject.Named;
 public class SimpleItemWriter extends AbstractItemWriter implements ItemWriter {
 
     @Inject
-    private ProcessResult processResult;
+    private Result result;
 
     @Override
     public void open(final Serializable checkpoint) throws Exception {
@@ -49,7 +49,7 @@ public class SimpleItemWriter extends AbstractItemWriter implements ItemWriter {
     public void writeItems(final List<Object> items) throws Exception {
         try {
             for (Object item : items) {
-                processResult.addWrittenItems(item);
+                result.addItem(item);
                 if (counter.incrementAndGet() == failAt) {
                     throw new IllegalStateException("Failed at " + failAt + " per request");
                 }

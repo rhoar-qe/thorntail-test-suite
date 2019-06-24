@@ -24,7 +24,7 @@ public class MessagingServlet extends HttpServlet {
     private Topic topic;
 
     @Inject
-    private ProcessResult processResult;
+    private Result result;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -35,7 +35,7 @@ public class MessagingServlet extends HttpServlet {
         }
 
         if (operation.equals("sendQueue")) {
-            processResult.clear();
+            result.clear();
 
             try (JMSContext context = connectionFactory.createContext()) {
                 context.createProducer().send(queue, "1 in queue");
@@ -43,7 +43,7 @@ public class MessagingServlet extends HttpServlet {
 
             resp.getWriter().print("OK");
         } else if (operation.equals("sendTopic")) {
-            processResult.clear();
+            result.clear();
 
             try (JMSContext context = connectionFactory.createContext()) {
                 context.createProducer().send(topic, "2 in topic");
@@ -51,7 +51,7 @@ public class MessagingServlet extends HttpServlet {
 
             resp.getWriter().print("OK");
         } else if (operation.equals("results")) {
-            processResult.getWrittenItems().forEach(resp.getWriter()::println);
+            result.getItems().forEach(resp.getWriter()::println);
         }
     }
 }

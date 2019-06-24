@@ -1,6 +1,6 @@
 package org.wildfly.swarm.ts.hollow.jar.full.messaging;
 
-import org.wildfly.swarm.ts.hollow.jar.full.ProcessResult;
+import org.wildfly.swarm.ts.hollow.jar.full.Result;
 
 import javax.ejb.ActivationConfigProperty;
 import javax.ejb.MessageDriven;
@@ -16,13 +16,13 @@ import javax.jms.TextMessage;
 })
 public class QueueMessagingMdb implements MessageListener {
     @Inject
-    private ProcessResult processResult;
+    private Result result;
 
     @Override
     public void onMessage(Message message) {
         try {
             String text = ((TextMessage) message).getText();
-            processResult.addWrittenItems(text);
+            result.addItem(text);
         } catch (JMSException e) {
         }
     }
