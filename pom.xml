@@ -662,6 +662,8 @@ remove this line for bom-certified -->
             </activation>
             <modules>
                 <module>java11/http-client</module>
+
+                <module>java11/servlet-4.0</module>
             </modules>
         </profile>
     </profiles>
