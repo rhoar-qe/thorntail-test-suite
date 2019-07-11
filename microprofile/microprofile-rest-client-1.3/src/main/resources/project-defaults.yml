@@ -1,0 +1,20 @@
+thorntail:
+  management:
+    security-realms:
+      my-ssl-realm:
+        ssl-server-identity:
+          keystore-path: ${project.build.directory}/classes/server-keystore.jks
+          keystore-password: server-password
+          alias: server-key
+          key-password: server-password
+        truststore-authentication:
+          keystore-path: ${project.build.directory}/classes/server-truststore.jks
+          keystore-password: server-password
+  undertow:
+    servers:
+      default-server:
+        https-listeners:
+          my-https-listener:
+            security-realm: my-ssl-realm
+            socket-binding: https
+#            verify-client: REQUIRED -commented out to prevent client verification
