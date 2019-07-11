@@ -5,7 +5,7 @@ import javax.ws.rs.Path;
 
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
-@RegisterRestClient(configKey="myClientsKey")
+@RegisterRestClient(configKey = "myClientsKey")
 public interface ClientAutoCloseable extends AutoCloseable {
     @GET
     @Path("/rest/simple")

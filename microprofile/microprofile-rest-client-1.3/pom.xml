@@ -158,6 +158,25 @@
                             <noprompt>true</noprompt>
                         </configuration>
                     </execution>
+
+                    <execution>
+                        <id>unknown-client-keystore</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>generateKeyPair</goal>
+                        </goals>
+                        <configuration>
+                            <keystore>${project.build.directory}/classes/unknown-client-keystore.jks</keystore>
+                            <storepass>client-password</storepass>
+                            <alias>client-key</alias>
+                            <keypass>client-password</keypass>
+                            <dname>CN=unknown-client</dname>
+                            <sigalg>SHA1withRSA</sigalg>
+                            <validity>100</validity>
+                            <keyalg>RSA</keyalg>
+                            <keysize>2048</keysize>
+                        </configuration>
+                    </execution>
                 </executions>
             </plugin>
         </plugins>
