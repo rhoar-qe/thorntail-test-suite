@@ -6,7 +6,6 @@ import javax.ws.rs.core.Response;
 
 @Path("/")
 public class SimpleResource {
-
     @GET
     @Path("/simple")
     public Response simpleOperation() {
