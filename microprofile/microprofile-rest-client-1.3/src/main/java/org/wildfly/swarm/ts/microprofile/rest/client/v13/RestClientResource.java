@@ -74,33 +74,4 @@ public class RestClientResource {
         }
         return response;
     }
-
-    @GET
-    @Path("/ssl-client")
-    public String sslClient() throws GeneralSecurityException, IOException {
-        ClassLoader cl = Thread.currentThread().getContextClassLoader();
-        KeyStore keyStore = getKeyStore(cl.getResourceAsStream("/META-INF/client-keystore.jks"));
-        KeyStore trustStore = getKeyStore(cl.getResourceAsStream("/META-INF/client-truststore.jks"));
-
-        SslClient client = RestClientBuilder.newBuilder()
-                .baseUrl(new URL(HTTP_LOCALHOST_8080))
-                .keyStore(keyStore, PASSWORD)
-                .trustStore(trustStore)
-                .hostnameVerifier(new DefaultHostnameVerifier())
-                .build(SslClient.class);
-        return "SSL client got: " + client.simpleOperation();
-    }
-
-    @GET
-    @Path("/ssl-client-cdi")
-    public String sslClientCdi() {
-        SslClient client = CDI.current().select(SslClient.class, RestClient.LITERAL).get();
-        return "SSL client got: " + client.simpleOperation();
-    }
-
-    private static KeyStore getKeyStore(InputStream inputStream) throws GeneralSecurityException, IOException {
-        KeyStore keystore = KeyStore.getInstance("JKS");
-        keystore.load(inputStream, PASSWORD.toCharArray());
-        return keystore;
-    }
 }

@@ -14,7 +14,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 @RunWith(Arquillian.class)
 @DefaultDeployment
 public class MicroprofileRestClient13Test {
-
     @Test
     @RunAsClient
     public void configKey() throws IOException {
