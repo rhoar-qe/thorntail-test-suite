@@ -1,7 +1,5 @@
 package org.wildfly.swarm.ts.microprofile.rest.client.v13;
 
-import java.io.IOException;
-
 import org.apache.http.HttpResponse;
 import org.apache.http.client.fluent.Request;
 import org.apache.http.util.EntityUtils;
@@ -11,6 +9,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.wildfly.swarm.arquillian.DefaultDeployment;
 import org.wildfly.swarm.ts.microprofile.rest.client.v13.mediatype.ResourceMediaType;
+
+import java.io.IOException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
