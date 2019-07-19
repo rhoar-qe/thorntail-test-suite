@@ -131,7 +131,7 @@
         <version.com.icegreen.greenmail>1.5.10</version.com.icegreen.greenmail>
         <version.io.jaegertracing.everything>0.34.0</version.io.jaegertracing.everything>
         <version.io.jsonwebtoken.jjwt-everything>0.10.6</version.io.jsonwebtoken.jjwt-everything>
-        <version.io.thorntail>2.4.1.Final-SNAPSHOT</version.io.thorntail>
+        <version.io.thorntail>2.5.0.Final</version.io.thorntail>
         <version.javax.enterprise.cdi-api>2.0.SP1</version.javax.enterprise.cdi-api>
         <version.junit.junit>4.12</version.junit.junit>
         <version.net.java.xadisk>1.2.2</version.net.java.xadisk>
@@ -157,13 +157,13 @@
         <version.org.jboss.arquillian.drone>2.5.1</version.org.jboss.arquillian.drone>
         <version.org.jboss.marshalling>2.0.6.Final</version.org.jboss.marshalling>
         <version.org.jboss.remotingjmx>3.0.0.Final</version.org.jboss.remotingjmx>
-        <version.org.jboss.resteasy>3.6.2.Final</version.org.jboss.resteasy>
+        <version.org.jboss.resteasy>3.8.1.Final</version.org.jboss.resteasy>
         <version.org.jboss.spec.javax.ejb.jboss-ejb-api_3.2_spec>1.0.2.Final</version.org.jboss.spec.javax.ejb.jboss-ejb-api_3.2_spec>
         <version.org.jboss.spec.javax.json.jboss-json-api_1.1_spec>1.0.0.Final</version.org.jboss.spec.javax.json.jboss-json-api_1.1_spec>
         <version.org.jboss.spec.javax.servlet.jboss-servlet-api_4.0_spec>1.0.0.Final</version.org.jboss.spec.javax.servlet.jboss-servlet-api_4.0_spec>
-        <version.org.jboss.spec.javax.ws.rs.jboss-jaxrs-api_2.1_spec>1.0.2.Final</version.org.jboss.spec.javax.ws.rs.jboss-jaxrs-api_2.1_spec>
-        <version.org.jboss.spec.web.8.0.api>1.0.3.Final</version.org.jboss.spec.web.8.0.api>
-        <version.org.jboss.spec.all.8.0.api>1.0.3.Final</version.org.jboss.spec.all.8.0.api>
+        <version.org.jboss.spec.javax.ws.rs.jboss-jaxrs-api_2.1_spec>1.0.3.Final</version.org.jboss.spec.javax.ws.rs.jboss-jaxrs-api_2.1_spec>
+        <version.org.jboss.spec.web.8.0.api>1.0.4.Final</version.org.jboss.spec.web.8.0.api>
+        <version.org.jboss.spec.all.8.0.api>1.0.4.Final</version.org.jboss.spec.all.8.0.api>
         <version.org.jgroups>4.0.15.Final</version.org.jgroups>
         <version.org.keycloak.everything>4.8.3.Final</version.org.keycloak.everything>
         <version.org.kohsuke.ajp-client>1.0</version.org.kohsuke.ajp-client>
@@ -181,7 +181,10 @@ remove this line for EAP Client BOMs -->
 
         <!--
           - when updating version.io.thorntail, check and possibly update these properties as well:
+          -   version.io.jaegertracing.everything
+          -   version.javax.enterprise.cdi-api
           -   version.org.infinispan
+          -   version.org.jboss.marshalling
           -   version.org.jboss.remotingjmx
           -   version.org.jboss.resteasy
           -   version.org.jgroups
