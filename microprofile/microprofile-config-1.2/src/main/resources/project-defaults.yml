@@ -1,4 +1,4 @@
-swarm:
+thorntail:
   microprofile:
     config:
       config-sources:

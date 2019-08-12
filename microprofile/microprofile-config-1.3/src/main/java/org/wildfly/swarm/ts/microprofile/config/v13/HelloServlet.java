@@ -1,19 +1,18 @@
 package org.wildfly.swarm.ts.microprofile.config.v13;
 
-import java.io.IOException;
-import java.net.URI;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import org.eclipse.microprofile.config.Config;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import javax.inject.Inject;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.eclipse.microprofile.config.Config;
-import org.eclipse.microprofile.config.inject.ConfigProperty;
+import java.io.IOException;
+import java.net.URI;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 @WebServlet("/")
 public class HelloServlet extends HttpServlet {
@@ -101,9 +100,9 @@ public class HelloServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         // Check mapping rule: from config property name to environment variable
         // https://github.com/eclipse/microprofile-config/issues/264
-        final String key = "MY_ENVIRONMENT_VARIABLE";
-        final String keyDots = "MY.ENVIRONMENT.VARIABLE";
-        final String keyDotsLowercase = "my.environment.variable";
+        String key = "MY_ENVIRONMENT_VARIABLE";
+        String keyDots = "MY.ENVIRONMENT.VARIABLE";
+        String keyDotsLowercase = "my.environment.variable";
         resp.getWriter().println(key + ": " + config.getValue(key, String.class));
         resp.getWriter().println(keyDots + ": " + config.getValue(keyDots, String.class));
         resp.getWriter().println(keyDotsLowercase + ": " + config.getValue(keyDotsLowercase, String.class));
@@ -134,17 +133,16 @@ public class HelloServlet extends HttpServlet {
 
         // custom converter on custom class
         resp.getWriter().println("my.stringWrapper.property: " + stringWrapper.getProperty());
-        resp.getWriter().println("my.stringWrapper.property: " +
-                                         config.getValue("my.stringWrapper.property",
-                                                         StringWrapper.class).getProperty());
+        resp.getWriter().println("my.stringWrapper.property: "
+                + config.getValue("my.stringWrapper.property", StringWrapper.class).getProperty());
 
         String[] animals = config.getValue("my.animals.array.property", String[].class);
-        resp.getWriter().println("my.animals.array.property.array: " +
-                                         (animals.length == 2 ? animals[0] + ", " + animals[1]
-                                                 : "unexpected length: " + animals.length));
-        resp.getWriter().println("my.animals.array.property.array: " +
-                                         (myAnimalsArray.length == 2 ? myAnimalsArray[0] + ", " + myAnimalsArray[1]
-                                                 : "unexpected length: " + myAnimalsArray.length));
+        resp.getWriter().println("my.animals.array.property.array: " + (animals.length == 2
+                ? animals[0] + ", " + animals[1]
+                : "unexpected length: " + animals.length));
+        resp.getWriter().println("my.animals.array.property.array: " + (myAnimalsArray.length == 2
+                ? myAnimalsArray[0] + ", " + myAnimalsArray[1]
+                : "unexpected length: " + myAnimalsArray.length));
         resp.getWriter().println("my.animals.array.property.list: " + myAnimalsList);
         // Note: HashSet will sort set (Zebra, Alligator => Alligator, Zebra)
         resp.getWriter().println("myAnimalsSet.class: " + myAnimalsSet.getClass().toString());

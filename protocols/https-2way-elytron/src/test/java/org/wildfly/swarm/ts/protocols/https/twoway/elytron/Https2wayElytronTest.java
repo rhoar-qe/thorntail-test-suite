@@ -3,8 +3,6 @@ package org.wildfly.swarm.ts.protocols.https.twoway.elytron;
 import org.apache.http.client.fluent.Executor;
 import org.apache.http.client.fluent.Request;
 import org.apache.http.conn.ssl.DefaultHostnameVerifier;
-import org.apache.http.conn.ssl.NoopHostnameVerifier;
-import org.apache.http.conn.ssl.TrustAllStrategy;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.ssl.SSLContexts;
@@ -15,7 +13,7 @@ import org.junit.runner.RunWith;
 import org.wildfly.swarm.arquillian.DefaultDeployment;
 
 import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLHandshakeException;
+import javax.net.ssl.SSLException;
 import java.io.File;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
@@ -67,7 +65,7 @@ public class Https2wayElytronTest {
 
             assertThatThrownBy(() -> {
                 Executor.newInstance(httpClient).execute(Request.Get("https://localhost:8443/"));
-            }).isExactlyInstanceOf(SSLHandshakeException.class);
+            }).isInstanceOf(SSLException.class);
         }
     }
 
@@ -86,7 +84,7 @@ public class Https2wayElytronTest {
 
             assertThatThrownBy(() -> {
                 Executor.newInstance(httpClient).execute(Request.Get("https://localhost:8443/"));
-            }).isExactlyInstanceOf(SSLHandshakeException.class);
+            }).isInstanceOf(SSLException.class);
         }
     }
 
@@ -104,7 +102,7 @@ public class Https2wayElytronTest {
 
             assertThatThrownBy(() -> {
                 Executor.newInstance(httpClient).execute(Request.Get("https://localhost:8443/"));
-            }).isExactlyInstanceOf(SSLHandshakeException.class);
+            }).isInstanceOf(SSLException.class);
         }
     }
 }
