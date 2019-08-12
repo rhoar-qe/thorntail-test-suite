@@ -5,7 +5,6 @@ import org.apache.http.client.fluent.Request;
 import org.apache.http.entity.ContentType;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.arquillian.junit.InSequence;
 import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,22 +26,21 @@ public class EjbMdbArtemisTest {
 
     @Test
     @RunAsClient
-    @InSequence(1)
-    public void sendMessages() throws IOException {
+    public void sendAndReceiveMessages() throws IOException {
+        StringBuilder expected = new StringBuilder();
         for (int i = 0; i < 10; i++) {
-            HttpResponse response = Request.Post("http://localhost:8080/")
-                    .bodyString("msg " + i, ContentType.TEXT_PLAIN).execute().returnResponse();
-            assertThat(response.getStatusLine().getStatusCode()).isEqualTo(200);
-        }
-    }
+            expected.append("msg ").append(i);
 
-    @Test
-    @RunAsClient
-    @InSequence(2)
-    public void receivewMessages() {
-        String expected = "msg 0|msg 1|msg 2|msg 3|msg 4|msg 5|msg 6|msg 7|msg 8|msg 9";
-        await().atMost(5, TimeUnit.SECONDS).untilAsserted(() -> {
-            assertThat(Request.Get("http://localhost:8080/").execute().returnContent().asString()).isEqualTo(expected);
-        });
+            HttpResponse sendResponse = Request.Post("http://localhost:8080/")
+                    .bodyString("msg " + i, ContentType.TEXT_PLAIN).execute().returnResponse();
+            assertThat(sendResponse.getStatusLine().getStatusCode()).isEqualTo(200);
+
+            await().atMost(5, TimeUnit.SECONDS).untilAsserted(() -> {
+                String receiveResponse = Request.Get("http://localhost:8080/").execute().returnContent().asString();
+                assertThat(receiveResponse).isEqualTo(expected.toString());
+            });
+
+            expected.append("|");
+        }
     }
 }

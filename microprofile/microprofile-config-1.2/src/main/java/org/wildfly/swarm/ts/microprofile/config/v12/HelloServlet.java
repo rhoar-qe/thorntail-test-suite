@@ -23,8 +23,12 @@ public class HelloServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        String[] arrayProperty = config.getValue("arrayProperty", String[].class);
-        resp.getWriter().println("arrayproperty programatic: " + Arrays.toString(arrayProperty));
-        resp.getWriter().println("arrayproperty injected list: " + String.join(",", arrayPropertyList));
+        boolean programmatic = Boolean.parseBoolean(req.getParameter("programmatic"));
+        if (programmatic) {
+            String[] arrayProperty = config.getValue("arrayProperty", String[].class);
+            resp.getWriter().println("programmatic: " + Arrays.toString(arrayProperty));
+        } else {
+            resp.getWriter().println("injected: " + String.join(",", arrayPropertyList));
+        }
     }
 }
