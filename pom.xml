@@ -56,6 +56,8 @@
         <module>javaee/servlet-jpa-jta</module>
         <module>javaee/websocket</module>
 
+        <module>javaee8/websocket-1.1</module>
+
         <module>wildfly/cdi-config</module>
         <module>wildfly/hibernate-validator</module>
         <module>wildfly/infinispan</module>
