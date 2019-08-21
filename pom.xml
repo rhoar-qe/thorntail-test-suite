@@ -176,7 +176,7 @@ remove this line for EAP Client BOMs -->
 <!-- remove this line for EAP Client BOMs
 -->
 <!-- remove this line for EAP Client BOMs
-        <version.org.wildfly.client-bom>7.2.0.GA</version.org.wildfly.client-bom>
+        <version.org.wildfly.client-bom>7.2.3.GA</version.org.wildfly.client-bom>
 remove this line for EAP Client BOMs -->
         <version.org.xmlunit>2.6.2</version.org.xmlunit>
         <version.org.yaml.snakeyaml>1.24</version.org.yaml.snakeyaml>
