@@ -19,16 +19,36 @@ public class HelloServlet extends HttpServlet {
 
     @Inject
     @ConfigProperty(name = "arrayProperty")
-    private List<String> arrayPropertyList;
+    private String string;
+
+    @Inject
+    @ConfigProperty(name = "arrayProperty")
+    private String[] array;
+
+    @Inject
+    @ConfigProperty(name = "arrayProperty")
+    private List<String> list;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        boolean programmatic = Boolean.parseBoolean(req.getParameter("programmatic"));
-        if (programmatic) {
-            String[] arrayProperty = config.getValue("arrayProperty", String[].class);
-            resp.getWriter().println("programmatic: " + Arrays.toString(arrayProperty));
-        } else {
-            resp.getWriter().println("injected: " + String.join(",", arrayPropertyList));
+        switch (req.getParameter("mode")) {
+            case "injected-string":
+                resp.getWriter().print(string);
+                break;
+            case "injected-array":
+                resp.getWriter().print(String.join("; ", array));
+                break;
+            case "injected-list":
+                resp.getWriter().print(String.join("; ", list));
+                break;
+            case "lookup-string":
+                String string = config.getValue("arrayProperty", String.class);
+                resp.getWriter().print(string);
+                break;
+            case "lookup-array":
+                String[] array = config.getValue("arrayProperty", String[].class);
+                resp.getWriter().print(String.join("; ", array));
+                break;
         }
     }
 }

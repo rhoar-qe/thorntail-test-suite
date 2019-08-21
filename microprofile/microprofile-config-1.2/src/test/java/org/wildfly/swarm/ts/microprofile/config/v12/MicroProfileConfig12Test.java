@@ -16,15 +16,36 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class MicroProfileConfig12Test {
     @Test
     @RunAsClient
-    public void programmatic() throws IOException {
-        String response = Request.Get("http://localhost:8080?programmatic=true").execute().returnContent().asString();
-        assertThat(response).isEqualTo("programmatic: [element1, element2, element3, element41\\,element42]\n");
+    public void injectedString() throws IOException {
+        String response = Request.Get("http://localhost:8080?mode=injected-string").execute().returnContent().asString();
+        assertThat(response).isEqualTo("element1,element2\\\\,element3,element41\\,element42,ele\\\\ment5");
     }
 
     @Test
     @RunAsClient
-    public void injected() throws IOException {
-        String response = Request.Get("http://localhost:8080?programmatic=false").execute().returnContent().asString();
-        assertThat(response).isEqualTo("injected: element1,element2,element3,element41\\,element42\n");
+    public void injectedArray() throws IOException {
+        String response = Request.Get("http://localhost:8080?mode=injected-array").execute().returnContent().asString();
+        assertThat(response).isEqualTo("element1; element2\\; element3; element41,element42; ele\\ment5");
+    }
+
+    @Test
+    @RunAsClient
+    public void injectedList() throws IOException {
+        String response = Request.Get("http://localhost:8080?mode=injected-list").execute().returnContent().asString();
+        assertThat(response).isEqualTo("element1; element2\\; element3; element41,element42; ele\\ment5");
+    }
+
+    @Test
+    @RunAsClient
+    public void lookupString() throws IOException {
+        String response = Request.Get("http://localhost:8080?mode=lookup-string").execute().returnContent().asString();
+        assertThat(response).isEqualTo("element1,element2\\\\,element3,element41\\,element42,ele\\\\ment5");
+    }
+
+    @Test
+    @RunAsClient
+    public void lookupArray() throws IOException {
+        String response = Request.Get("http://localhost:8080?mode=lookup-array").execute().returnContent().asString();
+        assertThat(response).isEqualTo("element1; element2\\; element3; element41,element42; ele\\ment5");
     }
 }
