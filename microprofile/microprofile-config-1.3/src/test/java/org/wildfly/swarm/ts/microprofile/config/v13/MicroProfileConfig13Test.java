@@ -1,13 +1,13 @@
 package org.wildfly.swarm.ts.microprofile.config.v13;
 
-import java.io.IOException;
-
 import org.apache.http.client.fluent.Request;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.wildfly.swarm.arquillian.DefaultDeployment;
+
+import java.io.IOException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -52,6 +52,8 @@ public class MicroProfileConfig13Test {
     @RunAsClient
     public void testEmptyProperty() throws IOException {
         String response = Request.Get("http://localhost:8080/empty-properties").execute().returnContent().asString();
-        assertThat(response).isEqualTo("Empty system property: ''\nEmpty property in config file: ''\n");
+        assertThat(response)
+                .as("Expected non-compliant behavior, see https://github.com/smallrye/smallrye-config/blob/smallrye-config-1.3-1.0.0/testsuite/tck/tck-suite.xml")
+                .isEqualTo("Empty system property: 'Property my.empty.system.property not found'\nEmpty property in config file: 'Property my.empty.property.in.config.file not found'\n");
     }
 }

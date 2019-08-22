@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.NoSuchElementException;
 
 @WebServlet("/empty-properties")
 public class EmptyPropertiesServlet extends HttpServlet {
@@ -22,10 +23,18 @@ public class EmptyPropertiesServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         System.setProperty(EMPTY_PROPERTY, "");
 
-        String fromSystemProperty = config.getValue(EMPTY_PROPERTY, String.class);
+        String fromSystemProperty = getPossiblyEmptyConfigProperty(EMPTY_PROPERTY);
         resp.getWriter().println("Empty system property: '" + fromSystemProperty + "'");
 
-        String fromConfigFile = config.getValue(PROP_FILE_EMPTY_PROPERTY, String.class);
+        String fromConfigFile = getPossiblyEmptyConfigProperty(PROP_FILE_EMPTY_PROPERTY);
         resp.getWriter().println("Empty property in config file: '" + fromConfigFile + "'");
+    }
+
+    private String getPossiblyEmptyConfigProperty(String propertyName) {
+        try {
+            return config.getValue(propertyName, String.class);
+        } catch (NoSuchElementException e) {
+            return e.getMessage();
+        }
     }
 }
