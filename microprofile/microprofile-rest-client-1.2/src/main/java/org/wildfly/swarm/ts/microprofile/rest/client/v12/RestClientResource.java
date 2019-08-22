@@ -1,15 +1,14 @@
 package org.wildfly.swarm.ts.microprofile.rest.client.v12;
 
-import java.net.URI;
-import java.net.URL;
+import org.eclipse.microprofile.rest.client.RestClientBuilder;
+import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 import javax.enterprise.inject.spi.CDI;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
-
-import org.eclipse.microprofile.rest.client.RestClientBuilder;
-import org.eclipse.microprofile.rest.client.inject.RestClient;
+import java.net.URI;
+import java.net.URL;
 
 @Path("/client")
 public class RestClientResource {
@@ -29,17 +28,17 @@ public class RestClientResource {
 
     @GET
     @Path("/injected1")
-    public String injected() {
+    public String injected1() {
         return client1.simpleOperation1();
     }
 
     @GET
-    @Path("/programatic1")
-    public String programatic() throws Exception {
-        Client1 programaticRestClient = RestClientBuilder.newBuilder()
+    @Path("/programmatic1")
+    public String programmatic1() throws Exception {
+        Client1 programmaticRestClient = RestClientBuilder.newBuilder()
                 .baseUrl(new URL(HTTP_LOCALHOST_8080))
                 .build(Client1.class);
-        return programaticRestClient.simpleOperation1();
+        return programmaticRestClient.simpleOperation1();
     }
 
     @GET
@@ -49,8 +48,8 @@ public class RestClientResource {
     }
 
     @GET
-    @Path("/programatic2")
-    public String programatic2() { // using CDI
+    @Path("/programmatic2")
+    public String programmatic2() { // using CDI
         Client2 client = CDI.current().select(Client2.class, RestClient.LITERAL).get();
         return client.simpleOperation2();
     }
@@ -62,8 +61,8 @@ public class RestClientResource {
     }
 
     @GET
-    @Path("/programatic3")
-    public String programatic3() throws Exception {
+    @Path("/programmatic3")
+    public String programmatic3() throws Exception {
         Client3 client = RestClientBuilder.newBuilder()
                 .baseUri(new URI(HTTP_LOCALHOST_8080)) // since 1.1 New baseUri method on RestClientBuilder
                 .build(Client3.class);
