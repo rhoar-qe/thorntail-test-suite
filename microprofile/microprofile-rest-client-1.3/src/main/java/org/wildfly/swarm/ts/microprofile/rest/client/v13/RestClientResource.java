@@ -1,18 +1,13 @@
 package org.wildfly.swarm.ts.microprofile.rest.client.v13;
 
-import org.apache.http.conn.ssl.DefaultHostnameVerifier;
 import org.eclipse.microprofile.rest.client.RestClientBuilder;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 import javax.enterprise.inject.spi.CDI;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
-import java.io.IOException;
-import java.io.InputStream;
 import java.net.URI;
 import java.net.URL;
-import java.security.GeneralSecurityException;
-import java.security.KeyStore;
 
 @Path("/client")
 public class RestClientResource {

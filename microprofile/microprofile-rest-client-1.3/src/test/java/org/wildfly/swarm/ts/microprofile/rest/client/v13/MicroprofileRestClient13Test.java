@@ -33,7 +33,6 @@ public class MicroprofileRestClient13Test {
     public void closingOfClient() throws IOException {
         String response = Request.Get("http://localhost:8080/rest/client/manual-close").execute().returnContent().asString();
         assertThat(response).isEqualTo("Hello from endpoint, client was closed as expected.");
-
     }
 
     @Test
