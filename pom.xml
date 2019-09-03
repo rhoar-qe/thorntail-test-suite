@@ -58,6 +58,7 @@
 
         <module>javaee8/bean-validation-2.0</module>
         <module>javaee8/jpa-2.2</module>
+        <module>javaee8/jsf-2.3</module>
         <module>javaee8/jsonp-1.1</module>
         <module>javaee8/websocket-1.1</module>
 
