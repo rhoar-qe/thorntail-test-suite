@@ -57,6 +57,7 @@
         <module>javaee/websocket</module>
 
         <module>javaee8/jpa-2.2</module>
+        <module>javaee8/jsonp-1.1</module>
         <module>javaee8/websocket-1.1</module>
 
         <module>wildfly/cdi-config</module>
@@ -128,7 +129,7 @@
 
         <version.java>1.8</version.java>
 
-        <version.com.google.code.gson>2.8.3</version.com.google.code.gson>
+        <version.com.google.code.gson>2.8.5</version.com.google.code.gson>
         <version.com.google.guava>25.0-jre</version.com.google.guava>
         <version.com.h2database.h2>1.4.199</version.com.h2database.h2>
         <version.com.icegreen.greenmail>1.5.10</version.com.icegreen.greenmail>
