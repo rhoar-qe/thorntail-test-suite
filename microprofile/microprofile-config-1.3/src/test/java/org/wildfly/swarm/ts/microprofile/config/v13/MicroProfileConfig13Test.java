@@ -53,7 +53,7 @@ public class MicroProfileConfig13Test {
     public void testEmptyProperty() throws IOException {
         String response = Request.Get("http://localhost:8080/empty-properties").execute().returnContent().asString();
         assertThat(response)
-                .as("Expected non-compliant behavior, see https://github.com/smallrye/smallrye-config/blob/smallrye-config-1.3-1.0.0/testsuite/tck/tck-suite.xml")
-                .isEqualTo("Empty system property: 'Property my.empty.system.property not found'\nEmpty property in config file: 'Property my.empty.property.in.config.file not found'\n");
+                .as("Expected non-compliant behavior, see ENTSWM-671 and ENTSWM-682 as smallrye.config was downgraded to 1.3.6")
+                .isEqualTo("Empty system property: ''\nEmpty property in config file: ''\n");
     }
 }
