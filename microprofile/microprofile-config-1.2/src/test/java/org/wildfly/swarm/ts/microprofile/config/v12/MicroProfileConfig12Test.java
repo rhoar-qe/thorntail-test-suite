@@ -25,14 +25,14 @@ public class MicroProfileConfig12Test {
     @RunAsClient
     public void injectedArray() throws IOException {
         String response = Request.Get("http://localhost:8080?mode=injected-array").execute().returnContent().asString();
-        assertThat(response).isEqualTo("element1; element2\\,element3; element41,element42; ele\\\\ment5");
+        assertThat(response).isEqualTo("element1; element2\\; element3; element41,element42; ele\\ment5");
     }
 
     @Test
     @RunAsClient
     public void injectedList() throws IOException {
         String response = Request.Get("http://localhost:8080?mode=injected-list").execute().returnContent().asString();
-        assertThat(response).isEqualTo("element1; element2\\,element3; element41,element42; ele\\\\ment5");
+        assertThat(response).isEqualTo("element1; element2\\; element3; element41,element42; ele\\ment5");
     }
 
     @Test
@@ -46,6 +46,6 @@ public class MicroProfileConfig12Test {
     @RunAsClient
     public void lookupArray() throws IOException {
         String response = Request.Get("http://localhost:8080?mode=lookup-array").execute().returnContent().asString();
-        assertThat(response).isEqualTo("element1; element2\\,element3; element41,element42; ele\\\\ment5");
+        assertThat(response).isEqualTo("element1; element2\\; element3; element41,element42; ele\\ment5");
     }
 }
