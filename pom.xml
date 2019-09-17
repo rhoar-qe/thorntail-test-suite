@@ -508,6 +508,9 @@ remove this line for bom-certified -->
                     <configuration>
                         <!-- the default value of "true" is a real pain in multi-module projects -->
                         <failIfNoSpecifiedTests>false</failIfNoSpecifiedTests>
+                        <systemPropertyVariables>
+                            <org.apache.maven.user-settings>${session.request.userSettingsFile.path}</org.apache.maven.user-settings>
+                        </systemPropertyVariables>
                     </configuration>
                     <executions>
                         <execution>
@@ -537,6 +540,9 @@ remove this line for bom-certified -->
                     <configuration>
                         <!-- the default value of "true" is a real pain in multi-module projects -->
                         <failIfNoSpecifiedTests>false</failIfNoSpecifiedTests>
+                        <systemPropertyVariables>
+                            <org.apache.maven.user-settings>${session.request.userSettingsFile.path}</org.apache.maven.user-settings>
+                        </systemPropertyVariables>
                     </configuration>
                     <dependencies>
                         <dependency>
