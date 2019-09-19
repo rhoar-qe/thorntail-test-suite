@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+<h:head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Validate</title>
+</h:head>
+
+<h:body id="body">
+    <h:form id="form">
+        <h:inputText id="password1" value="#{passwordBean.password1}" required="true">
+            <f:validateBean validationGroups="javax.validation.groups.Default,org.wildfly.swarm.ts.javaee8.jsf.validation.PasswordValidationGroup"/>
+        </h:inputText>
+        <br/>
+
+        <h:inputText id="password2" value="#{passwordBean.password2}" rendered="true">
+            <f:validateBean validationGroups="javax.validation.groups.Default,org.wildfly.swarm.ts.javaee8.jsf.validation.PasswordValidationGroup"/>
+        </h:inputText>
+        <br/>
+
+        <f:validateWholeBean value="#{passwordBean}" validationGroups="org.wildfly.swarm.ts.javaee8.jsf.validation.PasswordValidationGroup"/>
+
+        <h:messages/>
+        <h:commandButton id="submitButton" value="OK"/>
+    </h:form>
+</h:body>
+</html>
