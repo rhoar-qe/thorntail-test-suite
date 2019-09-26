@@ -3,6 +3,7 @@ package org.wildfly.swarm.ts.protocols.https.twoway.elytron;
 import org.apache.http.client.fluent.Executor;
 import org.apache.http.client.fluent.Request;
 import org.apache.http.conn.ssl.DefaultHostnameVerifier;
+import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.ssl.SSLContexts;
@@ -24,6 +25,8 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @RunWith(Arquillian.class)
 @DefaultDeployment
 public class Https2wayElytronTest {
+    private static final String[] SUPPORTED_PROTOCOLS = {"TLSv1.2"};
+
     @Test
     @RunAsClient
     public void http() throws IOException {
@@ -39,9 +42,10 @@ public class Https2wayElytronTest {
                 .loadKeyMaterial(new File("target/client-keystore.jks"), clientPassword, clientPassword)
                 .loadTrustMaterial(new File("target/client-truststore.jks"), clientPassword)
                 .build();
+        SSLConnectionSocketFactory sslSocketFactory = new SSLConnectionSocketFactory(sslContext,
+                SUPPORTED_PROTOCOLS, null, new DefaultHostnameVerifier());
         try (CloseableHttpClient httpClient = HttpClients.custom()
-                .setSSLContext(sslContext)
-                .setSSLHostnameVerifier(new DefaultHostnameVerifier())
+                .setSSLSocketFactory(sslSocketFactory)
                 .build()) {
 
             String response = Executor.newInstance(httpClient)
@@ -58,9 +62,10 @@ public class Https2wayElytronTest {
         SSLContext sslContext = SSLContexts.custom()
                 .loadKeyMaterial(new File("target/client-keystore.jks"), clientPassword, clientPassword)
                 .build();
+        SSLConnectionSocketFactory sslSocketFactory = new SSLConnectionSocketFactory(sslContext,
+                SUPPORTED_PROTOCOLS, null, new DefaultHostnameVerifier());
         try (CloseableHttpClient httpClient = HttpClients.custom()
-                .setSSLContext(sslContext)
-                .setSSLHostnameVerifier(new DefaultHostnameVerifier())
+                .setSSLSocketFactory(sslSocketFactory)
                 .build()) {
 
             assertThatThrownBy(() -> {
@@ -77,9 +82,10 @@ public class Https2wayElytronTest {
                 .loadKeyMaterial(new File("target/unknown-client-keystore.jks"), clientPassword, clientPassword)
                 .loadTrustMaterial(new File("target/client-truststore.jks"), clientPassword)
                 .build();
+        SSLConnectionSocketFactory sslSocketFactory = new SSLConnectionSocketFactory(sslContext,
+                SUPPORTED_PROTOCOLS, null, new DefaultHostnameVerifier());
         try (CloseableHttpClient httpClient = HttpClients.custom()
-                .setSSLContext(sslContext)
-                .setSSLHostnameVerifier(new DefaultHostnameVerifier())
+                .setSSLSocketFactory(sslSocketFactory)
                 .build()) {
 
             assertThatThrownBy(() -> {
@@ -95,9 +101,10 @@ public class Https2wayElytronTest {
         SSLContext sslContext = SSLContexts.custom()
                 .loadKeyMaterial(new File("target/unknown-client-keystore.jks"), clientPassword, clientPassword)
                 .build();
+        SSLConnectionSocketFactory sslSocketFactory = new SSLConnectionSocketFactory(sslContext,
+                SUPPORTED_PROTOCOLS, null, new DefaultHostnameVerifier());
         try (CloseableHttpClient httpClient = HttpClients.custom()
-                .setSSLContext(sslContext)
-                .setSSLHostnameVerifier(new DefaultHostnameVerifier())
+                .setSSLSocketFactory(sslSocketFactory)
                 .build()) {
 
             assertThatThrownBy(() -> {
