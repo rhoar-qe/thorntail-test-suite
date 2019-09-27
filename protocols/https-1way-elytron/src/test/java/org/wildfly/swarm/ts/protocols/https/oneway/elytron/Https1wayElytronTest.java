@@ -3,8 +3,7 @@ package org.wildfly.swarm.ts.protocols.https.oneway.elytron;
 import org.apache.http.client.fluent.Executor;
 import org.apache.http.client.fluent.Request;
 import org.apache.http.conn.ssl.DefaultHostnameVerifier;
-import org.apache.http.conn.ssl.NoopHostnameVerifier;
-import org.apache.http.conn.ssl.TrustAllStrategy;
+import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.ssl.SSLContexts;
@@ -26,6 +25,8 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @RunWith(Arquillian.class)
 @DefaultDeployment
 public class Https1wayElytronTest {
+    private static final String[] SUPPORTED_PROTOCOLS = {"TLSv1.2"};
+
     @Test
     @RunAsClient
     public void http() throws IOException {
@@ -39,9 +40,10 @@ public class Https1wayElytronTest {
         SSLContext sslContext = SSLContexts.custom()
                 .loadTrustMaterial(new File("target/client-truststore.jks"), "client-password".toCharArray())
                 .build();
+        SSLConnectionSocketFactory sslSocketFactory = new SSLConnectionSocketFactory(sslContext,
+                SUPPORTED_PROTOCOLS, null, new DefaultHostnameVerifier());
         try (CloseableHttpClient httpClient = HttpClients.custom()
-                .setSSLContext(sslContext)
-                .setSSLHostnameVerifier(new DefaultHostnameVerifier())
+                .setSSLSocketFactory(sslSocketFactory)
                 .build()) {
 
             String response = Executor.newInstance(httpClient)
@@ -55,9 +57,10 @@ public class Https1wayElytronTest {
     @RunAsClient
     public void https_serverCertificateUnknownToClient() throws IOException {
         SSLContext sslContext = SSLContexts.createDefault();
+        SSLConnectionSocketFactory sslSocketFactory = new SSLConnectionSocketFactory(sslContext,
+                SUPPORTED_PROTOCOLS, null, new DefaultHostnameVerifier());
         try (CloseableHttpClient httpClient = HttpClients.custom()
-                .setSSLContext(sslContext)
-                .setSSLHostnameVerifier(new DefaultHostnameVerifier())
+                .setSSLSocketFactory(sslSocketFactory)
                 .build()) {
 
             assertThatThrownBy(() -> {
