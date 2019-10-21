@@ -54,6 +54,7 @@
         <module>javaee/servlet-cdi</module>
         <module>javaee/servlet-ejb</module>
         <module>javaee/servlet-jpa-jta</module>
+        <module>javaee/static-content</module>
         <module>javaee/websocket</module>
 
         <module>javaee8/bean-validation-2.0</module>
