@@ -1,0 +1,24 @@
+thorntail:
+  deployment:
+    BasicAuthTest.war:
+      web:
+        login-config:
+          auth-method: BASIC
+          security-domain: jaspitest
+        security-constraints:
+        - url-pattern: /api/*
+          methods:
+          - POST
+          roles:
+          - ADMIN
+        - url-pattern: /api/*
+          methods:
+          - GET
+          roles:
+          - ADMIN
+          - USER
+    FormAuthTest.war:
+      web:
+        login-config:
+          auth-method: BASIC
+          security-domain: jaspitest

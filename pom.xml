@@ -62,6 +62,7 @@
         <module>javaee8/jpa-2.2</module>
         <module>javaee8/jsf-2.3</module>
         <module>javaee8/jsonp-1.1</module>
+        <module>javaee8/security-1.0</module>
         <module>javaee8/websocket-1.1</module>
 
         <module>wildfly/cdi-config</module>
