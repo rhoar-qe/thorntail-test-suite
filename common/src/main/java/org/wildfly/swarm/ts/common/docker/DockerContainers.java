@@ -8,6 +8,9 @@ public class DockerContainers {
                 .waitForLogLine("AMQ241004: Artemis Console available")
                 .port("5672:5672") // AMQP
                 .port("61616:61616") // Artemis Core, OpenWire, etc.
+                .port("8161:8161") // web console
+                .tmpfsMount("/tmp/amq-data")
+                .envVar("AMQ_DATA_DIR", "/tmp/amq-data")
                 .envVar("AMQ_USER", "amq")
                 .envVar("AMQ_PASSWORD", "amq")
                 .envVar("AMQ_QUEUES", "my-queue");

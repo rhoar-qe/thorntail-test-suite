@@ -24,8 +24,7 @@ public class Docker extends ExternalResource {
     private final String uuid;
     private final String name;
     private final String image;
-    private final List<String> ports = new ArrayList<>();
-    private final Map<String, String> environmentVariables = new HashMap<>();
+    private final List<String> dockerArguments = new ArrayList<>();
     private final List<String> commandArguments = new ArrayList<>();
     private String awaitedLogLine;
     private long waitTimeoutInMillis = 600_000; // 10 minutes
@@ -49,12 +48,26 @@ public class Docker extends ExternalResource {
     }
 
     public Docker port(String port) {
-        this.ports.add(port);
+        dockerArguments.add("-p");
+        dockerArguments.add(port);
         return this;
     }
 
     public Docker envVar(String key, String value) {
-        environmentVariables.put(key, value);
+        dockerArguments.add("-e");
+        dockerArguments.add(key + "=" + value);
+        return this;
+    }
+
+    public Docker tmpfsMount(String directoryInContainer) {
+        dockerArguments.add("--tmpfs");
+        dockerArguments.add(directoryInContainer);
+        return this;
+    }
+
+    public Docker bindMount(String directoryOnHost, String directoryInContainer) {
+        dockerArguments.add("-v");
+        dockerArguments.add(directoryOnHost + ":" + directoryInContainer);
         return this;
     }
 
@@ -71,15 +84,7 @@ public class Docker extends ExternalResource {
         cmd.add("--name");
         cmd.add(uuid);
 
-        for (String port : ports) {
-            cmd.add("-p");
-            cmd.add(port);
-        }
-
-        for (Map.Entry<String, String> envVar : environmentVariables.entrySet()) {
-            cmd.add("-e");
-            cmd.add(envVar.getKey() + "=" + envVar.getValue());
-        }
+        cmd.addAll(dockerArguments);
 
         cmd.add(image);
 
