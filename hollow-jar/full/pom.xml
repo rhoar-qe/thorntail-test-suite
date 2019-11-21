@@ -42,7 +42,7 @@
         </dependency>
         <dependency>
             <groupId>org.jboss.spec</groupId>
-            <artifactId>jboss-javaee-all-8.0</artifactId>
+            <artifactId>jboss-jakartaee-all-8.0</artifactId>
             <type>pom</type>
             <scope>provided</scope>
         </dependency>
@@ -80,7 +80,7 @@
         <dependency>
             <!-- org.apache.activemq:artemis-jms-client requires this, but doesn't declare a dependency -->
             <groupId>org.glassfish</groupId>
-            <artifactId>javax.json</artifactId>
+            <artifactId>jakarta.json</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>

@@ -84,8 +84,8 @@ remove this line for "full" -->
         </dependency>
         <dependency>
             <!-- org.apache.activemq:artemis-jms-client requires this, but doesn't declare a dependency -->
-            <groupId>javax.json</groupId>
-            <artifactId>javax.json-api</artifactId>
+            <groupId>jakarta.json</groupId>
+            <artifactId>jakarta.json-api</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>

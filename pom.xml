@@ -133,71 +133,73 @@
 
         <version.java>1.8</version.java>
 
-        <version.com.google.code.gson>2.8.5</version.com.google.code.gson>
+        <version.com.google.code.gson>2.8.6</version.com.google.code.gson>
         <version.com.google.guava>25.0-jre</version.com.google.guava>
-        <version.com.h2database.h2>1.4.199</version.com.h2database.h2>
-        <version.com.icegreen.greenmail>1.5.10</version.com.icegreen.greenmail>
+        <version.com.h2database.h2>1.4.200</version.com.h2database.h2>
+        <version.com.icegreen.greenmail>1.5.11</version.com.icegreen.greenmail>
         <version.io.jaegertracing.everything>0.34.0</version.io.jaegertracing.everything>
-        <version.io.jsonwebtoken.jjwt-everything>0.10.6</version.io.jsonwebtoken.jjwt-everything>
+        <version.io.jsonwebtoken.jjwt-everything>0.10.7</version.io.jsonwebtoken.jjwt-everything>
         <version.io.thorntail>2.5.1.Final-SNAPSHOT</version.io.thorntail>
-        <version.javax.enterprise.cdi-api>2.0.SP1</version.javax.enterprise.cdi-api>
+        <version.jakarta.enterprise.cdi-api>2.0.2</version.jakarta.enterprise.cdi-api>
+        <version.jakarta.json-api>1.1.6</version.jakarta.json-api>
         <version.junit.junit>4.12</version.junit.junit>
         <version.net.java.xadisk>1.2.2</version.net.java.xadisk>
         <version.org.amqphub.jca.resource-adapter>1.0.0</version.org.amqphub.jca.resource-adapter>
-        <version.org.apache.activemq.activemq-rar>5.15.9</version.org.apache.activemq.activemq-rar>
-        <version.org.apache.activemq.examples.modules.artemis-rar>2.8.1</version.org.apache.activemq.examples.modules.artemis-rar>
-        <version.org.apache.httpcomponents.httpclient>4.5.9</version.org.apache.httpcomponents.httpclient>
+        <version.org.apache.activemq.activemq-rar>5.15.10</version.org.apache.activemq.activemq-rar>
+        <version.org.apache.activemq.examples.modules.artemis-rar>2.10.1</version.org.apache.activemq.examples.modules.artemis-rar>
+        <version.org.apache.httpcomponents.httpclient>4.5.10</version.org.apache.httpcomponents.httpclient>
         <version.org.apache.maven.plugins.maven-clean-plugin>3.1.0</version.org.apache.maven.plugins.maven-clean-plugin>
         <version.org.apache.maven.plugins.maven-compiler-plugin>3.8.1</version.org.apache.maven.plugins.maven-compiler-plugin>
         <version.org.apache.maven.plugins.maven-dependency-plugin>3.1.1</version.org.apache.maven.plugins.maven-dependency-plugin>
         <version.org.apache.maven.plugins.maven-resources-plugin>3.1.0</version.org.apache.maven.plugins.maven-resources-plugin>
         <version.org.apache.maven.plugins.maven-surefire-plugin>2.22.2</version.org.apache.maven.plugins.maven-surefire-plugin>
         <version.org.apache.maven.plugins.maven-war-plugin>3.2.3</version.org.apache.maven.plugins.maven-war-plugin>
-        <version.org.assertj.assertj-core>3.12.2</version.org.assertj.assertj-core>
-        <version.org.awaitility>3.1.6</version.org.awaitility>
+        <version.org.assertj.assertj-core>3.14.0</version.org.assertj.assertj-core>
+        <version.org.awaitility>4.0.1</version.org.awaitility>
         <version.org.codehaus.mojo.keytool-maven-plugin>1.5</version.org.codehaus.mojo.keytool-maven-plugin>
         <version.org.eclipse.microprofile>3.0</version.org.eclipse.microprofile>
         <version.org.fusesource.jansi>1.18</version.org.fusesource.jansi>
         <version.org.glassfish.tyrus>1.15</version.org.glassfish.tyrus>
         <version.org.honton.chas.process-exec-maven-plugin>0.9.2</version.org.honton.chas.process-exec-maven-plugin>
-        <version.org.infinispan>9.4.3.Final</version.org.infinispan>
-        <version.org.jboss.arquillian>1.4.1.Final</version.org.jboss.arquillian>
+        <version.org.infinispan>9.4.16.Final</version.org.infinispan>
+        <version.org.jboss.arquillian>1.5.0.Final</version.org.jboss.arquillian>
         <version.org.jboss.arquillian.drone>2.5.1</version.org.jboss.arquillian.drone>
-        <version.org.jboss.logmanager>2.1.5.Final</version.org.jboss.logmanager>
-        <version.org.jboss.marshalling>2.0.6.Final</version.org.jboss.marshalling>
-        <version.org.jboss.remotingjmx>3.0.0.Final</version.org.jboss.remotingjmx>
-        <version.org.jboss.resteasy>3.9.0.Final</version.org.jboss.resteasy>
-        <version.org.jboss.spec.javax.ejb.jboss-ejb-api_3.2_spec>1.0.2.Final</version.org.jboss.spec.javax.ejb.jboss-ejb-api_3.2_spec>
-        <version.org.jboss.spec.javax.json.jboss-json-api_1.1_spec>1.0.0.Final</version.org.jboss.spec.javax.json.jboss-json-api_1.1_spec>
-        <version.org.jboss.spec.javax.servlet.jboss-servlet-api_4.0_spec>1.0.0.Final</version.org.jboss.spec.javax.servlet.jboss-servlet-api_4.0_spec>
-        <version.org.jboss.spec.javax.ws.rs.jboss-jaxrs-api_2.1_spec>1.0.3.Final</version.org.jboss.spec.javax.ws.rs.jboss-jaxrs-api_2.1_spec>
-        <version.org.jboss.spec.web.8.0.api>1.0.4.Final</version.org.jboss.spec.web.8.0.api>
-        <version.org.jboss.spec.all.8.0.api>1.0.4.Final</version.org.jboss.spec.all.8.0.api>
-        <version.org.jgroups>4.0.15.Final</version.org.jgroups>
+        <version.org.jboss.logmanager>2.1.14.Final</version.org.jboss.logmanager>
+        <version.org.jboss.marshalling>2.0.9.Final</version.org.jboss.marshalling>
+        <version.org.jboss.remotingjmx>3.0.3.Final</version.org.jboss.remotingjmx>
+        <version.org.jboss.resteasy>3.9.1.Final</version.org.jboss.resteasy>
+        <version.org.jboss.spec.javax.ejb.jboss-ejb-api_3.2_spec>2.0.0.Final</version.org.jboss.spec.javax.ejb.jboss-ejb-api_3.2_spec>
+        <version.org.jboss.spec.javax.servlet.jboss-servlet-api_4.0_spec>2.0.0.Final</version.org.jboss.spec.javax.servlet.jboss-servlet-api_4.0_spec>
+        <version.org.jboss.spec.javax.ws.rs.jboss-jaxrs-api_2.1_spec>2.0.0.Final</version.org.jboss.spec.javax.ws.rs.jboss-jaxrs-api_2.1_spec>
+        <version.org.jboss.spec.jakartaee-web-8.0>1.0.0.Final</version.org.jboss.spec.jakartaee-web-8.0>
+        <version.org.jboss.spec.jakartaee-all-8.0>1.0.0.Final</version.org.jboss.spec.jakartaee-all-8.0>
+        <version.org.jgroups>4.1.4.Final</version.org.jgroups>
         <version.org.keycloak.everything>4.8.3.Final</version.org.keycloak.everything>
         <version.org.kohsuke.ajp-client>1.0</version.org.kohsuke.ajp-client>
-        <version.org.wildfly.common>1.4.0.Final</version.org.wildfly.common>
-        <version.org.wildfly.core>7.0.0.Final</version.org.wildfly.core>
+        <version.org.wildfly.common>1.5.1.Final</version.org.wildfly.common>
+        <version.org.wildfly.core>10.0.3.Final</version.org.wildfly.core>
 <!--
 remove this line for EAP Client BOMs -->
-        <version.org.wildfly.client-bom>15.0.1.Final</version.org.wildfly.client-bom>
+        <version.org.wildfly.client-bom>18.0.1.Final</version.org.wildfly.client-bom>
 <!-- remove this line for EAP Client BOMs
 -->
 <!-- remove this line for EAP Client BOMs
         <version.org.wildfly.client-bom>7.2.3.GA</version.org.wildfly.client-bom>
 remove this line for EAP Client BOMs -->
-        <version.org.xmlunit>2.6.2</version.org.xmlunit>
-        <version.org.yaml.snakeyaml>1.24</version.org.yaml.snakeyaml>
+        <version.org.xmlunit>2.6.3</version.org.xmlunit>
+        <version.org.yaml.snakeyaml>1.25</version.org.yaml.snakeyaml>
 
         <!--
           - when updating version.io.thorntail, check and possibly update these properties as well:
           -   version.io.jaegertracing.everything
-          -   version.javax.enterprise.cdi-api
+          -   version.jakarta.*
+          -   version.org.eclipse.microprofile
           -   version.org.infinispan
           -   version.org.jboss.logmanager
           -   version.org.jboss.marshalling
           -   version.org.jboss.remotingjmx
           -   version.org.jboss.resteasy
+          -   version.org.jboss.spec.*
           -   version.org.jgroups
           -   version.org.keycloak.everything
           -   version.org.wildfly.common
@@ -224,7 +226,7 @@ remove this line for EAP Client BOMs -->
                 <version>${project.version}</version>
             </dependency>
 
-            <!-- Swarm BOMs -->
+            <!-- Thorntail BOMs -->
             <dependency>
                 <groupId>io.thorntail</groupId>
                 <artifactId>bom</artifactId>
@@ -245,19 +247,19 @@ remove this line for bom-certified -->
 
             <!-- spec dependencies, only for fraction autodetection tests -->
             <dependency>
-                <groupId>javax.enterprise</groupId>
-                <artifactId>cdi-api</artifactId>
-                <version>${version.javax.enterprise.cdi-api}</version>
+                <groupId>jakarta.enterprise</groupId>
+                <artifactId>jakarta.enterprise.cdi-api</artifactId>
+                <version>${version.jakarta.enterprise.cdi-api}</version>
+            </dependency>
+            <dependency>
+                <groupId>jakarta.json</groupId>
+                <artifactId>jakarta.json-api</artifactId>
+                <version>${version.jakarta.json-api}</version>
             </dependency>
             <dependency>
                 <groupId>org.jboss.spec.javax.ejb</groupId>
                 <artifactId>jboss-ejb-api_3.2_spec</artifactId>
                 <version>${version.org.jboss.spec.javax.ejb.jboss-ejb-api_3.2_spec}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.jboss.spec.javax.json</groupId>
-                <artifactId>jboss-json-api_1.1_spec</artifactId>
-                <version>${version.org.jboss.spec.javax.json.jboss-json-api_1.1_spec}</version>
             </dependency>
             <dependency>
                 <groupId>org.jboss.spec.javax.servlet</groupId>
@@ -272,7 +274,7 @@ remove this line for bom-certified -->
 
             <!-- test dependencies -->
             <!--
-              - If at all possible, tests should NEVER depend on something that Swarm can bring in transitively.
+              - If at all possible, tests should NEVER depend on something that Thorntail can bring in transitively.
               - For example, instead of using JSON-P for working with JSON in the tests, use Gson. Instead of
               - using Undertow's WebSocket implementation for implementing the WebSocket client in the tests,
               - use Glassfish's implementation (Tyrus). First, it avoids dependency clashes, which are typically
@@ -459,8 +461,8 @@ remove this line for bom-certified -->
             <!-- For hollow jar web profile test -->
             <dependency>
                 <groupId>org.jboss.spec</groupId>
-                <artifactId>jboss-javaee-web-8.0</artifactId>
-                <version>${version.org.jboss.spec.web.8.0.api}</version>
+                <artifactId>jboss-jakartaee-web-8.0</artifactId>
+                <version>${version.org.jboss.spec.jakartaee-web-8.0}</version>
                 <type>pom</type>
             </dependency>
 
@@ -477,8 +479,8 @@ remove this line for bom-certified -->
             </dependency>
             <dependency>
                 <groupId>org.jboss.spec</groupId>
-                <artifactId>jboss-javaee-all-8.0</artifactId>
-                <version>${version.org.jboss.spec.all.8.0.api}</version>
+                <artifactId>jboss-jakartaee-all-8.0</artifactId>
+                <version>${version.org.jboss.spec.jakartaee-all-8.0}</version>
                 <type>pom</type>
             </dependency>
         </dependencies>
