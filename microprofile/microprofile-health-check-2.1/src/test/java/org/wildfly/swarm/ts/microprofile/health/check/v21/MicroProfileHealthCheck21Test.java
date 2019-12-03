@@ -1,4 +1,4 @@
-package org.wildfly.swarm.ts.microprofile.health.check.v20;
+package org.wildfly.swarm.ts.microprofile.health.check.v21;
 
 import java.io.IOException;
 
@@ -17,7 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(Arquillian.class)
 @DefaultDeployment
-public class MicroProfileHealthCheck20Test {
+public class MicroProfileHealthCheck21Test {
     private static final String URL_HEALTH = "http://localhost:8080/health";
 
     private static final String URL_HEALTH_LIVE = URL_HEALTH + "/live";
@@ -28,26 +28,26 @@ public class MicroProfileHealthCheck20Test {
     @RunAsClient
     public void overall() throws IOException {
         String response = Request.Get(URL_HEALTH).execute().returnContent().asString();
-        // expected check count is 5 because BothHealthCheck contains both annotations: @Liveness and @Readiness
-        checkResponse(response, 5, "both", "deprecated-health", "live", "ready");
+        // expected check count is 2 because SimplifiedHealthCheck contains both annotations: @Liveness and @Readiness
+        checkResponse(response, 2, "simplified");
     }
 
     @Test
     @RunAsClient
     public void liveness() throws IOException {
         String response = Request.Get(URL_HEALTH_LIVE).execute().returnContent().asString();
-        checkResponse(response, 2, "both", "live");
+        checkResponse(response, 1, "simplified");
     }
 
     @Test
     @RunAsClient
     public void readiness() throws IOException {
         String response = Request.Get(URL_HEALTH_READY).execute().returnContent().asString();
-        checkResponse(response, 2, "both", "ready");
+        checkResponse(response, 1, "simplified");
     }
 
     private void checkResponse(String response, int checkCount, String... names) {
-        JsonElement json = new JsonParser().parse(response);
+        JsonElement json = JsonParser.parseString(response);
         assertThat(json.isJsonObject()).isTrue();
         assertThat(json.getAsJsonObject().has("status")).isTrue();
         assertThat(json.getAsJsonObject().get("status").getAsString()).isEqualTo("UP");
@@ -67,7 +67,6 @@ public class MicroProfileHealthCheck20Test {
         assertThat(expectedNames).contains(actualName);
         assertThat(check.has("status")).isTrue();
         assertThat(check.get("status").getAsString()).isEqualTo("UP");
-        assertThat(check.has("data")).isTrue();
-        assertThat(check.get("data").getAsJsonObject().get("key").getAsString()).isEqualTo("value");
+        assertThat(check.has("data")).isFalse();
     }
 }
