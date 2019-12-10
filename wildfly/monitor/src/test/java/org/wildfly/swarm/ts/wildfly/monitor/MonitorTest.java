@@ -28,7 +28,7 @@ public class MonitorTest {
     @RunAsClient
     public void myHealthCheck() throws IOException {
         String response = Request.Get("http://localhost:8080/my-health-check").execute().returnContent().asString();
-        JsonElement json = new JsonParser().parse(response);
+        JsonElement json = JsonParser.parseString(response);
         assertThat(json.isJsonObject()).isTrue();
         assertThat(json.getAsJsonObject().get("id").getAsString()).isEqualTo("hello");
         assertThat(json.getAsJsonObject().get("result").getAsString()).isEqualTo("UP");
@@ -38,7 +38,7 @@ public class MonitorTest {
     @RunAsClient
     public void health() throws IOException {
         String response = Request.Get("http://localhost:8080/health").execute().returnContent().asString();
-        JsonElement json = new JsonParser().parse(response);
+        JsonElement json = JsonParser.parseString(response);
         assertThat(json.isJsonObject()).isTrue();
         assertThat(json.getAsJsonObject().get("outcome").getAsString()).isEqualTo("UP");
         JsonArray checks = json.getAsJsonObject().getAsJsonArray("checks");
@@ -53,7 +53,7 @@ public class MonitorTest {
     @RunAsClient
     public void node() throws IOException {
         String response = Request.Get("http://localhost:8080/node").execute().returnContent().asString();
-        JsonElement json = new JsonParser().parse(response);
+        JsonElement json = JsonParser.parseString(response);
         assertThat(json.isJsonObject()).isTrue();
         assertThat(json.getAsJsonObject().has("name")).isTrue();
         assertThat(json.getAsJsonObject().has("server-state")).isTrue();
@@ -66,7 +66,7 @@ public class MonitorTest {
     @RunAsClient
     public void heap() throws IOException {
         String response = Request.Get("http://localhost:8080/heap").execute().returnContent().asString();
-        JsonElement json = new JsonParser().parse(response);
+        JsonElement json = JsonParser.parseString(response);
         assertThat(json.isJsonObject()).isTrue();
         assertThat(json.getAsJsonObject().has("heap-memory-usage")).isTrue();
         assertThat(json.getAsJsonObject().getAsJsonObject("heap-memory-usage").has("init")).isTrue();
@@ -84,7 +84,7 @@ public class MonitorTest {
     @RunAsClient
     public void threads() throws IOException {
         String response = Request.Get("http://localhost:8080/threads").execute().returnContent().asString();
-        JsonElement json = new JsonParser().parse(response);
+        JsonElement json = JsonParser.parseString(response);
         assertThat(json.isJsonObject()).isTrue();
         assertThat(json.getAsJsonObject().has("thread-count")).isTrue();
         assertThat(json.getAsJsonObject().has("peak-thread-count")).isTrue();

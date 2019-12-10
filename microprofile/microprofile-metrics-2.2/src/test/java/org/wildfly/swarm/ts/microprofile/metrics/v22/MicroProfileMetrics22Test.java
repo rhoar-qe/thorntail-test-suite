@@ -39,7 +39,7 @@ public class MicroProfileMetrics22Test {
     public void jsonMetadata() throws IOException {
         String response = Request.Options("http://localhost:8080/metrics")
                 .addHeader("Accept", "application/json").execute().returnContent().asString();
-        JsonObject json = new JsonParser().parse(response).getAsJsonObject();
+        JsonObject json = JsonParser.parseString(response).getAsJsonObject();
         assertThat(json.has("application")).isTrue();
         JsonObject app = json.getAsJsonObject("application");
         assertThat(app.has("hello-count")).isTrue();
@@ -55,7 +55,7 @@ public class MicroProfileMetrics22Test {
     public void jsonData() throws IOException {
         String response = Request.Get("http://localhost:8080/metrics")
                 .addHeader("Accept", "application/json").execute().returnContent().asString();
-        JsonObject json = new JsonParser().parse(response).getAsJsonObject();
+        JsonObject json = JsonParser.parseString(response).getAsJsonObject();
         assertThat(json.has("application")).isTrue();
         JsonObject app = json.getAsJsonObject("application");
         assertThat(app.has("hello-count")).isTrue();
@@ -68,7 +68,7 @@ public class MicroProfileMetrics22Test {
     public void newMetrics() throws IOException {
         String response = Request.Get("http://localhost:8080/metrics")
                 .addHeader("Accept", "application/json").execute().returnContent().asString();
-        JsonObject json = new JsonParser().parse(response).getAsJsonObject();
+        JsonObject json = JsonParser.parseString(response).getAsJsonObject();
         assertThat(json.has("base")).isTrue();
         JsonObject app = json.getAsJsonObject("base");
         assertThat(app.has("cpu.processCpuTime")).isTrue();

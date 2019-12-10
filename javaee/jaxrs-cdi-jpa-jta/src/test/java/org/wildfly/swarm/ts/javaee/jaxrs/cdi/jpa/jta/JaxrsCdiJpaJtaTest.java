@@ -29,7 +29,7 @@ public class JaxrsCdiJpaJtaTest {
     @RunAsClient
     public void empty() throws IOException {
         String response = Request.Get("http://localhost:8080/").execute().returnContent().asString();
-        JsonArray json = new JsonParser().parse(response).getAsJsonArray();
+        JsonArray json = JsonParser.parseString(response).getAsJsonArray();
         assertThat(json.size()).isEqualTo(0);
     }
 
@@ -51,7 +51,7 @@ public class JaxrsCdiJpaJtaTest {
     @RunAsClient
     public void notEmpty() throws IOException {
         String response = Request.Get("http://localhost:8080/").execute().returnContent().asString();
-        JsonArray json = new JsonParser().parse(response).getAsJsonArray();
+        JsonArray json = JsonParser.parseString(response).getAsJsonArray();
         assertThat(json.size()).isEqualTo(1);
     }
 
@@ -60,7 +60,7 @@ public class JaxrsCdiJpaJtaTest {
     @RunAsClient
     public void content() throws IOException {
         String response = Request.Get(url).execute().returnContent().asString();
-        JsonObject json = new JsonParser().parse(response).getAsJsonObject();
+        JsonObject json = JsonParser.parseString(response).getAsJsonObject();
         assertThat(json.get("title").getAsString()).isEqualTo("Title");
         assertThat(json.get("author").getAsString()).isEqualTo("Author");
     }
@@ -78,7 +78,7 @@ public class JaxrsCdiJpaJtaTest {
     @RunAsClient
     public void emptyAgain() throws IOException {
         String response = Request.Get("http://localhost:8080/").execute().returnContent().asString();
-        JsonArray json = new JsonParser().parse(response).getAsJsonArray();
+        JsonArray json = JsonParser.parseString(response).getAsJsonArray();
         assertThat(json.size()).isEqualTo(0);
     }
 }

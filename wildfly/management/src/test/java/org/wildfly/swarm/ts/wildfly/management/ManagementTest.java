@@ -27,7 +27,7 @@ public class ManagementTest {
     @RunAsClient
     public void management() throws IOException {
         String response = Request.Get("http://localhost:9990/management").execute().returnContent().asString();
-        JsonElement json = new JsonParser().parse(response);
+        JsonElement json = JsonParser.parseString(response);
         assertThat(json.isJsonObject()).isTrue();
         assertThat(json.getAsJsonObject().has("core-service"));
         assertThat(json.getAsJsonObject().has("deployment"));

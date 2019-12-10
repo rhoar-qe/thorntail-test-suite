@@ -26,7 +26,7 @@ public class MicroProfileMetrics20Test {
     public void applicationMetricsAreRegisteredAtDeploymentTime() throws IOException {
         String response = Request.Options("http://localhost:8080/metrics")
                 .addHeader("Accept", "application/json").execute().returnContent().asString();
-        JsonObject json = new JsonParser().parse(response).getAsJsonObject();
+        JsonObject json = JsonParser.parseString(response).getAsJsonObject();
         assertThat(json.has("application")).isTrue();
         JsonObject app = json.getAsJsonObject("application");
         assertThat(app.size()).isEqualTo(4);
@@ -57,7 +57,7 @@ public class MicroProfileMetrics20Test {
     public void jsonMetadata() throws IOException {
         String response = Request.Options("http://localhost:8080/metrics")
                 .addHeader("Accept", "application/json").execute().returnContent().asString();
-        JsonObject json = new JsonParser().parse(response).getAsJsonObject();
+        JsonObject json = JsonParser.parseString(response).getAsJsonObject();
         assertThat(json.has("application")).isTrue();
         JsonObject app = json.getAsJsonObject("application");
         assertThat(app.has("hello-count")).isTrue();
@@ -85,7 +85,7 @@ public class MicroProfileMetrics20Test {
     public void jsonData() throws IOException {
         String response = Request.Get("http://localhost:8080/metrics")
                 .addHeader("Accept", "application/json").execute().returnContent().asString();
-        JsonObject json = new JsonParser().parse(response).getAsJsonObject();
+        JsonObject json = JsonParser.parseString(response).getAsJsonObject();
         assertThat(json.has("application")).isTrue();
         JsonObject app = json.getAsJsonObject("application");
         assertThat(app.has("hello-count")).isTrue();
@@ -135,7 +135,7 @@ public class MicroProfileMetrics20Test {
     public void vendorMetrics() throws IOException {
         String response = Request.Get("http://localhost:8080/metrics")
                 .addHeader("Accept", "application/json").execute().returnContent().asString();
-        JsonObject json = new JsonParser().parse(response).getAsJsonObject();
+        JsonObject json = JsonParser.parseString(response).getAsJsonObject();
         assertThat(json.has("vendor")).isTrue();
         JsonObject vendor = json.getAsJsonObject("vendor");
         assertThat(vendor.has("loadedModules")).isTrue();
@@ -148,7 +148,7 @@ public class MicroProfileMetrics20Test {
     @InSequence(7)
     public void metricRegistryInjection() throws IOException {
         String response = Request.Get("http://localhost:8080/summary?of=all-registries").execute().returnContent().asString();
-        JsonObject json = new JsonParser().parse(response).getAsJsonObject();
+        JsonObject json = JsonParser.parseString(response).getAsJsonObject();
 
         assertThat(json.has("base")).isTrue();
         JsonArray base = json.getAsJsonArray("base");
@@ -183,7 +183,7 @@ public class MicroProfileMetrics20Test {
     @InSequence(8)
     public void getAllRegisteredMetricsOfGivenType() throws IOException {
         String response = Request.Get("http://localhost:8080/summary?of=app-registry").execute().returnContent().asString();
-        JsonObject json = new JsonParser().parse(response).getAsJsonObject();
+        JsonObject json = JsonParser.parseString(response).getAsJsonObject();
 
         assertThat(json.has("app-counters")).isTrue();
         JsonArray appCounters = json.getAsJsonArray("app-counters");

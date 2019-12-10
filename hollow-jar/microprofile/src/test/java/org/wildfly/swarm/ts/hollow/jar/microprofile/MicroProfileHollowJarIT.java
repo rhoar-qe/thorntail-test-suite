@@ -49,7 +49,7 @@ public class MicroProfileHollowJarIT {
     @Test
     public void jaxrsCdiJsonp() throws IOException {
         String response = Request.Get("http://localhost:8080/basic").execute().returnContent().asString();
-        JsonElement json = new JsonParser().parse(response);
+        JsonElement json = JsonParser.parseString(response);
         assertThat(json.isJsonObject()).isTrue();
         assertThat(json.getAsJsonObject().size()).isEqualTo(1);
         assertThat(json.getAsJsonObject().has("content")).isTrue();
@@ -182,7 +182,7 @@ public class MicroProfileHollowJarIT {
     @Test
     public void healthCheck() throws IOException {
         String response = Request.Get("http://localhost:8080/health").execute().returnContent().asString();
-        JsonElement json = new JsonParser().parse(response);
+        JsonElement json = JsonParser.parseString(response);
         assertThat(json.isJsonObject()).isTrue();
         assertThat(json.getAsJsonObject().has("status")).isTrue();
         assertThat(json.getAsJsonObject().get("status").getAsString()).isEqualTo("UP");
@@ -214,7 +214,7 @@ public class MicroProfileHollowJarIT {
     public void metrics_2_jsonMetadata() throws IOException {
         String response = Request.Options("http://localhost:8080/metrics")
                 .addHeader("Accept", "application/json").execute().returnContent().asString();
-        JsonObject json = new JsonParser().parse(response).getAsJsonObject();
+        JsonObject json = JsonParser.parseString(response).getAsJsonObject();
         assertThat(json.has("application")).isTrue();
         JsonObject app = json.getAsJsonObject("application");
         assertThat(app.has("hello-count")).isTrue();
@@ -226,7 +226,7 @@ public class MicroProfileHollowJarIT {
     public void metrics_3_jsonData() throws IOException {
         String response = Request.Get("http://localhost:8080/metrics")
                 .addHeader("Accept", "application/json").execute().returnContent().asString();
-        JsonObject json = new JsonParser().parse(response).getAsJsonObject();
+        JsonObject json = JsonParser.parseString(response).getAsJsonObject();
         assertThat(json.has("application")).isTrue();
         JsonObject app = json.getAsJsonObject("application");
         assertThat(app.has("hello-count")).isTrue();

@@ -47,7 +47,7 @@ public class MicroProfileHealthCheck20Test {
     }
 
     private void checkResponse(String response, int checkCount, String... names) {
-        JsonElement json = new JsonParser().parse(response);
+        JsonElement json = JsonParser.parseString(response);
         assertThat(json.isJsonObject()).isTrue();
         assertThat(json.getAsJsonObject().has("status")).isTrue();
         assertThat(json.getAsJsonObject().get("status").getAsString()).isEqualTo("UP");

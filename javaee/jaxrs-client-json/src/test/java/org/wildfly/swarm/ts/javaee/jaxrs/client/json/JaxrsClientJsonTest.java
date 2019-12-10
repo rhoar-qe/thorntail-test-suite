@@ -24,7 +24,7 @@ public class JaxrsClientJsonTest {
         HttpResponse response = Request.Get("http://localhost:8080/client").execute().returnResponse();
         assertThat(response.getFirstHeader("Content-Type").getValue()).contains("application/json");
 
-        JsonElement json = new JsonParser().parse(EntityUtils.toString(response.getEntity()));
+        JsonElement json = JsonParser.parseString(EntityUtils.toString(response.getEntity()));
         assertThat(json.isJsonObject()).isTrue();
         assertThat(json.getAsJsonObject().has("value")).isTrue();
         assertThat(json.getAsJsonObject().get("value").getAsString()).isEqualTo("JAX-RS Client got: Hello in JSON");
