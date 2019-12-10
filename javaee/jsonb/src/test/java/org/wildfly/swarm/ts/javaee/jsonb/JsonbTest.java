@@ -20,7 +20,7 @@ public class JsonbTest {
     @RunAsClient
     public void test() throws IOException {
         String response = Request.Get("http://localhost:8080/").execute().returnContent().asString();
-        JsonElement json = new JsonParser().parse(response);
+        JsonElement json = JsonParser.parseString(response);
         assertThat(json.isJsonObject()).isTrue();
         assertThat(json.getAsJsonObject().size()).isEqualTo(1);
         assertThat(json.getAsJsonObject().has("hello")).isTrue();

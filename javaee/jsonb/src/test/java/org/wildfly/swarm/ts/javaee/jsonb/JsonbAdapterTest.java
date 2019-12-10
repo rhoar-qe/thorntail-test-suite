@@ -20,7 +20,7 @@ public class JsonbAdapterTest {
     @RunAsClient
     public void testToJson() throws IOException {
         String response = Request.Get("http://localhost:8080/adapt?case=to").execute().returnContent().asString();
-        JsonElement json = new JsonParser().parse(response);
+        JsonElement json = JsonParser.parseString(response);
         assertThat(json.isJsonObject()).isTrue();
         assertThat(json.getAsJsonObject().size()).isEqualTo(1);
         assertThat(json.getAsJsonObject().has("hello")).isTrue();
@@ -31,7 +31,7 @@ public class JsonbAdapterTest {
     @RunAsClient
     public void testFromJson() throws IOException {
         String response = Request.Get("http://localhost:8080/adapt?case=from").execute().returnContent().asString();
-        JsonElement json = new JsonParser().parse(response);
+        JsonElement json = JsonParser.parseString(response);
         assertThat(json.isJsonObject()).isFalse();
         assertThat(response).isEqualTo("world");
     }

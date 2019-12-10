@@ -39,7 +39,7 @@ public class MicroProfileAnnotationsOpenApi10Test {
     public void hitEndpoint() throws IOException {
         String response = Request.Get("http://localhost:8080/rest/user1").
                 addHeader("Accept", "application/json").execute().returnContent().asString();
-        JsonObject json = new JsonParser().parse(response).getAsJsonObject();
+        JsonObject json = JsonParser.parseString(response).getAsJsonObject();
         assertThat(json.has("attribute1")).isTrue();
         assertThat(json.get("attribute1").getAsString()).isEqualTo("user1");
         assertThat(json.has("attribute2")).isTrue();

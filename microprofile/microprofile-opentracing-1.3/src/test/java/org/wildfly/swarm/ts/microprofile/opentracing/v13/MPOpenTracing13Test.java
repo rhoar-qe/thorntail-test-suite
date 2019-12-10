@@ -109,7 +109,7 @@ public class MPOpenTracing13Test {
         // they are batched, so we need to wait a bit
         await().atMost(20, TimeUnit.SECONDS).untilAsserted(() -> {
             String response = Request.Get("http://localhost:16686/api/traces?service=test-traced-service").execute().returnContent().asString();
-            JsonObject json = new JsonParser().parse(response).getAsJsonObject();
+            JsonObject json = JsonParser.parseString(response).getAsJsonObject();
             assertThat(json.has("data")).isTrue();
             JsonArray data = json.getAsJsonArray("data");
 
