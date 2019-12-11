@@ -59,6 +59,7 @@
 
         <module>javaee8/bean-validation-2.0</module>
         <module>javaee8/cdi-2.0</module>
+        <module>javaee8/java-mail-1.6</module>
         <module>javaee8/jaxrs-2.1</module>
         <module>javaee8/jpa-2.2</module>
         <module>javaee8/jsf-2.3</module>
