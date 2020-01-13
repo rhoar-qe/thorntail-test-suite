@@ -20,4 +20,11 @@ public class JaxrsTest {
         String response = Request.Get("http://localhost:8080/").execute().returnContent().asString();
         assertThat(response).isEqualTo("Hello from JAX-RS");
     }
+
+    @Test
+    @RunAsClient
+    public void async() throws IOException {
+        String response = Request.Get("http://localhost:8080/async").execute().returnContent().asString();
+        assertThat(response).isEqualTo("Async hello");
+    }
 }
