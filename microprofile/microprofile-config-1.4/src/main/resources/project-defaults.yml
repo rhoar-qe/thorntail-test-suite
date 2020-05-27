@@ -1,0 +1,12 @@
+swarm:
+  microprofile:
+    config:
+      config-sources:
+        default:
+          dir: ${project.build.directory}/classes/configs
+        propertiesSource:
+          properties:
+            my.byte.property: 100
+            my.short.property: 10000
+            my.char.property: Q
+

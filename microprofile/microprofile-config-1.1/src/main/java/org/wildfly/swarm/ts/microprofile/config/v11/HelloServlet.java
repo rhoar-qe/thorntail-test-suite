@@ -25,8 +25,8 @@ public class HelloServlet extends HttpServlet {
     private String yamlProperty;
 
     @Inject
-    @ConfigProperty(name = "yamlOrdereredProperty")
-    private String yamlOrdereredProperty;
+    @ConfigProperty(name = "yamlOrderedProperty")
+    private String yamlOrderedProperty;
 
     @Inject
     @ConfigProperty(name = "missing.property", defaultValue = "it's present anyway")
@@ -43,6 +43,6 @@ public class HelloServlet extends HttpServlet {
         resp.getWriter().println("Config contains missing.property: " + config.getOptionalValue("missing.property", String.class).isPresent());
         resp.getWriter().println("Custom scan dir: " + propFromCustomScanDir);
         resp.getWriter().println("YAML Property: " + yamlProperty);
-        resp.getWriter().println("YAML Ordered property: " + yamlOrdereredProperty);
+        resp.getWriter().println("YAML Ordered property: " + yamlOrderedProperty);
     }
 }

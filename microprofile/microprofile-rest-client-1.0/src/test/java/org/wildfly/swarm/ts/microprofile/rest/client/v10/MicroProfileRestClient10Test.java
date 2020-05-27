@@ -14,7 +14,7 @@ import org.wildfly.swarm.arquillian.DefaultDeployment;
 
 @RunWith(Arquillian.class)
 @DefaultDeployment
-public class MicroprofileRestClient10Test {
+public class MicroProfileRestClient10Test {
     @Test
     @InSequence(1)
     @RunAsClient
