@@ -13,6 +13,7 @@ import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @WebServlet("/")
 public class HelloServlet extends HttpServlet {
@@ -144,8 +145,8 @@ public class HelloServlet extends HttpServlet {
                 ? myAnimalsArray[0] + ", " + myAnimalsArray[1]
                 : "unexpected length: " + myAnimalsArray.length));
         resp.getWriter().println("my.animals.array.property.list: " + myAnimalsList);
-        // Note: HashSet will sort set (Zebra, Alligator => Alligator, Zebra)
-        resp.getWriter().println("myAnimalsSet.class: " + myAnimalsSet.getClass().toString());
-        resp.getWriter().println("my.animals.array.property.set: " + myAnimalsSet);
+        // can't rely on Set iteration order
+        resp.getWriter().println("my.animals.array.property.set: ["
+                + myAnimalsSet.stream().sorted().collect(Collectors.joining(", ")) + "]");
     }
 }

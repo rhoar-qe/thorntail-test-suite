@@ -112,7 +112,7 @@ public class MicroProfileFaultTolerance10Test {
     }
 
     private static void testCircuitBreakerFailure(String url, String expectedFallbackResponse, String expectedOkResponse) throws IOException {
-        // hystrix.command.default.circuitBreaker.requestVolumeThreshold
+        // @CircuitBreaker.requestVolumeThreshold
         int initialRequestsCount = 20;
 
         for (int i = 0; i < initialRequestsCount; i++) {
@@ -120,7 +120,7 @@ public class MicroProfileFaultTolerance10Test {
             assertThat(response).isEqualTo(expectedFallbackResponse);
         }
 
-        // initialRequestsCount * hystrix.command.default.circuitBreaker.errorThresholdPercentage
+        // initialRequestsCount * @CircuitBreaker.failureRatio
         int failuresCount = 10;
 
         for (int i = 0; i < failuresCount; i++) {
@@ -157,7 +157,7 @@ public class MicroProfileFaultTolerance10Test {
         expectedResponses.put("Fallback Hello, context = foobar", 20);
 
         // 30 = 10 allowed invocations + 20 not allowed invocations that lead to fallback
-        // 31 invocations would already trigger fallback rejection
+        // it could be more than 20, that's just an arbitrary number
         testBulkhead(30, "http://localhost:8080/?operation=bulkhead&context=foobar&fail=true", expectedResponses);
     }
 
@@ -180,7 +180,7 @@ public class MicroProfileFaultTolerance10Test {
         expectedResponses.put("Fallback Hello", 20);
 
         // 40 = 10 allowed invocations + 10 queued invocations + 20 not allowed invocations that lead to fallback
-        // 41 invocations would already trigger fallback rejection
+        // it could be more than 20, that's just an arbitrary number
         testBulkhead(40, "http://localhost:8080/async?operation=bulkhead&fail=true", expectedResponses);
     }
 

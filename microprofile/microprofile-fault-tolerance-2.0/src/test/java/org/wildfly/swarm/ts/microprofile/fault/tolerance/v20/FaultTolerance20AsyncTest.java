@@ -44,11 +44,10 @@ public class FaultTolerance20AsyncTest {
     public void bulkheadTimeoutFailure() throws InterruptedException {
         Map<String, Integer> expectedResponses = new HashMap<>();
         expectedResponses.put("Hello from @Bulkhead @Timeout method", 0);
-        expectedResponses.put("Fallback Hello", 40);
-        // timeout takes effect, there will be 40 fallbacks (project-defaults.yml.. maximumSize: 40)
-        // 41 invocations would already trigger fallback rejection
-        // no matter @Bulkhead has e.g. value = 15 and waitingTaskQueue = 15
-        testBulkhead(40, "http://localhost:8080/async?operation=bulkhead-timeout&fail=true", expectedResponses);
+        expectedResponses.put("Fallback Hello", 50);
+        // all executions will end up as a fallback -- some because they timeout,
+        // some because they are rejected by the bulkhead (which allows 15 executions and 15 queued executions)
+        testBulkhead(50, "http://localhost:8080/async?operation=bulkhead-timeout&fail=true", expectedResponses);
     }
 
     @Test
@@ -63,9 +62,9 @@ public class FaultTolerance20AsyncTest {
     public void bulkheadTimeoutRetryFailure() throws InterruptedException {
         Map<String, Integer> expectedResponses = new HashMap<>();
         expectedResponses.put("Hello from @Bulkhead @Timeout @Retry method", 0);
-        expectedResponses.put("Fallback Hello", 40);
+        expectedResponses.put("Fallback Hello", 50);
 
-        testBulkhead(40, "http://localhost:8080/async?operation=bulkhead-timeout-retry&fail=true", expectedResponses);
+        testBulkhead(50, "http://localhost:8080/async?operation=bulkhead-timeout-retry&fail=true", expectedResponses);
     }
 
     private static void testBulkhead(int parallelRequests, String url, Map<String, Integer> expectedResponses) throws InterruptedException {
@@ -130,18 +129,18 @@ public class FaultTolerance20AsyncTest {
     }
 
     private static void testCircuitBreakerFailure(String url, String expectedFallbackResponse, String expectedOkResponse) throws IOException, InterruptedException {
-        // call 20x fail URL, circuit is OPEN
+        // call 20x fail URL, circuit breaker is OPEN
         for (int i = 0; i < 20; i++) {
             String response = Request.Get(url + "&fail=true").execute().returnContent().asString();
             assertThat(response).isEqualTo(expectedFallbackResponse);
         }
-        // call 10x correct URL on opened circuit -> still returns fallback response
+        // call 10x correct URL on open circuit breaker -> still returns fallback response
         for (int i = 0; i < 10; i++) {
             String response = Request.Get(url).execute().returnContent().asString();
             assertThat(response).isEqualTo(expectedFallbackResponse);
         }
         // the window of 20 calls now contains 10 fail and 10 correct responses, this equals 0.5 failureRatio
-        // @CircuitBreaker.delay is 5 seconds default, then circuit is CLOSED and OK response is returned
+        // @CircuitBreaker.delay is 5 seconds, then circuit breaker is CLOSED and OK response is returned
         Thread.sleep(5000L);
         await().atMost(1, TimeUnit.SECONDS).untilAsserted(() -> {
             String response = Request.Get(url).execute().returnContent().asString();
