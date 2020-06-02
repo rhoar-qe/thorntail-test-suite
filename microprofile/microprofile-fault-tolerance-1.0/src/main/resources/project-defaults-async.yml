@@ -1,4 +1,0 @@
-swarm:
-  microprofile:
-    fault-tolerance:
-      synchronous-circuit-breaker: false

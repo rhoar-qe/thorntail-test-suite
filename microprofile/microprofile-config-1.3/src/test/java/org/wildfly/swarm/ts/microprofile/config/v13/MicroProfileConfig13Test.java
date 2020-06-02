@@ -43,7 +43,6 @@ public class MicroProfileConfig13Test {
                 + "my.animals.array.property.array: Zebra, Alligator\n"
                 + "my.animals.array.property.array: Zebra, Alligator\n"
                 + "my.animals.array.property.list: [Zebra, Alligator]\n"
-                + "myAnimalsSet.class: class java.util.HashSet\n"
                 + "my.animals.array.property.set: [Alligator, Zebra]\n"
         );
     }
@@ -51,7 +50,9 @@ public class MicroProfileConfig13Test {
     @Test
     @RunAsClient
     public void testEmptyProperty() throws IOException {
+        // this behavior is not spec-compliant, but empty values treatment is disputed in MP Config
         String response = Request.Get("http://localhost:8080/empty-properties").execute().returnContent().asString();
-        assertThat(response).isEqualTo("Empty system property: ''\nEmpty property in config file: ''\n");
+        assertThat(response).isEqualTo("Empty system property: 'Property my.empty.system.property not found'\n"
+                + "Empty property in config file: 'Property my.empty.property.in.config.file not found'\n");
     }
 }
