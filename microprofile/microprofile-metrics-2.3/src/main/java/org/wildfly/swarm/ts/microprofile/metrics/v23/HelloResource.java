@@ -25,13 +25,6 @@ public class HelloResource {
     @Inject
     private MetricRegistry metrics;
 
-    @GET
-    @Produces(MediaType.TEXT_PLAIN)
-    public String hello() {
-        counter.inc();
-        return "Hello from programmatically counted method";
-    }
-
     @PostConstruct
     private void setupMetrics() {
         counter = metrics.counter(Metadata.builder()
