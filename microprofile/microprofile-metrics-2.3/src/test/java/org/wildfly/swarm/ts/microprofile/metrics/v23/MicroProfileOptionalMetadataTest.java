@@ -39,4 +39,17 @@ public class MicroProfileOptionalMetadataTest {
         assertThat(counter.get("displayName").getAsString()).isEqualTo("counter");
         assertThat(counter.has("description")).isFalse();
     }
+
+    @Test
+    @RunAsClient
+    @InSequence(3)
+    public void jsonData() throws IOException {
+        String response = Request.Get("http://localhost:8080/metrics")
+                .addHeader("Accept", "application/json").execute().returnContent().asString();
+        JsonObject json = JsonParser.parseString(response).getAsJsonObject();
+        assertThat(json.has("application")).isTrue();
+        JsonObject app = json.getAsJsonObject("application");
+        assertThat(app.has("counter")).isTrue();
+        assertThat(app.get("counter").getAsInt()).isEqualTo(1);
+    }
 }

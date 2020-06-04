@@ -22,7 +22,7 @@ public class MicroProfileSimpleTimerTest {
     @RunAsClient
     @InSequence(1)
     public void trigger() throws IOException {
-        String response = Request.Get("http://localhost:8080/timer").execute().returnContent().asString();
+        String response = Request.Get("http://localhost:8080/simple-timer").execute().returnContent().asString();
         assertThat(response).isEqualTo("Hello from timed method");
     }
 

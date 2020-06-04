@@ -7,8 +7,6 @@ import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
 
 import org.eclipse.microprofile.metrics.Counter;
 import org.eclipse.microprofile.metrics.Metadata;
@@ -25,6 +23,11 @@ public class HelloResource {
     @Inject
     private MetricRegistry metrics;
 
+    private Counter counter;
+
+    @Metric(name = "tags-holder")
+    private Counter tagHolder;
+
     @PostConstruct
     private void setupMetrics() {
         counter = metrics.counter(Metadata.builder()
@@ -40,15 +43,10 @@ public class HelloResource {
         metrics.counter("tags-holder", tags);
     }
 
-    private Counter counter;
-
-    @Metric(name = "tags-holder")
-    private Counter tagHolder;
-
     @GET
-    @Path("timer")
+    @Path("simple-timer")
     @SimplyTimed(name = "simple-timer", absolute = true, unit = "milliseconds")
-    public String timed() throws InterruptedException {
+    public String simplyTimed() throws InterruptedException {
         Thread.sleep(10);
         return "Hello from timed method";
     }
@@ -64,7 +62,8 @@ public class HelloResource {
     @Path("tags-as-array")
     public String getTagsAsArray() {
         MetricID metricID = metrics.getCounters((mID, metric) -> mID.getName().equals("tags-holder")).firstKey();
-        return Arrays.stream(metricID.getTagsAsArray()).map(c -> c.getTagName() + ":" + c.getTagValue())
+        return Arrays.stream(metricID.getTagsAsArray())
+                .map(c -> c.getTagName() + ":" + c.getTagValue())
                 .collect(Collectors.joining(","));
     }
 }
