@@ -25,10 +25,6 @@
             <groupId>io.thorntail</groupId>
             <artifactId>jaxrs</artifactId>
         </dependency>
-        <dependency>
-            <groupId>io.thorntail</groupId>
-            <artifactId>jsonp</artifactId>
-        </dependency>
 
         <dependency>
             <groupId>com.google.code.gson</groupId>
