@@ -13,7 +13,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(Arquillian.class)
 @DefaultDeployment
-public class MicroprofileRestClient12Test {
+public class MicroProfileRestClient12Test {
     @Test
     @RunAsClient
     public void applicationRequest() throws IOException {

@@ -1,0 +1,10 @@
+swarm:
+  microprofile:
+    config:
+      config-sources:
+        propertiesSource:
+          properties:
+            my.byte.property: 100
+            my.short.property: 10000
+            my.char.property: Q
+

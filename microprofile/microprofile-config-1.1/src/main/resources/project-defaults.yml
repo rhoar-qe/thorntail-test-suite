@@ -13,4 +13,4 @@ swarm:
         orderedSource:
           ordinal: 99
           properties:
-            yamlOrdereredProperty: This will be overriden by microprofile-config.properties
+            yamlOrderedProperty: This will be overridden by microprofile-config.properties
