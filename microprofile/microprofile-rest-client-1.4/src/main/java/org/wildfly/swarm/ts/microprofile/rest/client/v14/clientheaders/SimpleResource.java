@@ -8,13 +8,12 @@ import javax.ws.rs.Path;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
 
-@Path("/")
+@Path("/headers")
 public class SimpleResource {
     @Context
     HttpHeaders headers;
 
     @GET
-    @Path("/headers")
     public JsonObject getHeaders() {
         final JsonObjectBuilder builder = Json.createObjectBuilder();
         headers.getRequestHeaders().forEach((key, value) -> builder.add(key, String.valueOf(value.get(0))));

@@ -7,11 +7,10 @@ import javax.ws.rs.Path;
 
 import org.eclipse.microprofile.rest.client.RestClientBuilder;
 
-@Path("/")
+@Path("/client")
 public class ClientResource {
 
     @GET
-    @Path("/client")
     public String headers() throws Exception {
         ClientHeadersClient client = RestClientBuilder.newBuilder()
                 .baseUrl(new URL("http://localhost:8080"))
