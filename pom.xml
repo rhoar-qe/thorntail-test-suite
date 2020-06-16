@@ -680,6 +680,7 @@ remove this line for bom-certified -->
                 <module>javaee/batch</module>
                 <module>javaee/ejb-passivation</module>
                 <module>javaee/ejb-remote</module>
+                <module>javaee/ejb-remote-http</module>
                 <module>javaee/ejb-remote-security</module>
                 <module>javaee/jaxws</module>
                 <module>javaee/mail</module>

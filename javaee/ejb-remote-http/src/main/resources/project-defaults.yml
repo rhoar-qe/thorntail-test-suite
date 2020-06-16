@@ -1,0 +1,23 @@
+thorntail:
+  bind:
+    address: 127.0.0.1
+  management:
+    security-realms:
+      ApplicationRealm:
+        in-memory-authentication:
+          users:
+            test-user:
+              password: test-user-password
+        in-memory-authorization:
+          users:
+            test-user:
+              roles:
+              - user
+  undertow:
+    servers:
+      default-server:
+        hosts:
+          default-host:
+            http-invoker-setting:
+              path: /wildfly-services
+              security-realm: ApplicationRealm
