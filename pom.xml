@@ -95,6 +95,7 @@
         <module>microprofile/microprofile-metrics-2.3</module>
         <module>microprofile/microprofile-fault-tolerance-1.0</module>
         <module>microprofile/microprofile-fault-tolerance-2.0</module>
+        <module>microprofile/microprofile-fault-tolerance-2.1</module>
         <module>microprofile/microprofile-openapi-1.0</module>
         <module>microprofile/microprofile-openapi-1.1</module>
         <module>microprofile/microprofile-opentracing-1.0</module>
