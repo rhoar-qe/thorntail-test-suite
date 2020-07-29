@@ -1,5 +1,8 @@
 package org.wildfly.swarm.ts.microprofile.opentracing.fault.tolerance;
 
+import java.io.IOException;
+import java.util.concurrent.TimeUnit;
+
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -15,10 +18,8 @@ import org.wildfly.swarm.arquillian.DefaultDeployment;
 import org.wildfly.swarm.ts.common.docker.Docker;
 import org.wildfly.swarm.ts.common.docker.DockerContainers;
 
-import java.io.IOException;
-import java.util.concurrent.TimeUnit;
-
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 import static org.awaitility.Awaitility.await;
 
 @RunWith(Arquillian.class)
@@ -78,7 +79,7 @@ public class MicroProfileOpenTracingFaultToleranceTest {
                             case "http.url":
                                 assertThat(tag.get("value").getAsString()).isEqualTo("http://localhost:8080/rest/hello" + suffix);
                                 break;
-                            case "http.status.code":
+                            case "http.status_code":
                                 assertThat(tag.get("value").getAsInt()).isEqualTo(200);
                                 break;
                             case "component":
@@ -87,6 +88,12 @@ public class MicroProfileOpenTracingFaultToleranceTest {
                             case "span.kind":
                                 assertThat(tag.get("value").getAsString()).isEqualTo("server");
                                 break;
+                            case "sampler.type":
+                            case "sampler.param":
+                                // do nothing
+                                break;
+                            default:
+                                fail(this.getClass().getSimpleName() + " unknown key: " + tag.get("key").getAsString());
                         }
                     }
                 });
