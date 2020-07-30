@@ -1,5 +1,8 @@
 package org.wildfly.swarm.ts.microprofile.opentracing.restclient;
 
+import java.io.IOException;
+import java.util.concurrent.TimeUnit;
+
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -15,10 +18,8 @@ import org.wildfly.swarm.arquillian.DefaultDeployment;
 import org.wildfly.swarm.ts.common.docker.Docker;
 import org.wildfly.swarm.ts.common.docker.DockerContainers;
 
-import java.io.IOException;
-import java.util.concurrent.TimeUnit;
-
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 import static org.awaitility.Awaitility.await;
 
 @RunWith(Arquillian.class)
@@ -97,7 +98,7 @@ public class MicroProfileOpenTracingRestClientTest {
                             case "http.url":
                                 assertThat(tag.get("value").getAsString()).isEqualTo("http://localhost:8080/rest/hello");
                                 break;
-                            case "http.status.code":
+                            case "http.status_code":
                                 assertThat(tag.get("value").getAsInt()).isEqualTo(200);
                                 break;
                             case "component":
@@ -106,6 +107,8 @@ public class MicroProfileOpenTracingRestClientTest {
                             case "span.kind":
                                 assertThat(tag.get("value").getAsString()).isEqualTo("server");
                                 break;
+                            default:
+                                fail(this.getClass().getSimpleName() + " #1 unknown key: " + tag.get("key").getAsString());
                         }
                     }
                 });
@@ -123,7 +126,7 @@ public class MicroProfileOpenTracingRestClientTest {
                             case "http.url":
                                 assertThat(tag.get("value").getAsString()).isEqualTo("http://localhost:8080/rest/hello");
                                 break;
-                            case "http.status.code":
+                            case "http.status_code":
                                 assertThat(tag.get("value").getAsInt()).isEqualTo(200);
                                 break;
                             case "component":
@@ -132,6 +135,12 @@ public class MicroProfileOpenTracingRestClientTest {
                             case "span.kind":
                                 assertThat(tag.get("value").getAsString()).isEqualTo("client");
                                 break;
+                            case "peer.hostname":
+                            case "peer.port":
+                                // do nothing
+                                break;
+                            default:
+                                fail(this.getClass().getSimpleName() + " #2 unknown key: " + tag.get("key").getAsString());
                         }
                     }
                 });
@@ -150,7 +159,7 @@ public class MicroProfileOpenTracingRestClientTest {
                             case "http.url":
                                 assertThat(tag.get("value").getAsString()).isEqualTo("http://localhost:8080/rest/client/" + method);
                                 break;
-                            case "http.status.code":
+                            case "http.status_code":
                                 assertThat(tag.get("value").getAsInt()).isEqualTo(200);
                                 break;
                             case "component":
@@ -159,6 +168,12 @@ public class MicroProfileOpenTracingRestClientTest {
                             case "span.kind":
                                 assertThat(tag.get("value").getAsString()).isEqualTo("server");
                                 break;
+                            case "sampler.param":
+                            case "sampler.type":
+                                // do nothing
+                                break;
+                            default:
+                                fail(this.getClass().getSimpleName() + " #3 unknown key: " + tag.get("key").getAsString());
                         }
                     }
                 });
