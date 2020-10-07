@@ -117,9 +117,11 @@
         <module>protocols/ajp</module>
         <module>protocols/https</module>
         <module>protocols/https-1way</module> <!-- same as protocols/https, but more verbose/low-level configuration -->
+        <module>protocols/https-1way-openssl</module> <!-- same as protocols/https-1way, but with WildFly OpenSSL enabled -->
         <module>protocols/https-2way</module>
         <module>protocols/https-2way-authz</module>
         <module>protocols/https-1way-elytron</module> <!-- same as protocols/https-1way, but using Elytron -->
+        <module>protocols/https-1way-openssl-elytron</module> <!-- same as protocols/https-1way-openssl, but using Elytron -->
         <module>protocols/https-2way-elytron</module> <!-- same as protocols/https-2way, but using Elytron -->
         <module>protocols/https-2way-authz-elytron</module> <!-- same as protocols/https-2way-authz, but using Elytron -->
 
@@ -148,7 +150,7 @@
         <version.com.icegreen.greenmail>1.5.11</version.com.icegreen.greenmail>
         <version.io.jaegertracing.everything>0.34.1</version.io.jaegertracing.everything>
         <version.io.jsonwebtoken.jjwt-everything>0.11.1</version.io.jsonwebtoken.jjwt-everything>
-        <version.io.thorntail>2.7.0.Final</version.io.thorntail>
+        <version.io.thorntail>2.7.1.Final-SNAPSHOT</version.io.thorntail>
         <version.jakarta.enterprise.cdi-api>2.0.2</version.jakarta.enterprise.cdi-api>
         <version.jakarta.json-api>1.1.6</version.jakarta.json-api>
         <version.junit.junit>4.13.1</version.junit.junit>

@@ -1,0 +1,28 @@
+thorntail:
+  elytron:
+    key-stores:
+      my-key-store:
+        path: ${project.build.directory}/server-keystore.jks
+        type: JKS
+        credential-reference:
+          clear-text: server-password
+    key-managers:
+      my-key-manager:
+        key-store: my-key-store
+        alias-filter: server-key
+        credential-reference:
+          clear-text: server-password
+    server-ssl-contexts:
+      my-server-ssl-context:
+        key-manager: my-key-manager
+        protocols:
+        - TLSv1.2
+        # enables WildFly OpenSSL
+        providers: openssl
+  undertow:
+    servers:
+      default-server:
+        https-listeners:
+          my-https-listener:
+            ssl-context: my-server-ssl-context
+            socket-binding: https
