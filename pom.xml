@@ -151,7 +151,7 @@
         <version.io.thorntail>2.7.0.Final</version.io.thorntail>
         <version.jakarta.enterprise.cdi-api>2.0.2</version.jakarta.enterprise.cdi-api>
         <version.jakarta.json-api>1.1.6</version.jakarta.json-api>
-        <version.junit.junit>4.13</version.junit.junit>
+        <version.junit.junit>4.13.1</version.junit.junit>
         <version.net.java.xadisk>1.2.2</version.net.java.xadisk>
         <version.org.amqphub.jca.resource-adapter>1.0.0</version.org.amqphub.jca.resource-adapter>
         <version.org.apache.activemq.activemq-rar>5.15.10</version.org.apache.activemq.activemq-rar>
