@@ -18,6 +18,6 @@ public class DatasourcesTest {
     @RunAsClient
     public void test() throws IOException {
         String result = Request.Get("http://localhost:8080/").execute().returnContent().asString();
-        assertThat(result).isEqualTo("DataSource present: true\nConnection obtained: true\n");
+        assertThat(result).isEqualTo("DataSource present: true\r\nConnection obtained: true\r\n");
     }
 }

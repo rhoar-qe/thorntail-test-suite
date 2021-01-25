@@ -27,8 +27,8 @@ public class JtaTest {
     public void withTxCommit() throws IOException {
         String result = Request.Get("http://localhost:8080/with-tx-commit").execute().returnContent().asString();
         assertThat(result).isEqualTo(""
-                + Status.STATUS_NO_TRANSACTION + "\n"
-                + Status.STATUS_ACTIVE + "\n"
+                + Status.STATUS_NO_TRANSACTION + "\r\n"
+                + Status.STATUS_ACTIVE + "\r\n"
                 + Status.STATUS_NO_TRANSACTION
         );
     }
@@ -38,9 +38,9 @@ public class JtaTest {
     public void withTxRollback() throws IOException {
         String result = Request.Get("http://localhost:8080/with-tx-rollback").execute().returnContent().asString();
         assertThat(result).isEqualTo(""
-                + Status.STATUS_NO_TRANSACTION + "\n"
-                + Status.STATUS_ACTIVE + "\n"
-                + Status.STATUS_MARKED_ROLLBACK + "\n"
+                + Status.STATUS_NO_TRANSACTION + "\r\n"
+                + Status.STATUS_ACTIVE + "\r\n"
+                + Status.STATUS_MARKED_ROLLBACK + "\r\n"
                 + Status.STATUS_NO_TRANSACTION
         );
     }

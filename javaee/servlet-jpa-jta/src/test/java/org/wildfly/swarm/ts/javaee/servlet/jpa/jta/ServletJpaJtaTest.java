@@ -45,7 +45,7 @@ public class ServletJpaJtaTest {
     @InSequence(3)
     public void notEmpty() throws IOException {
         String result = Request.Get("http://localhost:8080/").execute().returnContent().asString();
-        assertThat(result).isNotEmpty().isEqualTo("1 Author: Title\n");
+        assertThat(result).isNotEmpty().isEqualTo("1 Author: Title\r\n");
     }
 
     @Test

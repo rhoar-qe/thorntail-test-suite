@@ -18,6 +18,6 @@ public class HibernateValidatorTest {
     @RunAsClient
     public void test() throws IOException {
         String response = Request.Get("http://localhost:8080/").execute().returnContent().asString();
-        assertThat(response).isEqualTo("Violations: 0\nViolations: 1\n");
+        assertThat(response).isEqualTo("Violations: 0\r\nViolations: 1\r\n");
     }
 }
