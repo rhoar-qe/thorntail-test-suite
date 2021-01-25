@@ -18,6 +18,6 @@ public class CdiConfigTest {
     @RunAsClient
     public void test() throws IOException {
         String response = Request.Get("http://localhost:8080/").execute().returnContent().asString();
-        assertThat(response).isEqualTo("Value of app.config: FooBAR!\nConfigView contains app.config: true\n");
+        assertThat(response).isEqualTo("Value of app.config: FooBAR!\r\nConfigView contains app.config: true\r\n");
     }
 }

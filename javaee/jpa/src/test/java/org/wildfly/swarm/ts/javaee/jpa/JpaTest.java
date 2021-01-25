@@ -19,12 +19,12 @@ public class JpaTest {
     public void test() throws IOException {
         {
             String response = Request.Get("http://localhost:8080/").execute().returnContent().asString();
-            assertThat(response).isEqualTo("1: Hello from servlet + JPA\n");
+            assertThat(response).isEqualTo("1: Hello from servlet + JPA\r\n");
         }
 
         {
             String response = Request.Get("http://localhost:8080/").execute().returnContent().asString();
-            assertThat(response).isEqualTo("1: Hello from servlet + JPA\n2: Hello from servlet + JPA\n");
+            assertThat(response).isEqualTo("1: Hello from servlet + JPA\r\n2: Hello from servlet + JPA\r\n");
         }
     }
 }

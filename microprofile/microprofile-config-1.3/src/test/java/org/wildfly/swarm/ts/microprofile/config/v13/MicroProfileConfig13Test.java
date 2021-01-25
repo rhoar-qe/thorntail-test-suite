@@ -19,31 +19,31 @@ public class MicroProfileConfig13Test {
     public void test() throws IOException {
         String response = Request.Get("http://localhost:8080/").execute().returnContent().asString();
         assertThat(response).isEqualTo(""
-                + "MY_ENVIRONMENT_VARIABLE: value from surefire envvar\n"
-                + "MY.ENVIRONMENT.VARIABLE: value from surefire envvar\n"
-                + "my.environment.variable: value from surefire envvar\n"
-                + "MY_ENVIRONMENT_VARIABLE: value from surefire envvar\n"
-                + "MY.ENVIRONMENT.VARIABLE: value from surefire envvar\n"
-                + "my.environment.variable: value from surefire envvar\n"
-                + "URI: http://microprofile.io\n"
-                + "Optional notExisting: false\n"
-                + "Optional existing: true\n"
-                + "my.boolean.property: true\n"
-                + "my.boolean.property: true\n"
-                + "my.int.property: 42\n"
-                + "my.int.property: 42\n"
-                + "my.long.property: 9223372036854775807\n"
-                + "my.long.property: 9223372036854775807\n"
-                + "my.float.property: 3.14\n"
-                + "my.float.property: 3.14\n"
-                + "my.double.property: 10.0\n"
-                + "my.double.property: 10.0\n"
-                + "my.stringWrapper.property: Converted stringWrapperContent\n"
-                + "my.stringWrapper.property: Converted stringWrapperContent\n"
-                + "my.animals.array.property.array: Zebra, Alligator\n"
-                + "my.animals.array.property.array: Zebra, Alligator\n"
-                + "my.animals.array.property.list: [Zebra, Alligator]\n"
-                + "my.animals.array.property.set: [Alligator, Zebra]\n"
+                + "MY_ENVIRONMENT_VARIABLE: value from surefire envvar\r\n"
+                + "MY.ENVIRONMENT.VARIABLE: value from surefire envvar\r\n"
+                + "my.environment.variable: value from surefire envvar\r\n"
+                + "MY_ENVIRONMENT_VARIABLE: value from surefire envvar\r\n"
+                + "MY.ENVIRONMENT.VARIABLE: value from surefire envvar\r\n"
+                + "my.environment.variable: value from surefire envvar\r\n"
+                + "URI: http://microprofile.io\r\n"
+                + "Optional notExisting: false\r\n"
+                + "Optional existing: true\r\n"
+                + "my.boolean.property: true\r\n"
+                + "my.boolean.property: true\r\n"
+                + "my.int.property: 42\r\n"
+                + "my.int.property: 42\r\n"
+                + "my.long.property: 9223372036854775807\r\n"
+                + "my.long.property: 9223372036854775807\r\n"
+                + "my.float.property: 3.14\r\n"
+                + "my.float.property: 3.14\r\n"
+                + "my.double.property: 10.0\r\n"
+                + "my.double.property: 10.0\r\n"
+                + "my.stringWrapper.property: Converted stringWrapperContent\r\n"
+                + "my.stringWrapper.property: Converted stringWrapperContent\r\n"
+                + "my.animals.array.property.array: Zebra, Alligator\r\n"
+                + "my.animals.array.property.array: Zebra, Alligator\r\n"
+                + "my.animals.array.property.list: [Zebra, Alligator]\r\n"
+                + "my.animals.array.property.set: [Alligator, Zebra]\r\n"
         );
     }
 
@@ -52,7 +52,7 @@ public class MicroProfileConfig13Test {
     public void testEmptyProperty() throws IOException {
         // this behavior is not spec-compliant, but empty values treatment is disputed in MP Config
         String response = Request.Get("http://localhost:8080/empty-properties").execute().returnContent().asString();
-        assertThat(response).isEqualTo("Empty system property: 'Property my.empty.system.property not found'\n"
-                + "Empty property in config file: 'Property my.empty.property.in.config.file not found'\n");
+        assertThat(response).isEqualTo("Empty system property: 'Property my.empty.system.property not found'\r\n"
+                + "Empty property in config file: 'Property my.empty.property.in.config.file not found'\r\n");
     }
 }

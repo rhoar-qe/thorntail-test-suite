@@ -20,7 +20,7 @@ public class JpaTest {
     @InSequence(1)
     public void createFirst() throws IOException {
         String response = Request.Post("http://localhost:8080/?year=1997&month=8&day=24&hour=12&minute=00").execute().returnContent().asString();
-        assertThat(response).isEqualTo("1: 1997-08-24 12:00, f:l\n");
+        assertThat(response).isEqualTo("1: 1997-08-24 12:00, f:l\r\n");
     }
 
     @Test
@@ -28,7 +28,7 @@ public class JpaTest {
     @InSequence(2)
     public void createSecond() throws IOException {
         String response = Request.Post("http://localhost:8080/?year=2001&month=9&day=11&hour=9&minute=3").execute().returnContent().asString();
-        assertThat(response).isEqualTo("1: 1997-08-24 12:00, f:l\n2: 2001-09-11 09:03, f:l\n");
+        assertThat(response).isEqualTo("1: 1997-08-24 12:00, f:l\r\n2: 2001-09-11 09:03, f:l\r\n");
     }
 
     @Test

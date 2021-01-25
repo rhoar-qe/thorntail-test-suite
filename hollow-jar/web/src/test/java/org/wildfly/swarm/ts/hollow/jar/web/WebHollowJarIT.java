@@ -18,13 +18,13 @@ public class WebHollowJarIT {
     @Test
     public void testServlet() throws IOException {
         String response = Request.Get("http://localhost:8080/servlet?name=World").execute().returnContent().asString();
-        assertThat(response).isEqualTo("Servlet says: Hello, World!\nInit param:bar");
+        assertThat(response).isEqualTo("Servlet says: Hello, World!\r\nInit param:bar");
     }
 
     @Test
     public void testJpa() throws IOException {
         String response = Request.Get("http://localhost:8080/jpa").execute().returnContent().asString();
-        assertThat(response).isEqualTo("1: Hello from JPA servlet\n");
+        assertThat(response).isEqualTo("1: Hello from JPA servlet\r\n");
     }
 
     @Test
