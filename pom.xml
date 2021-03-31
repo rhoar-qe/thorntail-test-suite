@@ -145,7 +145,7 @@
         <version.java>1.8</version.java>
 
         <version.com.google.code.gson>2.8.6</version.com.google.code.gson>
-        <version.com.google.guava>25.0-jre</version.com.google.guava>
+        <version.com.google.guava>29.0-jre</version.com.google.guava>
         <version.com.h2database.h2>1.4.200</version.com.h2database.h2>
         <version.com.icegreen.greenmail>1.5.11</version.com.icegreen.greenmail>
         <version.io.jaegertracing.everything>0.34.1</version.io.jaegertracing.everything>
