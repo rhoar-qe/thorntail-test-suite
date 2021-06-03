@@ -178,7 +178,7 @@
         <version.org.jboss.logmanager>2.1.14.Final</version.org.jboss.logmanager>
         <version.org.jboss.marshalling>2.0.9.Final</version.org.jboss.marshalling>
         <version.org.jboss.remotingjmx>3.0.3.Final</version.org.jboss.remotingjmx>
-        <version.org.jboss.resteasy>3.11.2.Final</version.org.jboss.resteasy>
+        <version.org.jboss.resteasy>4.5.7.Final</version.org.jboss.resteasy>
         <version.org.jboss.spec.javax.ejb.jboss-ejb-api_3.2_spec>2.0.0.Final</version.org.jboss.spec.javax.ejb.jboss-ejb-api_3.2_spec>
         <version.org.jboss.spec.javax.servlet.jboss-servlet-api_4.0_spec>2.0.0.Final</version.org.jboss.spec.javax.servlet.jboss-servlet-api_4.0_spec>
         <version.org.jboss.spec.javax.ws.rs.jboss-jaxrs-api_2.1_spec>2.0.0.Final</version.org.jboss.spec.javax.ws.rs.jboss-jaxrs-api_2.1_spec>
